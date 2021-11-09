@@ -11,7 +11,7 @@ projects:
     toml: package.version
   also:
   - file: README.md
-    pattern: whatismyip (\d+\.\d+\.\d+)
+    pattern: fast-conventional (\d+\.\d+\.\d+)
   hooks:
     post_write: cargo fetch
 

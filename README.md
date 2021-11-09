@@ -46,22 +46,34 @@ brew install PurpleBooth/repo/fast-conventional
 
 ## Usage
 
+> `.fastconventional.yaml`
+
 ``` yaml,file(path=".fastconventional.yaml")
 use_angular: true
 types: [ci]
-scopes: ["abc", "bcd", "cde"]
+scopes: ["mergify", "just", "github"]
 ```
 
 ``` text,file(path="commit.txt")
-# Some commit message template
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#       new file:   README.md
 ```
+
+We have a nice interactive UI that you can't really see here, but this
+simulates the steps
 
 ``` shell,script(name="full")
 {
     sleep 1
     echo -ne "fix\r"
     sleep 1
-    echo -ne "bcd\r"
+    echo -ne "github\r"
     sleep 1
     echo -ne "Something that changed\r"
     sleep 1
@@ -71,13 +83,25 @@ scopes: ["abc", "bcd", "cde"]
 } | socat - EXEC:'fast-conventional commit.txt',pty,setsid,ctty
 ```
 
+Now if we look at the commit
+
 ``` shell,script(name="cat-file")
 cat commit.txt
 ```
 
 ``` text,verify(name="cat-file")
-fix(bcd)!: the subject goes here
+fix(github)!: the subject goes here
 
 
 BREAKING CHANGE: Something that changed
 ```
+
+This binary is designed to be run as a `prepare-commit-msg` hook. To
+install it into a repository run
+
+``` shell,script(name="installing")
+git init .
+ln -s "$(fast-conventional)" .git/hooks/prepare-commit-msg
+```
+
+And it'll trigger when generating the commit

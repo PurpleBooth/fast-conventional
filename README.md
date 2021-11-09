@@ -34,12 +34,11 @@ OPTIONS:
     -V, --version            Print version information
 ```
 
-
 ## Installing
 
 See the [releases
-page](https://github.com/PurpleBooth/fast-conventional/releases/latest) we
-build for linux and mac (all x86_64), alternatively use brew
+page](https://github.com/PurpleBooth/fast-conventional/releases/latest)
+we build for linux and mac (all x86_64), alternatively use brew
 
 ``` shell,skip()
 brew install PurpleBooth/repo/fast-conventional
@@ -47,17 +46,17 @@ brew install PurpleBooth/repo/fast-conventional
 
 ## Usage
 
-```yaml,file(path=".fastconventional.yaml")
+``` yaml,file(path=".fastconventional.yaml")
 use_angular: true
 types: [ci]
 scopes: ["abc", "bcd", "cde"]
 ```
 
-```text,file(path="commit.txt")
+``` text,file(path="commit.txt")
 # Some commit message template
 ```
 
-```shell,script(name="full")
+``` shell,script(name="full")
 {
     sleep 1
     echo -ne "fix\r"
@@ -72,11 +71,11 @@ scopes: ["abc", "bcd", "cde"]
 } | socat - EXEC:'fast-conventional commit.txt',pty,setsid,ctty
 ```
 
-```shell,script(name="cat-file")
+``` shell,script(name="cat-file")
 cat commit.txt
 ```
 
-```text,verify(name="cat-file")
+``` text,verify(name="cat-file")
 fix(bcd)!: the subject goes here
 
 

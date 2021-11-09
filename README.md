@@ -65,7 +65,11 @@ scopes: ["mergify", "just", "github"]
 #       new file:   README.md
 ```
 
-We have a nice interactive UI that you can't really see here, but this
+We have a nice interactive UI.
+
+![A terminal running the command blow](demo.gif "A demo of the app running")
+
+We can fake it using the below example
 simulates the steps
 
 ``` shell,script(name="full")

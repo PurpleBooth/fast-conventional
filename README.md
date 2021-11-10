@@ -1,6 +1,6 @@
 # fast-conventional
 
-Make conventional commits, faster, and consistently name scopes.
+Make conventional commits, faster, and consistently name scopes
 
 ## Usage
 
@@ -13,7 +13,7 @@ fast-conventional 1.0.0
 
 Billie Thompson <billie@billiecodes.com>
 
-A fast way to fill in conventional commit messages
+Make conventional commits, faster, and consistently name scopes
 
 USAGE:
     fast-conventional [OPTIONS] <commit-message-path>

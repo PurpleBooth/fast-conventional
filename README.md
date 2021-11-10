@@ -16,16 +16,10 @@ Billie Thompson <billie@billiecodes.com>
 A fast way to fill in conventional commit messages
 
 USAGE:
-    fast-conventional [OPTIONS] <commit-message-path> [ARGS]
+    fast-conventional [OPTIONS] <commit-message-path>
 
 ARGS:
-    <commit-message-path>      The name of the file that contains the commit log message
-    <commit-message-source>    The commit message, and can be: message (if a -m or -F option
-                               was given to git); template (if a -t option was given or the
-                               configuration option commit.template is set in git); merge (if
-                               the commit is a merge or a .git/MERGE_MSG file exists); squash
-                               (if a .git/SQUASH_MSG file exists); or commit
-    <commit-sha>               Commit SHA-1 (if a -c, -C or --amend option was given to git).
+    <commit-message-path>    The name of the file that contains the commit log message
 
 OPTIONS:
     -c, --config <config>    Configuration file [env: FAST_CONVENTIONAL_CONFIG=]
@@ -100,12 +94,14 @@ fix(github)!: the subject goes here
 BREAKING CHANGE: Something that changed
 ```
 
-This binary is designed to be run as a `prepare-commit-msg` hook. To
-install it into a repository run
+This binary is designed to be run as a editor in git. To install it run
 
-``` shell,script(name="installing")
-git init .
-ln -s "$(fast-conventional)" .git/hooks/prepare-commit-msg
+``` shell,skip()
+git config --global alias.fci '-c "core.editor=fast-conventional" commit'
 ```
 
-And it'll trigger when generating the commit
+To trigger it when you commit run
+
+``` shell,skip()
+git fci
+```

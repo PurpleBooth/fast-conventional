@@ -67,10 +67,10 @@ scopes: ["mergify", "just", "github"]
 
 We have a nice interactive UI.
 
-![A terminal running the command blow](demo.gif "A demo of the app running")
+![A terminal running the command
+blow](demo.gif "A demo of the app running")
 
-We can fake it using the below example
-simulates the steps
+We can fake it using the below example simulates the steps
 
 ``` shell,script(name="full")
 {

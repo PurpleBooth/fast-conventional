@@ -6,6 +6,7 @@ class FastConventional < Formula
 
   depends_on "rust" => :build
   depends_on "specdown/repo/specdown" => :test
+  depends_on "socat" => :test
 
   def install
     system "cargo", "install", "--locked", "--root", prefix, "--path", "."

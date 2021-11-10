@@ -45,6 +45,7 @@ jobs:
       current_version: ${{ needs.release.outputs.current_version }}
       previous_version: ${{ needs.release.outputs.previous_version }}
     secrets:
+      cargo_token: ${{ secrets.CARGO_TOKEN }}
       committer_token: ${{ secrets.COMMITTER_TOKEN }}
       gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
       gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}

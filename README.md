@@ -1,6 +1,6 @@
 # fast-conventional
 
-Make fast commits run quickly
+Make conventional commits, faster, and consistently name scopes.
 
 ## Usage
 

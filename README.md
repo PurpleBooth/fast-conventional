@@ -9,7 +9,7 @@ fast-conventional --help
 ```
 
 ``` text,verify(script_name="help",stream=stdout)
-fast-conventional 0.1.3
+fast-conventional 0.1.4
 
 Billie Thompson <billie@billiecodes.com>
 

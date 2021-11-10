@@ -38,6 +38,18 @@ we build for linux and mac (all x86_64), alternatively use brew
 brew install PurpleBooth/repo/fast-conventional
 ```
 
+This binary is designed to be run as a editor in git. To install it run
+
+``` shell,skip()
+git config --global alias.fci '-c "core.editor=fast-conventional" commit'
+```
+
+To trigger it when you commit run
+
+``` shell,skip()
+git fci
+```
+
 ## Usage
 
 > `.fastconventional.yaml`
@@ -94,14 +106,3 @@ fix(github)!: the subject goes here
 BREAKING CHANGE: Something that changed
 ```
 
-This binary is designed to be run as a editor in git. To install it run
-
-``` shell,skip()
-git config --global alias.fci '-c "core.editor=fast-conventional" commit'
-```
-
-To trigger it when you commit run
-
-``` shell,skip()
-git fci
-```

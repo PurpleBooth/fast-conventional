@@ -10,7 +10,7 @@ license = "CC0-1.0"
 authors = ["Billie Thompson <billie@billiecodes.com>"]
 
 [dependencies]
-serde = { version = "1.0.130", features = ["derive"] }
+serde = { version = "1.0.131", features = ["derive"] }
 serde_yaml = "0.8.21"
 inquire = { version = "0.2.1", features = [ "editor"] }
 miette = { version = "3.2.0", features = ["fancy"] }

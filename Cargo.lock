@@ -93,9 +93,9 @@ dependencies = [
 
 [[package]]
 name = "clap_derive"
-version = "3.0.0-rc.4"
+version = "3.0.0-rc.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "85946d4034625800196413478a1c6d3a57c12785e1f3970e590e0137dfa07342"
+checksum = "8f5a75bf38d07693e9743648b9a34710d1270fe24d05c2973244ef2f19a4c700"
 dependencies = [
  "heck",
  "proc-macro-error",

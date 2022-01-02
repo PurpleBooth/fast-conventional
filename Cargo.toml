@@ -10,11 +10,10 @@ license = "CC0-1.0"
 authors = ["Billie Thompson <billie@billiecodes.com>"]
 
 [dependencies]
-serde = { version = "1.0.131", features = ["derive"] }
-serde_yaml = "0.8.21"
+serde = { version = "1.0.133", features = ["derive"] }
+serde_yaml = "0.8.23"
 inquire = { version = "0.2.1", features = [ "editor"] }
 miette = { version = "3.2.0", features = ["fancy"] }
-clap_derive = "3.0.0-rc.4"
-clap_generate = "3.0.0-rc.3"
-clap = "3.0.0-beta.5"
+clap_complete = "3.0.0"
+clap = { version = "3.0.0", features = ["derive", "cargo", "wrap_help", "yaml", "env", "unicode" ] }
 mit-commit = "3.0.0"

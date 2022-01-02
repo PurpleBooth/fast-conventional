@@ -8,7 +8,7 @@ pub fn app() -> App<'static> {
         .about(env!("CARGO_PKG_DESCRIPTION"))
         .arg(
             Arg::new("commit-message-path")
-                .about("The name of the file that contains the commit log message")
+                .help("The name of the file that contains the commit log message")
                 .required(true)
                 .index(1),
         )
@@ -18,7 +18,7 @@ pub fn app() -> App<'static> {
                 .long("config")
                 .env("FAST_CONVENTIONAL_CONFIG")
                 .default_value(".fastconventional.yaml")
-                .about("Configuration file")
+                .help("Configuration file")
                 .required(false),
         )
 }

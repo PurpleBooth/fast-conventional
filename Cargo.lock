@@ -150,7 +150,7 @@ dependencies = [
  "clap",
  "clap_complete",
  "inquire",
- "miette 4.0.1",
+ "miette",
  "mit-commit",
  "serde",
  "serde_yaml",
@@ -286,24 +286,13 @@ checksum = "308cc39be01b73d0d18f82a0e7b2a3df85245f84af96fdddc5d202d27e47b86a"
 
 [[package]]
 name = "miette"
-version = "3.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cd2adcfcced5d625bf90a958a82ae5b93231f57f3df1383fee28c9b5096d35ed"
-dependencies = [
- "miette-derive 3.3.0",
- "once_cell",
- "thiserror",
-]
-
-[[package]]
-name = "miette"
 version = "4.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f5fdfdf2b0939ff2da40668429092a9bb409af6d176673fe70d7b4f0e645ef37"
 dependencies = [
  "atty",
  "backtrace",
- "miette-derive 4.0.1",
+ "miette-derive",
  "once_cell",
  "owo-colors",
  "supports-color",
@@ -317,17 +306,6 @@ dependencies = [
 
 [[package]]
 name = "miette-derive"
-version = "3.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5c01a8b61312d367ce87956bb686731f87e4c6dd5dbc550e8f06e3c24fb1f67f"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
-name = "miette-derive"
 version = "4.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "33eb3f9f781611d588da4adf55d1886506e0a17033a74c38b78cda40a2a4c5b0"
@@ -336,6 +314,12 @@ dependencies = [
  "quote",
  "syn",
 ]
+
+[[package]]
+name = "minimal-lexical"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
 
 [[package]]
 name = "miniz_oxide"
@@ -371,13 +355,14 @@ dependencies = [
 
 [[package]]
 name = "mit-commit"
-version = "3.0.0"
+version = "3.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "03a1941aa9c9263016d707f431913a9ecc5be81740354c0bfe67f5e7e76ed0e7"
+checksum = "85a641aab1340e7f9c49485fd73bcf0f1cd646aaf8310da89e7b84e851ae67f2"
 dependencies = [
  "indoc",
  "lazy_static",
- "miette 3.3.0",
+ "miette",
+ "nom",
  "regex",
  "thiserror",
 ]
@@ -387,6 +372,17 @@ name = "newline-converter"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d6f81c2b19eebbc4249b3ca6aff70ae05bf18d6a99b7cc63cf0248774e640565"
+
+[[package]]
+name = "nom"
+version = "7.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1b1d11e1ef389c76fe5b81bcaf2ea32cf88b62bc494e19f493d0b30e7a930109"
+dependencies = [
+ "memchr",
+ "minimal-lexical",
+ "version_check",
+]
 
 [[package]]
 name = "ntapi"

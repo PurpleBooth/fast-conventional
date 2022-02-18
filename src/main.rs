@@ -34,7 +34,7 @@ struct FastConventionalConfig {
 fn main() -> Result<()> {
     miette::set_panic_hook();
 
-    let matches = cli::app().get_matches();
+    let matches = cli::cli().get_matches();
     let config = matches.value_of("config").unwrap();
 
     let contents = fs::read_to_string(config).into_diagnostic()?;

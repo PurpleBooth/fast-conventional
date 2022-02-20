@@ -1,4 +1,3 @@
-#![feature(result_flattening)]
 //! Quickly put together a conventional commit
 #![warn(
     rust_2018_idioms,

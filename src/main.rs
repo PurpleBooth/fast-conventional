@@ -29,7 +29,10 @@ fn main() -> Result<()> {
     miette::set_panic_hook();
 
     let matches = cli::cli().get_matches();
-    let buf: PathBuf = matches.value_of("commit-message-path").unwrap().into();
+    let buf: PathBuf = matches
+        .value_of("commit-message-path")
+        .expect("argument matches has no commit-message-path")
+        .into();
     let config: FastConventionalConfig = matches.try_into()?;
 
     let selected_type: String = Select::new(

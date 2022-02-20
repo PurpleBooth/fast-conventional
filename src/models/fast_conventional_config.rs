@@ -13,7 +13,7 @@ const ANGULAR_TYPES: [&str; 10] = [
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastConventionalConfig {
-    pub(crate) use_angular: Option<bool>,
+    use_angular: Option<bool>,
     types: Option<Vec<String>>,
     scopes: Option<Vec<String>>,
 }

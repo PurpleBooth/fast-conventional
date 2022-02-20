@@ -1,3 +1,4 @@
+#![feature(result_flattening)]
 //! Quickly put together a conventional commit
 #![warn(
     rust_2018_idioms,
@@ -11,8 +12,8 @@
 )]
 
 mod cli;
+mod models;
 
-use std::fs;
 use std::fs::File;
 use std::io::Write;
 use std::path::PathBuf;
@@ -21,52 +22,28 @@ use inquire::{Editor, Select, Text};
 use miette::IntoDiagnostic;
 use miette::Result;
 use mit_commit::{CommitMessage, Trailer};
-use serde::Deserialize;
-use serde::Serialize;
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
-struct FastConventionalConfig {
-    use_angular: Option<bool>,
-    types: Option<Vec<String>>,
-    scopes: Option<Vec<String>>,
-}
+use models::fast_conventional_config::FastConventionalConfig;
 
 fn main() -> Result<()> {
     miette::set_panic_hook();
 
     let matches = cli::cli().get_matches();
-    let config = matches.value_of("config").unwrap();
+    let buf: PathBuf = matches.value_of("commit-message-path").unwrap().into();
+    let config: FastConventionalConfig = matches.try_into()?;
 
-    let contents = fs::read_to_string(config).into_diagnostic()?;
-    let config: FastConventionalConfig = serde_yaml::from_str(&contents).into_diagnostic()?;
-
-    let mut type_options = vec![config.types.unwrap_or_default()];
-
-    if config.use_angular == Some(true) {
-        type_options.push(vec![
-            "feat".to_string(),
-            "fix".to_string(),
-            "docs".to_string(),
-            "style".to_string(),
-            "refactor".to_string(),
-            "perf".to_string(),
-            "test".to_string(),
-            "chore".to_string(),
-            "build".to_string(),
-            "ci".to_string(),
-        ]);
-    };
-
-    let type_options: Vec<String> = type_options.iter().flatten().cloned().collect();
-
-    let selected_type: String = Select::new("type", type_options)
-        .with_help_message("What type of change is this?")
-        .prompt()
-        .into_diagnostic()?;
+    let selected_type: String = Select::new(
+        "type",
+        config.get_types().into_iter().collect::<Vec<String>>(),
+    )
+    .with_help_message("What type of change is this?")
+    .prompt()
+    .into_diagnostic()?;
     let mut selected_scope: Option<String> = None;
 
-    if let Some(scopes) = config.scopes {
-        selected_scope = Select::new("scope", scopes)
+    let scopes = config.get_scopes();
+    if !scopes.is_empty() {
+        selected_scope = Select::new("scope", scopes.into_iter().collect())
             .with_help_message("What scope is your change within (if any)?")
             .prompt_skippable()
             .into_diagnostic()?
@@ -96,7 +73,6 @@ fn main() -> Result<()> {
         .into_diagnostic()?
         .filter(|breaking_message| !breaking_message.is_empty());
 
-    let buf: PathBuf = matches.value_of("commit-message-path").unwrap().into();
     let commit: CommitMessage<'_> =
         mit_commit::CommitMessage::try_from(buf.clone()).into_diagnostic()?;
 

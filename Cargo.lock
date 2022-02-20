@@ -154,6 +154,8 @@ dependencies = [
  "mit-commit",
  "serde",
  "serde_yaml",
+ "tempfile",
+ "thiserror",
 ]
 
 [[package]]

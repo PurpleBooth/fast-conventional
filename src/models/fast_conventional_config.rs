@@ -78,7 +78,7 @@ pub enum ConfigReadError {
 
 #[derive(Error, Debug, Diagnostic)]
 #[error(transparent)]
-#[diagnostic(code(models::fast_conventional_config::yaml_read_error), url(docsrs))]
+#[diagnostic(code(models::fast_conventional_config::yaml_parse_error), url(docsrs))]
 pub struct YamlParseError {
     #[from]
     inner: serde_yaml::Error,

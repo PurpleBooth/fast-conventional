@@ -11,6 +11,7 @@ const ANGULAR_TYPES: [&str; 10] = [
     "feat", "fix", "docs", "style", "refactor", "perf", "test", "chore", "build", "ci",
 ];
 
+#[non_exhaustive]
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastConventionalConfig {
     use_angular: Option<bool>,
@@ -68,6 +69,7 @@ impl TryFrom<ArgMatches> for FastConventionalConfig {
     }
 }
 
+#[non_exhaustive]
 #[derive(Error, Debug, Diagnostic)]
 #[error(transparent)]
 #[diagnostic(code(models::fast_conventional_config::config_read_error), url(docsrs))]
@@ -76,6 +78,7 @@ pub enum ConfigReadError {
     Yaml(#[from] YamlParseError),
 }
 
+#[non_exhaustive]
 #[derive(Error, Debug, Diagnostic)]
 #[error(transparent)]
 #[diagnostic(code(models::fast_conventional_config::yaml_parse_error), url(docsrs))]

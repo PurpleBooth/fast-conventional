@@ -1,8 +1,8 @@
-use clap::ArgMatches;
 use serde::Deserialize;
 use serde::Serialize;
 use std::collections::BTreeSet;
-use std::fs;
+use std::fs::File;
+use std::path::PathBuf;
 
 use miette::Diagnostic;
 use thiserror::Error;
@@ -49,23 +49,19 @@ impl FastConventionalConfig {
 }
 
 impl TryFrom<&str> for FastConventionalConfig {
-    type Error = YamlParseError;
+    type Error = YamlReadError;
 
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        Ok(serde_yaml::from_str::<Self>(value)?)
+    fn try_from(filename: &str) -> Result<Self, Self::Error> {
+        Ok(serde_yaml::from_str(filename)?)
     }
 }
 
-impl TryFrom<ArgMatches> for FastConventionalConfig {
-    type Error = ConfigReadError;
+impl TryFrom<PathBuf> for FastConventionalConfig {
+    type Error = YamlReadError;
 
-    fn try_from(matches: ArgMatches) -> Result<Self, Self::Error> {
-        let config = matches
-            .value_of("config")
-            .expect("No config parameter found");
-        let contents = fs::read_to_string(config)?;
-
-        Ok(contents.as_str().try_into()?)
+    fn try_from(filename: PathBuf) -> Result<Self, Self::Error> {
+        let file = File::open(filename)?;
+        Ok(serde_yaml::from_reader(file)?)
     }
 }
 
@@ -75,16 +71,16 @@ impl TryFrom<ArgMatches> for FastConventionalConfig {
 #[diagnostic(code(models::fast_conventional_config::config_read_error), url(docsrs))]
 pub enum ConfigReadError {
     Io(#[from] std::io::Error),
-    Yaml(#[from] YamlParseError),
+    Yaml(#[from] YamlReadError),
 }
 
 #[non_exhaustive]
 #[derive(Error, Debug, Diagnostic)]
 #[error(transparent)]
 #[diagnostic(code(models::fast_conventional_config::yaml_parse_error), url(docsrs))]
-pub struct YamlParseError {
-    #[from]
-    inner: serde_yaml::Error,
+pub enum YamlReadError {
+    Io(#[from] std::io::Error),
+    Yaml(#[from] serde_yaml::Error),
 }
 
 #[cfg(test)]
@@ -93,7 +89,6 @@ mod tests {
     use std::io::Write;
 
     use super::*;
-    use crate::cli::cli;
 
     #[test]
     fn can_be_created_from_string() {
@@ -152,16 +147,7 @@ scopes: ["mergify", "just", "github"]"#;
 
         write!(temp_file, r#"types: [ci]"#).expect("failed to write test config");
 
-        let input = cli()
-            .try_get_matches_from_mut(vec![
-                "myapp",
-                "--config",
-                path.to_str().unwrap_or_default(),
-                "unused",
-            ])
-            .unwrap();
-
-        let actual: FastConventionalConfig = input.try_into().expect("Yaml unexpectedly invalid");
+        let actual: FastConventionalConfig = path.try_into().expect("Yaml unexpectedly invalid");
 
         assert_eq!(actual.get_types(), BTreeSet::from(["ci".to_string()]));
         assert_eq!(actual.get_scopes(), BTreeSet::new());

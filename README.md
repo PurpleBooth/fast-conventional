@@ -14,13 +14,13 @@ Billie Thompson <billie@billiecodes.com>
 Make conventional commits, faster, and consistently name scopes
 
 USAGE:
-    fast-conventional [OPTIONS] <commit-message-path>
+    fast-conventional [OPTIONS] <COMMIT_MESSAGE_PATH>
 
 ARGS:
-    <commit-message-path>    The name of the file that contains the commit log message
+    <COMMIT_MESSAGE_PATH>    The name of the file that contains the commit log message
 
 OPTIONS:
-    -c, --config <config>    Configuration file [env: FAST_CONVENTIONAL_CONFIG=]
+    -c, --config <CONFIG>    Configuration file [env: FAST_CONVENTIONAL_CONFIG=]
                              [default: .fastconventional.yaml]
     -h, --help               Print help information
     -V, --version            Print version information

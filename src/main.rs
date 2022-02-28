@@ -12,6 +12,7 @@
 
 mod cli;
 mod models;
+use clap::Parser;
 
 use std::fs::File;
 use std::io::Write;
@@ -27,12 +28,9 @@ use models::fast_conventional_config::FastConventionalConfig;
 fn main() -> Result<()> {
     miette::set_panic_hook();
 
-    let matches = cli::cli().get_matches();
-    let buf: PathBuf = matches
-        .value_of("commit-message-path")
-        .expect("argument matches has no commit-message-path")
-        .into();
-    let config: FastConventionalConfig = matches.try_into()?;
+    let args = cli::Args::parse();
+    let buf: PathBuf = args.commit_message_path;
+    let config: FastConventionalConfig = args.config.try_into()?;
 
     let selected_type: String = Select::new(
         "type",

@@ -7,7 +7,7 @@ updates:
   commit-message:
     prefix: ci
     include: scope
-  rebase-strategy: disabled
+
 - package-ecosystem: cargo     # See documentation for possible values
   directory: /     # Location of package manifests
   schedule:
@@ -16,4 +16,3 @@ updates:
     prefix: fix
     prefix-development: build
     include: scope
-  rebase-strategy: disabled

@@ -23,7 +23,17 @@ queue_rules:
 pull_request_rules:
 - name: request review on external contributor
   conditions:
+  - -author~=^dependabot(|-preview)\[bot\]$
   - -author=PurpleBooth
+  actions:
+    assign:
+      add_users:
+      - PurpleBooth
+
+- name: request review on external contributor
+  conditions:
+  - '#check-failure>0'
+  - author~=^dependabot(|-preview)\[bot\]$
   actions:
     assign:
       add_users:

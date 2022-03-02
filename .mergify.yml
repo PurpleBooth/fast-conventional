@@ -29,6 +29,15 @@ pull_request_rules:
       add_users:
       - PurpleBooth
 
+- name: Ask dependabot to recreate on conflicts
+  conditions:
+  - base=main
+  - author~=^dependabot(|-preview)\[bot\]$
+  - conflict
+  actions:
+    comment:
+      message: "@dependabot recreate"
+
 - name: automatic rebase for dependencies
   conditions:
   - check-success=lint-markdown / lint-markdown

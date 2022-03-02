@@ -20,8 +20,8 @@ ARGS:
     <COMMIT_MESSAGE_PATH>    The name of the file that contains the commit log message
 
 OPTIONS:
-    -c, --config <CONFIG>    Configuration file [env: FAST_CONVENTIONAL_CONFIG=]
-                             [default: .fastconventional.yaml]
+    -c, --config <CONFIG>    Configuration file [env: FAST_CONVENTIONAL_CONFIG=] [default:
+                             .fastconventional.yaml]
     -h, --help               Print help information
     -V, --version            Print version information
 ```

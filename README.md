@@ -1,4 +1,5 @@
-# fast-conventional
+<center>![Fast Conventional Logo](./logo/logo-dark.png#gh-dark-mode-only)
+![Fast Conventional Logo](./logo/logo-light.png#gh-light-mode-only)</center>
 
 Make conventional commits, faster, and consistently name scopes
 

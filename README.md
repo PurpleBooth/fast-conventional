@@ -103,3 +103,33 @@ fix(github)!: the subject goes here
 
 BREAKING CHANGE: Something that changed
 ```
+
+Once you have an existing message, you can also edit it
+
+``` shell,script(name="editing")
+{
+    sleep 1
+    echo -ne "\r"
+    sleep 1
+    echo -ne "\r"
+    sleep 1
+    echo -ne "A better BC reason\r"
+    sleep 1
+    echo -ne "\r"
+    sleep 1
+    echo -ne "\r"
+} | socat - EXEC:'fast-conventional commit.txt',pty,setsid,ctty
+```
+
+Now if we look at the commit
+
+``` shell,script(name="cat-edited-file")
+cat commit.txt
+```
+
+``` text,verify(name="cat-edited-file")
+fix(github)!: the subject goes here
+
+
+BREAKING CHANGE: A better BC reason
+```

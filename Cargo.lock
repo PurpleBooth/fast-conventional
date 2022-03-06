@@ -152,6 +152,7 @@ dependencies = [
  "inquire",
  "miette",
  "mit-commit",
+ "nom",
  "serde",
  "serde_yaml",
  "tempfile",

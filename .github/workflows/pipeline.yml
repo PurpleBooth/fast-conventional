@@ -8,6 +8,8 @@ on:
 jobs:
   lint-markdown:
     uses: PurpleBooth/common-pipelines/.github/workflows/markdown-check.yml@main
+    with:
+      skip_formatting: true
   commit-checks:
     uses: PurpleBooth/common-pipelines/.github/workflows/commit-check.yml@main
   rust-checks:

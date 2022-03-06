@@ -1,7 +1,7 @@
 ![Fast
-Conventional](https://raw.githubusercontent.com/PurpleBooth/fast-conventional/main/logo/logo-dark.png#gh-light-mode-only)
+Conventional](https://raw.githubusercontent.com/PurpleBooth/fast-conventional/main/logo/logo-light.png#gh-light-mode-only)
 ![Fast
-Conventional](https://raw.githubusercontent.com/PurpleBooth/fast-conventional/main/logo/logo-light.png#gh-dark-mode-only)
+Conventional](https://raw.githubusercontent.com/PurpleBooth/fast-conventional/main/logo/logo-dark.png#gh-dark-mode-only)
 
 Make conventional commits, faster, and consistently name scopes
 

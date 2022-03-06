@@ -82,7 +82,7 @@ brew install PurpleBooth/repo/fast-conventional
 This binary is designed to be run as a editor in git. To install it run
 
 ``` shell,skip()
-git config --global alias.fci '-c "core.editor=\'fast-conventional editor\'" commit'
+git config --global alias.fci '-c "core.editor=fast-conventional editor" commit'
 ```
 
 To trigger it when you commit run

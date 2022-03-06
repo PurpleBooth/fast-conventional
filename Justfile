@@ -8,7 +8,7 @@ test:
 
 # Test the markdown in the docs directory
 specdown: build
-	specdown run --temporary-workspace-dir --add-path "$PWD/target/release" "README.md"
+	specdown run --temporary-workspace-dir --add-path "$PWD/target/release" "README.md" docs/*.md
 
 # Build release version
 build:

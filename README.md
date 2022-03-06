@@ -21,12 +21,13 @@ OPTIONS:
     -V, --version    Print version information
 
 SUBCOMMANDS:
-    completion    Generate completion for shell
-    editor        Edit a commit message
-    help          Print this message or the help of the given subcommand(s)
+    completion        Generate completion for shell
+    editor            Edit a commit message
+    example-config    Print an example configuration
+    help              Print this message or the help of the given subcommand(s)
 ```
 
-Completion
+### Completion
 
 ``` shell,script(name="help-completion",expected_exit_code=0)
 fast-conventional completion --help
@@ -46,13 +47,13 @@ OPTIONS:
     -h, --help    Print help information
 ```
 
-Editor
+### Editor
 
-``` shell,script(name="help-completion",expected_exit_code=0)
+``` shell,script(name="help-editor",expected_exit_code=0)
 fast-conventional editor --help
 ```
 
-``` text,verify(script_name="help-completion",stream=stdout)
+``` text,verify(script_name="help-editor",stream=stdout)
 fast-conventional-editor 
 Edit a commit message
 
@@ -68,6 +69,22 @@ OPTIONS:
     -h, --help               Print help information
 ```
 
+### Example Config
+
+``` shell,script(name="help-example",expected_exit_code=0)
+fast-conventional example-config --help
+```
+
+``` text,verify(script_name="help-example",stream=stdout)
+fast-conventional-example-config 
+Print an example configuration
+
+USAGE:
+    fast-conventional example-config
+
+OPTIONS:
+    -h, --help    Print help information
+```
 
 ## Installing
 
@@ -175,4 +192,25 @@ fix(github)!: the subject goes here
 
 
 BREAKING CHANGE: A better BC reason
+```
+
+## Example config
+
+``` shell,script(name="example-config")
+fast-conventional example-config
+```
+
+``` text,verify(name="example-config")
+---
+use_angular: true
+types:
+  - custom_type
+scopes:
+  - src
+  - actions
+  - manpages
+  - readme
+  - e2e
+  - unit
+
 ```

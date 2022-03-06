@@ -14,9 +14,9 @@ const ANGULAR_TYPES: [&str; 10] = [
 #[non_exhaustive]
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct FastConventionalConfig {
-    use_angular: Option<bool>,
-    types: Option<Vec<String>>,
-    scopes: Option<Vec<String>>,
+    pub(crate) use_angular: Option<bool>,
+    pub(crate) types: Option<Vec<String>>,
+    pub(crate) scopes: Option<Vec<String>>,
 }
 
 impl FastConventionalConfig {
@@ -45,6 +45,14 @@ impl FastConventionalConfig {
         };
 
         user_types
+    }
+}
+
+impl TryFrom<FastConventionalConfig> for String {
+    type Error = YamlGenerateError;
+
+    fn try_from(value: FastConventionalConfig) -> Result<Self, Self::Error> {
+        Ok(serde_yaml::to_string(&value)?)
     }
 }
 
@@ -77,9 +85,20 @@ pub enum ConfigReadError {
 #[non_exhaustive]
 #[derive(Error, Debug, Diagnostic)]
 #[error(transparent)]
-#[diagnostic(code(models::fast_conventional_config::yaml_parse_error), url(docsrs))]
+#[diagnostic(code(models::fast_conventional_config::yaml_read_error), url(docsrs))]
 pub enum YamlReadError {
     Io(#[from] std::io::Error),
+    Yaml(#[from] serde_yaml::Error),
+}
+
+#[non_exhaustive]
+#[derive(Error, Debug, Diagnostic)]
+#[error(transparent)]
+#[diagnostic(
+    code(models::fast_conventional_config::yaml_generate_error),
+    url(docsrs)
+)]
+pub enum YamlGenerateError {
     Yaml(#[from] serde_yaml::Error),
 }
 
@@ -151,5 +170,33 @@ scopes: ["mergify", "just", "github"]"#;
 
         assert_eq!(actual.get_types(), BTreeSet::from(["ci".to_string()]));
         assert_eq!(actual.get_scopes(), BTreeSet::new());
+    }
+    #[test]
+    fn it_can_output_to_string() {
+        let mut temp_file =
+            tempfile::NamedTempFile::new().expect("failed to create temporary file");
+        let path = temp_file.path().to_path_buf();
+
+        write!(
+            temp_file,
+            r#"types: [ci]
+scopes: [src, fastconventional]"#
+        )
+        .expect("failed to write test config");
+
+        let actual: FastConventionalConfig = path.try_into().expect("Yaml unexpectedly invalid");
+
+        assert_eq!(
+            String::try_from(actual).unwrap(),
+            r#"---
+use_angular: ~
+types:
+  - ci
+scopes:
+  - src
+  - fastconventional
+"#
+            .to_string()
+        );
     }
 }

@@ -31,4 +31,6 @@ pub enum Commands {
         )]
         config: PathBuf,
     },
+    /// Print an example configuration
+    ExampleConfig,
 }

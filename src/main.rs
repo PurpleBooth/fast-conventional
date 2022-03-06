@@ -41,6 +41,26 @@ fn main() -> Result<()> {
             completion::print_completions(shell, &mut cli::Args::command());
             Ok(())
         }
+        cli::Commands::ExampleConfig => {
+            let config = FastConventionalConfig {
+                use_angular: Some(true),
+                types: Some(vec!["custom_type".to_string()]),
+                scopes: Some(vec![
+                    "src".to_string(),
+                    "actions".to_string(),
+                    "manpages".to_string(),
+                    "readme".to_string(),
+                    "e2e".to_string(),
+                    "unit".to_string(),
+                ]),
+            };
+
+            let example: String = config.try_into()?;
+
+            println!("{}", example);
+
+            Ok(())
+        }
         cli::Commands::Editor {
             commit_message_path,
             config,

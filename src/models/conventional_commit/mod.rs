@@ -1,6 +1,6 @@
-mod body;
+pub mod body;
 pub mod change;
 pub mod commit;
 pub mod scope;
-mod subject;
+pub mod subject;
 mod type_slug;

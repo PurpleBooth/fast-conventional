@@ -1,6 +1,12 @@
 #[derive(Clone, PartialOrd, PartialEq, Default, Debug)]
 pub struct Subject(pub(crate) String);
 
+impl Subject {
+    pub(crate) fn is_empty(&self) -> bool {
+        self.0.is_empty()
+    }
+}
+
 impl From<&str> for Subject {
     fn from(s: &str) -> Self {
         Self(s.to_string())
@@ -29,6 +35,16 @@ mod tests {
             Subject::from("Hello".to_string()),
             Subject("Hello".to_string())
         );
+    }
+
+    #[test]
+    fn is_empty() {
+        assert!(Subject::from("".to_string()).is_empty(),);
+    }
+
+    #[test]
+    fn is_not_empty() {
+        assert!(!Subject::from("Hello".to_string()).is_empty(),);
     }
 
     #[test]

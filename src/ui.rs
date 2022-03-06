@@ -6,16 +6,24 @@ use super::models::fast_conventional_config::FastConventionalConfig;
 use super::models::{ConventionalBody, ConventionalSubject};
 
 pub fn prompt_body(previous_body: &ConventionalBody) -> Result<Option<String>> {
-    Ok(Editor::new("description")
+    let mut body_ui = Editor::new("description")
         .with_predefined_text(&previous_body.0)
-        .with_help_message("A body (if any)")
+        .with_help_message("A body (if any)");
+
+    body_ui = if previous_body.is_empty() {
+        body_ui
+    } else {
+        body_ui.with_predefined_text(&previous_body.0)
+    };
+
+    Ok(body_ui
         .prompt_skippable()
         .into_diagnostic()?
         .filter(|breaking_message| !breaking_message.is_empty()))
 }
 
 pub fn prompt_subject(previous_subject: &ConventionalSubject) -> Result<String> {
-    Text::new("subject")
+    let mut subject_ui = Text::new("subject")
         .with_help_message("Summary of the code changes")
         .with_validator(&|subject: &str| {
             if subject.is_empty() {
@@ -23,7 +31,15 @@ pub fn prompt_subject(previous_subject: &ConventionalSubject) -> Result<String> 
             } else {
                 Ok(())
             }
-        })
+        });
+
+    subject_ui = if previous_subject.is_empty() {
+        subject_ui
+    } else {
+        subject_ui.with_default(&previous_subject.0)
+    };
+
+    subject_ui
         .with_default(&previous_subject.0)
         .prompt()
         .into_diagnostic()

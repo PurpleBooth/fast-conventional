@@ -1,5 +1,7 @@
-![Fast Conventional](https://raw.githubusercontent.com/PurpleBooth/fast-conventional/main/logo/logo-dark.png#gh-light-mode-only)
-![Fast Conventional](https://raw.githubusercontent.com/PurpleBooth/fast-conventional/main/logo/logo-light.png#gh-dark-mode-only)
+![Fast
+Conventional](https://raw.githubusercontent.com/PurpleBooth/fast-conventional/main/logo/logo-dark.png#gh-light-mode-only)
+![Fast
+Conventional](https://raw.githubusercontent.com/PurpleBooth/fast-conventional/main/logo/logo-light.png#gh-dark-mode-only)
 
 Make conventional commits, faster, and consistently name scopes
 
@@ -58,7 +60,7 @@ git fci
 
 ## Further Docs
 
-* [Shell completion](./docs/completion.md)
-* [Configuration](./docs/configuration.md)
-* [Editor](./docs/editor.md)
-* [Cli usage](./docs/cli-usage.md)
+-   [Shell completion](./docs/completion.md)
+-   [Configuration](./docs/configuration.md)
+-   [Editor](./docs/editor.md)
+-   [Cli usage](./docs/cli-usage.md)

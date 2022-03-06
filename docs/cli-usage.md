@@ -9,7 +9,7 @@ fast-conventional --help
 ```
 
 ``` text,verify(script_name="help",stream=stdout)
-fast-conventional 2.0.0
+fast-conventional 2.1.0
 Billie Thompson <billie@billiecodes.com>
 Make conventional commits, faster, and consistently name scopes
 

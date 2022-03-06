@@ -10,7 +10,7 @@ projects:
     file: Cargo.toml
     toml: package.version
   also:
-  - file: README.md
+  - file: docs/cli-usage.md
     pattern: fast-conventional (\d+\.\d+\.\d+)
   hooks:
     post_write: cargo fetch

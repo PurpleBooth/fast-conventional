@@ -61,3 +61,4 @@ git fci
 * [Shell completion](./docs/completion.md)
 * [Configuration](./docs/configuration.md)
 * [Editor](./docs/editor.md)
+* [Cli usage](./docs/cli-usage.md)

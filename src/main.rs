@@ -22,10 +22,9 @@ use std::path::PathBuf;
 use inquire::{Editor, Select, Text};
 use miette::IntoDiagnostic;
 use miette::Result;
-use mit_commit::{CommitMessage, Trailer};
-use models::answers::Answers;
+use mit_commit::CommitMessage;
 
-use crate::models::conventional_commit::{Change, ConventionalCommit};
+use crate::models::{ConventionalChange, ConventionalCommit, ConventionalScope};
 use models::fast_conventional_config::FastConventionalConfig;
 
 fn main() -> Result<()> {
@@ -36,10 +35,10 @@ fn main() -> Result<()> {
     let config: FastConventionalConfig = args.config.try_into()?;
     let existing_commit = CommitMessage::try_from(buf.clone())?;
     let result = existing_commit.try_into();
-    let parsed_conventional = result.ok();
+    let previous_conventional = result.ok();
 
-    let answers = ask_user(&config, parsed_conventional)?;
-    let commit = make_commit(&answers);
+    let new_conventional = ask_user(&config, previous_conventional)?;
+    let commit: CommitMessage<'_> = new_conventional.into();
 
     let mut commit_file = File::create(&buf).into_diagnostic()?;
     writeln!(commit_file, "{}", String::from(commit.clone())).into_diagnostic()?;
@@ -47,42 +46,10 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn make_commit(answers: &Answers) -> CommitMessage<'_> {
-    let commit = CommitMessage::default();
-    let mut subject_buffer: String = answers.commit_type.to_string();
-
-    if let Some(selected_scope) = answers.scope.as_deref() {
-        subject_buffer.push('(');
-        subject_buffer.push_str(selected_scope);
-        subject_buffer.push(')');
-    }
-
-    if answers.breaking.is_some() {
-        subject_buffer.push('!');
-    }
-
-    subject_buffer.push_str(": ");
-    subject_buffer.push_str(&answers.subject);
-
-    let mut commit = commit.with_subject(subject_buffer.into());
-
-    if let Some(body_content) = answers.body.as_deref() {
-        commit = commit.with_body_contents(body_content);
-    }
-
-    if let Some(selected_breaking) = answers.breaking.as_deref() {
-        commit = commit.add_trailer(Trailer::new(
-            "BREAKING CHANGE".into(),
-            selected_breaking.into(),
-        ));
-    }
-    commit
-}
-
 fn ask_user(
     config: &FastConventionalConfig,
     conventional_commit: Option<ConventionalCommit>,
-) -> Result<Answers> {
+) -> Result<ConventionalCommit> {
     let (type_index, scope_index, previous_breaking, previous_subject, previous_body) =
         conventional_commit
             .map(|conv| {
@@ -90,9 +57,9 @@ fn ask_user(
                     conv.type_index(config.get_types().into_iter().collect::<Vec<_>>()),
                     conv.scope_index(config.get_scopes().into_iter().collect::<Vec<_>>()),
                     match conv.breaking {
-                        Change::BreakingWithMessage(message) => message,
-                        Change::Compatible => "".to_string(),
-                        Change::BreakingWithoutMessage => "See description".to_string(),
+                        ConventionalChange::BreakingWithMessage(message) => message,
+                        ConventionalChange::Compatible => "".to_string(),
+                        ConventionalChange::BreakingWithoutMessage => "See description".to_string(),
                     },
                     conv.subject,
                     conv.body,
@@ -141,20 +108,20 @@ fn ask_user(
                 Ok(())
             }
         })
-        .with_default(&previous_subject)
+        .with_default(&previous_subject.0)
         .prompt()
         .into_diagnostic()?;
     let body = Editor::new("description")
-        .with_predefined_text(&previous_body)
+        .with_predefined_text(&previous_body.0)
         .with_help_message("A body (if any)")
         .prompt_skippable()
         .into_diagnostic()?
         .filter(|breaking_message| !breaking_message.is_empty());
-    Ok(Answers {
-        commit_type,
-        scope,
-        breaking,
-        subject,
-        body,
+    Ok(ConventionalCommit {
+        type_slug: commit_type.into(),
+        scope: scope.map(ConventionalScope::from),
+        breaking: breaking.into(),
+        subject: subject.into(),
+        body: body.into(),
     })
 }

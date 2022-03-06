@@ -1,4 +1,5 @@
 use clap::Parser;
+use clap_complete::Shell;
 use std::path::PathBuf;
 
 #[derive(Parser, Debug)]
@@ -15,4 +16,7 @@ pub struct Args {
         default_value = ".fastconventional.yaml"
     )]
     pub config: PathBuf,
+
+    #[clap(long = "completion", conflicts_with = "config", arg_enum)]
+    pub completion: Option<Shell>,
 }

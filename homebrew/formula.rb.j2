@@ -4,12 +4,29 @@ class FastConventional < Formula
   url "https://github.com/{{ github_repo }}/archive/{{ git_tag }}.tar.gz"
   sha256 "{{ file_sha }}"
 
+  depends_on "help2man" => :build
   depends_on "rust" => :build
   depends_on "socat" => :test
   depends_on "specdown/repo/specdown" => :test
 
   def install
     system "cargo", "install", "--locked", "--root", prefix, "--path", "."
+
+    # Install bash completion
+    output = Utils.safe_popen_read("#{bin}/fast-conventional", "--completion", "bash")
+    (bash_completion/"fast-conventional").write output
+
+    # Install zsh completion
+    output = Utils.safe_popen_read("#{bin}/fast-conventional", "--completion", "zsh")
+    (zsh_completion/"_fast-conventional").write output
+
+    # Install fish completion
+    output = Utils.safe_popen_read("#{bin}/fast-conventional", "--completion", "fish")
+    (fish_completion/"fast-conventional.fish").write output
+
+    # Man pages
+    output = Utils.safe_popen_read("help2man", "#{bin}/fast-conventional")
+    (man1/"fast-conventional.1").write output
   end
 
   test do

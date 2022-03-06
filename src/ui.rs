@@ -1,3 +1,6 @@
+use crate::models::ConventionalChange;
+use crate::models::ConventionalCommit;
+use crate::models::ConventionalScope;
 use inquire::{Editor, Select, Text};
 use miette::IntoDiagnostic;
 use miette::Result;
@@ -86,4 +89,40 @@ pub fn prompt_commit_type(config: &FastConventionalConfig, type_index: usize) ->
     .with_starting_cursor(type_index)
     .prompt()
     .into_diagnostic()
+}
+
+pub fn ask_user(
+    config: &FastConventionalConfig,
+    conventional_commit: Option<ConventionalCommit>,
+) -> Result<ConventionalCommit> {
+    let (type_index, scope_index, previous_breaking, previous_subject, previous_body) =
+        conventional_commit
+            .map(|conv| {
+                (
+                    conv.type_index(config.get_types().into_iter().collect::<Vec<_>>()),
+                    conv.scope_index(config.get_scopes().into_iter().collect::<Vec<_>>()),
+                    match conv.breaking {
+                        ConventionalChange::BreakingWithMessage(message) => message,
+                        ConventionalChange::Compatible => "".to_string(),
+                        ConventionalChange::BreakingWithoutMessage => "See description".to_string(),
+                    },
+                    conv.subject,
+                    conv.body,
+                )
+            })
+            .unwrap_or_default();
+
+    let commit_type: String = prompt_commit_type(config, type_index)?;
+    let scope: Option<String> = prompt_commit_scope(config, scope_index)?;
+    let breaking = prompt_breaking(&previous_breaking)?;
+    let subject = prompt_subject(&previous_subject)?;
+    let body = prompt_body(&previous_body)?;
+
+    Ok(ConventionalCommit {
+        type_slug: commit_type.into(),
+        scope: scope.map(ConventionalScope::from),
+        breaking: breaking.into(),
+        subject: subject.into(),
+        body: body.into(),
+    })
 }

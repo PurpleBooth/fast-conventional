@@ -4,6 +4,7 @@ use crate::models::ConventionalScope;
 use inquire::{Editor, Select, Text};
 use miette::IntoDiagnostic;
 use miette::Result;
+use mit_commit::CommitMessage;
 
 use super::models::fast_conventional_config::FastConventionalConfig;
 use super::models::{ConventionalBody, ConventionalSubject};
@@ -125,4 +126,13 @@ pub fn ask_user(
         subject: subject.into(),
         body: body.into(),
     })
+}
+
+pub fn ask_fallback(previous_text: &'_ str) -> Result<CommitMessage<'_>> {
+    Ok(Editor::new("Non-conventional editor")
+        .with_predefined_text(previous_text)
+        .with_help_message("This commit isn't conventional")
+        .prompt()
+        .into_diagnostic()?
+        .into())
 }

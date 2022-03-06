@@ -16,6 +16,7 @@ mod models;
 mod ui;
 
 use clap::Parser;
+use std::fs;
 
 use std::fs::File;
 use std::io::Write;
@@ -27,6 +28,7 @@ use miette::IntoDiagnostic;
 use miette::Result;
 use mit_commit::CommitMessage;
 
+use crate::models::ConventionalCommit;
 use models::fast_conventional_config::FastConventionalConfig;
 
 fn main() -> Result<()> {
@@ -45,12 +47,21 @@ fn main() -> Result<()> {
         } => {
             let buf: PathBuf = commit_message_path;
             let config: FastConventionalConfig = config.try_into()?;
-            let existing_commit = CommitMessage::try_from(buf.clone())?;
-            let result = existing_commit.try_into();
-            let previous_conventional = result.ok();
+            let existing_contents = fs::read_to_string(buf.clone()).into_diagnostic()?;
+            let existing_commit = CommitMessage::from(existing_contents.clone());
+            let has_bodies = existing_commit
+                .get_body()
+                .iter()
+                .filter(|body| !body.is_empty())
+                .count();
 
-            let new_conventional = ui::ask_user(&config, previous_conventional)?;
-            let commit: CommitMessage<'_> = new_conventional.into();
+            let commit = match ConventionalCommit::try_from(existing_commit.clone()) {
+                Ok(previous_conventional) => {
+                    ui::ask_user(&config, Some(previous_conventional))?.into()
+                }
+                Err(_) if has_bodies == 0 => ui::ask_user(&config, None)?.into(),
+                Err(_) => ui::ask_fallback(&existing_contents)?,
+            };
 
             let mut commit_file = File::create(&buf).into_diagnostic()?;
             writeln!(commit_file, "{}", String::from(commit.clone())).into_diagnostic()?;

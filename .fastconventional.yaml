@@ -1,6 +1,7 @@
 use_angular: true
 types: [ci]
 scopes:
+- logo
 - versio
 - deps
 - deploy

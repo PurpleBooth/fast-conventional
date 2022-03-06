@@ -34,24 +34,28 @@ fn main() -> Result<()> {
 
     let args = cli::Args::parse();
 
-    if let Some(shell) = args.completion {
-        return {
+    match args.command {
+        cli::Commands::Completion { shell } => {
             completion::print_completions(shell, &mut cli::Args::command());
             Ok(())
-        };
-    };
+        }
+        cli::Commands::Editor {
+            commit_message_path,
+            config,
+        } => {
+            let buf: PathBuf = commit_message_path;
+            let config: FastConventionalConfig = config.try_into()?;
+            let existing_commit = CommitMessage::try_from(buf.clone())?;
+            let result = existing_commit.try_into();
+            let previous_conventional = result.ok();
 
-    let buf: PathBuf = args.commit_message_path;
-    let config: FastConventionalConfig = args.config.try_into()?;
-    let existing_commit = CommitMessage::try_from(buf.clone())?;
-    let result = existing_commit.try_into();
-    let previous_conventional = result.ok();
+            let new_conventional = ui::ask_user(&config, previous_conventional)?;
+            let commit: CommitMessage<'_> = new_conventional.into();
 
-    let new_conventional = ui::ask_user(&config, previous_conventional)?;
-    let commit: CommitMessage<'_> = new_conventional.into();
+            let mut commit_file = File::create(&buf).into_diagnostic()?;
+            writeln!(commit_file, "{}", String::from(commit.clone())).into_diagnostic()?;
 
-    let mut commit_file = File::create(&buf).into_diagnostic()?;
-    writeln!(commit_file, "{}", String::from(commit.clone())).into_diagnostic()?;
-
-    Ok(())
+            Ok(())
+        }
+    }
 }

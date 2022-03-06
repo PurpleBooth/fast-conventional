@@ -14,18 +14,60 @@ Billie Thompson <billie@billiecodes.com>
 Make conventional commits, faster, and consistently name scopes
 
 USAGE:
-    fast-conventional [OPTIONS] <COMMIT_MESSAGE_PATH>
+    fast-conventional <SUBCOMMAND>
+
+OPTIONS:
+    -h, --help       Print help information
+    -V, --version    Print version information
+
+SUBCOMMANDS:
+    completion    Generate completion for shell
+    editor        Edit a commit message
+    help          Print this message or the help of the given subcommand(s)
+```
+
+Completion
+
+``` shell,script(name="help-completion",expected_exit_code=0)
+fast-conventional completion --help
+```
+
+``` text,verify(script_name="help-completion",stream=stdout)
+fast-conventional-completion 
+Generate completion for shell
+
+USAGE:
+    fast-conventional completion <SHELL>
+
+ARGS:
+    <SHELL>    [possible values: bash, elvish, fish, powershell, zsh]
+
+OPTIONS:
+    -h, --help    Print help information
+```
+
+Editor
+
+``` shell,script(name="help-completion",expected_exit_code=0)
+fast-conventional editor --help
+```
+
+``` text,verify(script_name="help-completion",stream=stdout)
+fast-conventional-editor 
+Edit a commit message
+
+USAGE:
+    fast-conventional editor [OPTIONS] <COMMIT_MESSAGE_PATH>
 
 ARGS:
     <COMMIT_MESSAGE_PATH>    The name of the file that contains the commit log message
 
 OPTIONS:
-    -c, --config <CONFIG>            Configuration file [env: FAST_CONVENTIONAL_CONFIG=] [default:
-                                     .fastconventional.yaml]
-        --completion <COMPLETION>    [possible values: bash, elvish, fish, powershell, zsh]
-    -h, --help                       Print help information
-    -V, --version                    Print version information
+    -c, --config <CONFIG>    Configuration file [env: FAST_CONVENTIONAL_CONFIG=] [default:
+                             .fastconventional.yaml]
+    -h, --help               Print help information
 ```
+
 
 ## Installing
 
@@ -40,7 +82,7 @@ brew install PurpleBooth/repo/fast-conventional
 This binary is designed to be run as a editor in git. To install it run
 
 ``` shell,skip()
-git config --global alias.fci '-c "core.editor=fast-conventional" commit'
+git config --global alias.fci '-c "core.editor=\'fast-conventional editor\'" commit'
 ```
 
 To trigger it when you commit run
@@ -89,7 +131,7 @@ We can fake it using the below example simulates the steps
     echo -ne "the subject goes here\r"
     sleep 1
     echo -ne "\r"
-} | socat - EXEC:'fast-conventional commit.txt',pty,setsid,ctty
+} | socat - EXEC:'fast-conventional editor commit.txt',pty,setsid,ctty
 ```
 
 Now if we look at the commit
@@ -119,7 +161,7 @@ Once you have an existing message, you can also edit it
     echo -ne "\r"
     sleep 1
     echo -ne "\r"
-} | socat - EXEC:'fast-conventional commit.txt',pty,setsid,ctty
+} | socat - EXEC:'fast-conventional editor commit.txt',pty,setsid,ctty
 ```
 
 Now if we look at the commit

@@ -11,6 +11,7 @@ use super::models::{ConventionalBody, ConventionalSubject};
 
 pub fn prompt_body(previous_body: &ConventionalBody) -> Result<Option<String>> {
     let mut body_ui = Editor::new("description")
+        .with_file_extension("COMMIT_EDITMSG")
         .with_predefined_text(&previous_body.0)
         .with_help_message("A body (if any)");
 
@@ -130,6 +131,7 @@ pub fn ask_user(
 
 pub fn ask_fallback(previous_text: &'_ str) -> Result<CommitMessage<'_>> {
     Ok(Editor::new("Non-conventional editor")
+        .with_file_extension("COMMIT_EDITMSG")
         .with_predefined_text(previous_text)
         .with_help_message("This commit isn't conventional")
         .prompt()

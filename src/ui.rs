@@ -130,7 +130,7 @@ pub fn ask_user(
 }
 
 pub fn ask_fallback(previous_text: &'_ str) -> Result<CommitMessage<'_>> {
-    Ok(Editor::new("Non-conventional editor")
+    Ok(Editor::new("Non-conventional editor.rs")
         .with_file_extension("COMMIT_EDITMSG")
         .with_predefined_text(previous_text)
         .with_help_message("This commit isn't conventional")

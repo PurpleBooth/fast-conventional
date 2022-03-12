@@ -1,17 +1,19 @@
+use miette::{ErrReport, IntoDiagnostic, Result};
+use mit_commit::CommitMessage;
+use mit_commit::Subject as CommitSubject;
+use mit_commit::Trailer;
+
+use nom::bytes::complete::take_till1;
+use nom::bytes::complete::{tag, take_until1};
+
+use nom::combinator::opt;
+use nom::sequence::{delimited, pair, terminated, tuple};
+
 use super::body::Body;
 use super::change::Change;
 use super::scope::Scope;
 use super::subject::Subject;
 use super::type_slug::TypeSlug;
-use miette::{ErrReport, IntoDiagnostic, Result};
-use mit_commit::CommitMessage;
-use mit_commit::Subject as CommitSubject;
-use mit_commit::Trailer;
-use nom::branch::alt;
-use nom::bytes::complete::tag;
-use nom::bytes::complete::take_until1;
-use nom::combinator::{opt, rest};
-use nom::sequence::{delimited, pair, preceded, terminated, tuple};
 
 #[derive(Clone, PartialOrd, PartialEq, Default, Debug)]
 pub struct Commit {
@@ -21,6 +23,8 @@ pub struct Commit {
     pub(crate) type_slug: TypeSlug,
     pub(crate) scope: Option<Scope>,
 }
+
+type ParserOutput<'a> = (&'a str, (&'a str, Option<&'a str>, Option<&'a str>));
 
 impl Commit {
     pub fn type_index(&self, option: Vec<String>) -> usize {
@@ -39,28 +43,17 @@ impl Commit {
         })
     }
 
-    fn split_description<'a>(subject: &'a str) -> Result<(&'a str, &'a str)> {
-        let split: Result<(_, (_, _)), nom::Err<nom::error::Error<&'a str>>> =
-            pair(take_until1(":"), preceded(alt((tag(": "), tag(":"))), rest))(subject);
-
-        split
-            .map_err(nom::Err::<nom::error::Error<&str>>::to_owned)
-            .map(|(_, scope_plus_and_description)| scope_plus_and_description)
-            .into_diagnostic()
-    }
-
-    fn split_type_and_scope<'a>(scope_plus: &'a str) -> Result<(&str, Option<&'a str>)> {
-        let result = tuple((
-            alt((take_until1("("), take_until1("!"), rest)),
-            opt(alt((
-                terminated(delimited(tag("("), take_until1(")"), tag(")")), tag("!")),
-                delimited(tag("("), take_until1(")"), tag(")")),
-            ))),
-        ))(scope_plus)
+    fn parse(text: &'_ str) -> Result<ParserOutput<'_>> {
+        terminated(
+            tuple((
+                take_till1(|x| "(!:".contains(x)),
+                opt(delimited(tag("("), take_until1(")"), tag(")"))),
+                opt(tag("!")),
+            )),
+            pair(tag(":"), opt(tag(" "))),
+        )(text)
         .map_err(nom::Err::<nom::error::Error<&str>>::to_owned)
-        .into_diagnostic();
-        let split: (&str, (&str, Option<&str>)) = result?;
-        Ok((split.1 .0, split.1 .1))
+        .into_diagnostic()
     }
 }
 
@@ -109,16 +102,16 @@ impl TryFrom<CommitMessage<'_>> for Commit {
 
     fn try_from(value: CommitMessage<'_>) -> Result<Self, Self::Error> {
         let commit_header = value.get_subject().to_string();
-        let (scope_plus, description) = Self::split_description(&commit_header)?;
-        let (type_slug, scope) = Self::split_type_and_scope(scope_plus)?;
+        let (description, (type_slug, scope, breaking_marker)) = Self::parse(&commit_header)?;
+
         let breaking = value
             .get_trailers()
             .iter()
-            .find(|x| x.get_key() == "BREAKING CHANGE")
+            .find(|trailer| trailer.get_key() == "BREAKING CHANGE")
             .map(Trailer::get_value)
             .map(|x| x.trim().to_string())
             .map_or(
-                if scope_plus.ends_with('!') {
+                if breaking_marker.is_some() {
                     Change::BreakingWithoutMessage
                 } else {
                     Change::Compatible
@@ -138,8 +131,9 @@ impl TryFrom<CommitMessage<'_>> for Commit {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use mit_commit::CommitMessage;
+
+    use super::*;
 
     #[test]
     fn can_be_created_from_string() {
@@ -244,7 +238,7 @@ mod tests {
                 .scope_index(vec![
                     "some".into(),
                     "something".into(),
-                    "somethingelse".into()
+                    "somethingelse".into(),
                 ]),
             1_usize
         );
@@ -255,7 +249,7 @@ mod tests {
         assert_eq!(
             Commit::try_from(CommitMessage::from("fix: example"))
                 .unwrap()
-                .scope_index(vec!["some".into(),]),
+                .scope_index(vec!["some".into()]),
             0_usize
         );
     }
@@ -265,7 +259,7 @@ mod tests {
         assert_eq!(
             Commit::try_from(CommitMessage::from("fix(other): example"))
                 .unwrap()
-                .scope_index(vec!["some".into(),]),
+                .scope_index(vec!["some".into()]),
             0_usize
         );
     }
@@ -279,6 +273,7 @@ mod tests {
             1_usize
         );
     }
+
     #[test]
     fn type_is_0_when_not_found() {
         assert_eq!(
@@ -318,7 +313,7 @@ mod tests {
                 .with_subject("fix!: example".into())
                 .add_trailer(Trailer::new(
                     "BREAKING CHANGE".into(),
-                    "Something that changed".into()
+                    "Something that changed".into(),
                 ))
         );
     }
@@ -332,6 +327,7 @@ mod tests {
             CommitMessage::default().with_subject("fix(example): subject".into())
         );
     }
+
     #[test]
     fn convert_to_commit_message_scope_breaking_with_message() {
         assert_eq!(
@@ -345,7 +341,7 @@ mod tests {
                 .with_subject("fix(example)!: subject".into())
                 .add_trailer(Trailer::new(
                     "BREAKING CHANGE".into(),
-                    "Something that changed".into()
+                    "Something that changed".into(),
                 ))
         );
     }

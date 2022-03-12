@@ -44,10 +44,7 @@ pub fn prompt_subject(previous_subject: &ConventionalSubject) -> Result<String> 
         subject_ui.with_default(&previous_subject.0)
     };
 
-    subject_ui
-        .with_default(&previous_subject.0)
-        .prompt()
-        .into_diagnostic()
+    subject_ui.prompt().into_diagnostic()
 }
 
 pub fn prompt_breaking(previous_breaking: &str) -> Result<Option<String>> {

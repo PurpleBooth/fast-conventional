@@ -14,7 +14,7 @@ nom = "7.1.1"
 serde = { version = "1.0.136", features = ["derive"] }
 serde_yaml = "0.8.23"
 inquire = { version = "0.2.1", features = [ "editor"] }
-miette = { version = "4.5.0", features = ["fancy"] }
+miette = { version = "4.6.0", features = ["fancy"] }
 clap_complete = "3.1.2"
 clap = { version = "3.1.12", features = ["derive", "cargo", "wrap_help", "yaml", "env", "unicode" ] }
 mit-commit = "3.1.1"

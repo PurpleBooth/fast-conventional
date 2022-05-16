@@ -120,11 +120,11 @@ mod tests {
     const COMMIT_MESSAGE_2: &str = "Message 2";
     const COMMIT_MESSAGE_3: &str = "Message 3";
 
-    pub fn repo_init() -> (TempDir, Git2Repository) {
-        let td = tempdir().unwrap();
+    pub fn repo_init() -> TempDir {
+        let temporary_dir = tempdir().unwrap();
         let mut opts = Git2RepositoryInitOptions::new();
         opts.initial_head("main");
-        let git2_repo = Git2Repository::init_opts(td.path(), &opts).unwrap();
+        let git2_repo = Git2Repository::init_opts(temporary_dir.path(), &opts).unwrap();
         {
             let mut git2_config = git2_repo.config().unwrap();
             git2_config.set_str("user.name", COMMIT_USER).unwrap();
@@ -142,7 +142,7 @@ mod tests {
             let message_3 = COMMIT_MESSAGE_3;
             make_commit(&git2_repo, message_3);
         }
-        (td, git2_repo)
+        temporary_dir
     }
 
     fn make_commit(git2_repo: &Git2Repository, message: &str) {
@@ -167,7 +167,7 @@ mod tests {
 
     #[test]
     fn can_be_created_from_a_git_repository() {
-        let (dir, _) = repo_init();
+        let dir = repo_init();
         assert!(Repository::try_from(dir.into_path()).is_ok());
     }
 
@@ -179,7 +179,7 @@ mod tests {
 
     #[test]
     fn it_can_give_me_a_list_of_commit_messages() {
-        let (dir, _) = repo_init();
+        let dir = repo_init();
         let repo = Repository::try_from(dir.into_path()).unwrap();
         let commits = repo
             .list_commits(None)
@@ -200,7 +200,7 @@ mod tests {
 
     #[test]
     fn it_can_give_me_a_list_of_commits_like_git_log() {
-        let (dir, _) = repo_init();
+        let dir = repo_init();
         let repo = Repository::try_from(dir.into_path()).unwrap();
         let commits = repo
             .list_commits(Some(GitRevisionSelection::from_str("HEAD^").unwrap()))
@@ -220,7 +220,7 @@ mod tests {
 
     #[test]
     fn it_can_give_me_a_commit_from_a_range() {
-        let (dir, _git2_repo) = repo_init();
+        let dir = repo_init();
         let repo = Repository::try_from(dir.into_path()).unwrap();
         let commits = repo
             .list_commits(Some(GitRevisionSelection::from_str("HEAD^..HEAD").unwrap()))
@@ -234,7 +234,7 @@ mod tests {
 
     #[test]
     fn it_can_give_me_a_commit_from_a_range_with_the_finishing_id_missing() {
-        let (dir, _git2_repo) = repo_init();
+        let dir = repo_init();
 
         println!("{}", dir.path().to_string_lossy());
 

@@ -244,8 +244,6 @@ mod tests {
     fn it_can_give_me_a_commit_from_a_range_with_the_finishing_id_missing() {
         let dir = repo_init();
 
-        println!("{}", dir.path().to_string_lossy());
-
         let repo = Repository::try_from(dir.into_path()).unwrap();
         let commits = repo
             .list_commits(Some(GitRevisionSelection::from_str("HEAD^^..").unwrap()))

@@ -39,8 +39,8 @@ fn main() -> Result<()> {
             config,
         } => commands::editor(commit_message_path, config),
         cli::Commands::Validate {
-            repository,
-            revision_or_range: revision_selection,
-        } => commands::validate(repository, revision_selection),
+            repository_path,
+            revision_selection,
+        } => commands::validate(repository_path, revision_selection),
     }
 }

@@ -7,8 +7,11 @@ use crate::models::{GitRevisionSelection, GitShortRef};
 use miette::Diagnostic;
 use thiserror::Error;
 
-pub fn run(repository: PathBuf, revision_selection: Option<GitRevisionSelection>) -> Result<()> {
-    let repository = GitRepository::try_from(repository)?;
+pub fn run(
+    repository_path: PathBuf,
+    revision_selection: Option<GitRevisionSelection>,
+) -> Result<()> {
+    let repository = GitRepository::try_from(repository_path)?;
     let commits = repository.list_commits(revision_selection)?;
     let mut failed_commits = vec![];
 

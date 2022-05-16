@@ -36,7 +36,7 @@ pub enum Commands {
     Validate {
         /// An optional range to limit the linting
         #[clap()]
-        revision_or_range: Option<GitRevisionSelection>,
+        revision_selection: Option<GitRevisionSelection>,
         /// Git repository to search in
         #[clap(
             short = 'r',
@@ -44,7 +44,7 @@ pub enum Commands {
             env = "FAST_CONVENTIONAL_GIT_REPOSITORY",
             default_value = "."
         )]
-        repository: PathBuf,
+        repository_path: PathBuf,
     },
     /// Print an example configuration
     ExampleConfig,

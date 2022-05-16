@@ -13,15 +13,17 @@ fast-conventional-validate
 Validate a commit message is conventional
 
 USAGE:
-    fast-conventional validate [OPTIONS] [REVISION_OR_RANGE]
+    fast-conventional validate [OPTIONS] [REVISION_SELECTION]
 
 ARGS:
-    <REVISION_OR_RANGE>    An optional range to limit the linting
+    <REVISION_SELECTION>    An optional range to limit the linting
 
 OPTIONS:
-    -h, --help                       Print help information
-    -r, --repository <REPOSITORY>    Git repository to search in [env:
-                                     FAST_CONVENTIONAL_GIT_REPOSITORY=] [default: .]
+    -h, --help
+            Print help information
+
+    -r, --repository <REPOSITORY_PATH>
+            Git repository to search in [env: FAST_CONVENTIONAL_GIT_REPOSITORY=] [default: .]
 ```
 
 ## Conventional Commits

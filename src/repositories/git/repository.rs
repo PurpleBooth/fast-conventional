@@ -1,10 +1,10 @@
 use std::path::PathBuf;
 
-use git2::Error as Git2Error;
 use git2::ObjectType as Git2ObjectType;
 use git2::Oid as Git2Oid;
 use git2::Repository as Git2Repository;
 use git2::Sort as Git2Sort;
+use git2::{Error as Git2Error, Revwalk};
 use miette::Diagnostic;
 use mit_commit::CommitMessage;
 use thiserror::Error;
@@ -18,6 +18,38 @@ impl Repository {
         &self,
         revision_selection: Option<GitRevisionSelection>,
     ) -> Result<Vec<(GitShortRef, CommitMessage<'_>)>, CommitListError> {
+        let git2_revwalk = self.build_revwalk(revision_selection)?;
+
+        let git2_references = git2_revwalk
+            .into_iter()
+            .collect::<Result<Vec<Git2Oid>, _>>()?;
+
+        let git2_commits = git2_references
+            .clone()
+            .into_iter()
+            .map(|oid| self.0.find_commit(oid))
+            .collect::<Result<Vec<_>, _>>()?;
+
+        let mit_commits = git2_commits
+            .into_iter()
+            .map(|message| match message.message() {
+                None => CommitMessage::default(),
+                Some(message) => CommitMessage::from(message.to_string()),
+            });
+
+        let combined_commits: Vec<(GitShortRef, CommitMessage<'_>)> = git2_references
+            .into_iter()
+            .map(|x| x.to_string().into())
+            .zip(mit_commits)
+            .collect();
+
+        Ok(combined_commits)
+    }
+
+    fn build_revwalk(
+        &self,
+        revision_selection: Option<GitRevisionSelection>,
+    ) -> Result<Revwalk<'_>, CommitListError> {
         let mut git2_revwalk = self.0.revwalk()?;
 
         match revision_selection {
@@ -50,33 +82,9 @@ impl Repository {
                 };
             }
         };
-
         git2_revwalk.set_sorting(Git2Sort::TOPOLOGICAL | Git2Sort::REVERSE | Git2Sort::TIME)?;
 
-        let git2_references = git2_revwalk
-            .into_iter()
-            .collect::<Result<Vec<Git2Oid>, _>>()?;
-
-        let git2_commits = git2_references
-            .clone()
-            .into_iter()
-            .map(|oid| self.0.find_commit(oid))
-            .collect::<Result<Vec<_>, _>>()?;
-
-        let mit_commits = git2_commits
-            .into_iter()
-            .map(|message| match message.message() {
-                None => CommitMessage::default(),
-                Some(message) => CommitMessage::from(message.to_string()),
-            });
-
-        let combined_commits: Vec<(GitShortRef, CommitMessage<'_>)> = git2_references
-            .into_iter()
-            .map(|x| x.to_string().into())
-            .zip(mit_commits)
-            .collect();
-
-        Ok(combined_commits)
+        Ok(git2_revwalk)
     }
 }
 

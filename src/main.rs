@@ -14,6 +14,7 @@ mod cli;
 mod commands;
 mod models;
 mod repositories;
+mod service;
 mod ui;
 
 use clap::Parser;
@@ -36,11 +37,12 @@ fn main() -> Result<()> {
         cli::Commands::ExampleConfig => commands::example(),
         cli::Commands::Editor {
             commit_message_path,
-            config,
-        } => commands::editor(commit_message_path, config),
+            config_path,
+        } => commands::editor(commit_message_path, config_path),
         cli::Commands::Validate {
             repository_path,
             revision_selection,
-        } => commands::validate(repository_path, revision_selection),
+            config_path,
+        } => commands::validate(repository_path, revision_selection, config_path),
     }
 }

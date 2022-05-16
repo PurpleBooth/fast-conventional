@@ -2,12 +2,18 @@ use miette::Diagnostic;
 use std::fmt::{Display, Formatter};
 use thiserror::Error;
 
-#[derive(Debug, PartialOrd, PartialEq, Clone)]
+#[derive(Debug, PartialOrd, PartialEq, Ord, Eq, Clone)]
 pub struct ShortRef(String);
 
 impl From<String> for ShortRef {
     fn from(contents: String) -> Self {
         Self(contents)
+    }
+}
+
+impl From<&str> for ShortRef {
+    fn from(contents: &str) -> Self {
+        Self(contents.to_string())
     }
 }
 

@@ -30,7 +30,7 @@ pub enum Commands {
             env = "FAST_CONVENTIONAL_CONFIG",
             default_value = ".fastconventional.yaml"
         )]
-        config: PathBuf,
+        config_path: PathBuf,
     },
     /// Validate a commit message is conventional
     Validate {
@@ -45,6 +45,14 @@ pub enum Commands {
             default_value = "."
         )]
         repository_path: PathBuf,
+        /// Configuration file
+        #[clap(
+            short = 'c',
+            long = "config",
+            env = "FAST_CONVENTIONAL_CONFIG",
+            default_value = ".fastconventional.yaml"
+        )]
+        config_path: PathBuf,
     },
     /// Print an example configuration
     ExampleConfig,

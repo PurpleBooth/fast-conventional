@@ -8,9 +8,9 @@ use std::io::Write;
 
 use crate::{ui, ConventionalCommit, FastConventionalConfig};
 
-pub fn run(commit_message_path: PathBuf, config: PathBuf) -> Result<()> {
+pub fn run(commit_message_path: PathBuf, config_path: PathBuf) -> Result<()> {
     let buf: PathBuf = commit_message_path;
-    let config: FastConventionalConfig = config.try_into()?;
+    let config: FastConventionalConfig = config_path.try_into()?;
     let existing_contents = fs::read_to_string(buf.clone()).into_diagnostic()?;
     let existing_commit = CommitMessage::from(existing_contents.clone());
     let has_bodies = existing_commit

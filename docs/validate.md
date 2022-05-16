@@ -19,6 +19,9 @@ ARGS:
     <REVISION_SELECTION>    An optional range to limit the linting
 
 OPTIONS:
+    -c, --config <CONFIG_PATH>
+            Configuration file [env: FAST_CONVENTIONAL_CONFIG=] [default: .fastconventional.yaml]
+
     -h, --help
             Print help information
 
@@ -37,6 +40,16 @@ git config user.email "name@example.com"
 git config commit.gpgsign false
 git commit --allow-empty -m "feat: Initial Release"
 git commit --allow-empty -m "ci: Add pipeline"
+```
+
+and given we have this config
+
+> `.fastconventional.yaml`
+
+``` yaml,file(path=".fastconventional.yaml")
+use_angular: true
+types: [ci]
+scopes: ["mergify", "just", "github"]
 ```
 
 When we validate, we get a successful status
@@ -88,4 +101,22 @@ fast-conventional validate HEAD^
 ```text,verify(script_name="validate-single-commit", stream=stdout)
 [✔] feat: Initial Release
 [✔] ci: Add pipeline
+```
+
+We have seen a failure because of a non-conventional commit, we also might get a failure if we use a type that isn't in the configuration file
+
+```shell,script(name="make-a-commit-with-unknown-type")
+git commit --allow-empty -m "missing: Add a pipeline"
+```
+
+
+```shell,script(name="validate-missing-unknown-type",expected_exit_code=1)
+fast-conventional validate HEAD^..HEAD
+```
+
+```text,verify(script_name="validate-missing-unknown-type", stream=stderr)
+[✘] missing: Add a pipeline
+Error: 
+  × Some commits failed validation
+
 ```

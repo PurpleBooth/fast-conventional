@@ -2,7 +2,7 @@ use miette::Diagnostic;
 use std::fmt::{Display, Formatter};
 use thiserror::Error;
 
-#[derive(Debug, PartialOrd, PartialEq)]
+#[derive(Debug, PartialOrd, PartialEq, Clone)]
 pub struct ShortRef(String);
 
 impl From<String> for ShortRef {

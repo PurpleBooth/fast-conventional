@@ -120,3 +120,21 @@ Error:
   × Some commits failed validation
 
 ```
+
+You also validate the scopes
+
+```shell,script(name="make-a-commit-with-unknown-type")
+git commit --allow-empty -m "fix(invalid): Correct the automerge settings"
+```
+
+
+```shell,script(name="validate-missing-unknown-type",expected_exit_code=1)
+fast-conventional validate HEAD^..HEAD
+```
+
+```text,verify(script_name="validate-missing-unknown-type", stream=stderr)
+[✘] fix(invalid): Correct the automerge settings
+Error: 
+  × Some commits failed validation
+
+```

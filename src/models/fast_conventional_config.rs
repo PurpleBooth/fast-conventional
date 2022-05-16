@@ -12,11 +12,18 @@ const ANGULAR_TYPES: [&str; 10] = [
 ];
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Default)]
 pub struct FastConventionalConfig {
     pub(crate) use_angular: Option<bool>,
+    pub(crate) require_scope: Option<bool>,
     pub(crate) types: Option<Vec<String>>,
     pub(crate) scopes: Option<Vec<String>>,
+}
+
+impl FastConventionalConfig {
+    pub(crate) fn get_require_scope(&self) -> bool {
+        self.require_scope.unwrap_or(false)
+    }
 }
 
 impl FastConventionalConfig {
@@ -172,6 +179,12 @@ scopes: ["mergify", "just", "github"]"#;
         assert_eq!(actual.get_scopes(), BTreeSet::new());
     }
     #[test]
+    fn missing_require_scope_is_false() {
+        let actual = FastConventionalConfig::default();
+
+        assert!(!actual.get_require_scope());
+    }
+    #[test]
     fn it_can_output_to_string() {
         let mut temp_file =
             tempfile::NamedTempFile::new().expect("failed to create temporary file");
@@ -190,6 +203,7 @@ scopes: [src, fastconventional]"#
             String::try_from(actual).unwrap(),
             r#"---
 use_angular: ~
+require_scope: ~
 types:
   - ci
 scopes:

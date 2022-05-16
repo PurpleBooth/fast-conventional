@@ -46,7 +46,7 @@ fn is_scope_in_config(
     conventional_commit: &ConventionalCommit,
 ) -> bool {
     match &conventional_commit.scope {
-        None => true,
+        None => !config.get_require_scope(),
         Some(scope) => {
             let expected_scope: String = scope.clone().into();
             config.get_scopes().contains(&expected_scope)
@@ -66,6 +66,7 @@ mod tests {
         let actual = run(
             &FastConventionalConfig {
                 use_angular: Some(true),
+                require_scope: None,
                 types: None,
                 scopes: None,
             },
@@ -97,6 +98,7 @@ mod tests {
         let actual = run(
             &FastConventionalConfig {
                 use_angular: Some(true),
+                require_scope: None,
                 types: None,
                 scopes: None,
             },
@@ -133,6 +135,7 @@ mod tests {
         let actual = run(
             &FastConventionalConfig {
                 use_angular: Some(true),
+                require_scope: None,
                 types: None,
                 scopes: Some(vec!["FastConventional".into()]),
             },
@@ -151,6 +154,43 @@ mod tests {
         let failed_commits: BTreeMap<GitShortRef, CommitMessage<'_>> = vec![(
             "cafebabe".into(),
             CommitMessage::from("fix(missing): Example commit"),
+        )]
+        .into_iter()
+        .collect();
+        let valid_commits: BTreeMap<GitShortRef, CommitMessage<'_>> = vec![(
+            "deadbeef".into(),
+            CommitMessage::from("fix(FastConventional): Example commit"),
+        )]
+        .into_iter()
+        .collect();
+        assert_eq!(actual.0, valid_commits);
+        assert_eq!(actual.1, failed_commits);
+    }
+
+    #[test]
+    fn it_also_fails_if_the_scope_is_missing_when_required() {
+        let actual = run(
+            &FastConventionalConfig {
+                use_angular: Some(true),
+                require_scope: Some(true),
+                types: None,
+                scopes: Some(vec!["FastConventional".into()]),
+            },
+            vec![
+                (
+                    "deadbeef".into(),
+                    CommitMessage::from("fix(FastConventional): Example commit"),
+                ),
+                (
+                    "cafebabe".into(),
+                    CommitMessage::from("fix: Example commit"),
+                ),
+            ],
+        );
+
+        let failed_commits: BTreeMap<GitShortRef, CommitMessage<'_>> = vec![(
+            "cafebabe".into(),
+            CommitMessage::from("fix: Example commit"),
         )]
         .into_iter()
         .collect();

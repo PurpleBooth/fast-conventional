@@ -4,6 +4,7 @@ use miette::Result;
 pub fn run() -> Result<()> {
     let config = FastConventionalConfig {
         use_angular: Some(true),
+        require_scope: None,
         types: Some(vec!["custom_type".to_string()]),
         scopes: Some(vec![
             "src".to_string(),

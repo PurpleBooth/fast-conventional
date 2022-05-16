@@ -32,6 +32,7 @@ The file looks like this. All fields are optional.
 ``` yaml,verify(name="example-config")
 ---
 use_angular: true
+require_scope: ~
 types:
   - custom_type
 scopes:

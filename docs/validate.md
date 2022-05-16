@@ -138,3 +138,29 @@ Error:
   × Some commits failed validation
 
 ```
+
+These are optional unless you set `require_scope` in the config, in other words a missing scope won't fail the validation.
+
+> `.fastconventional.yaml`
+``` yaml,file(path=".fastconventional.yaml")
+use_angular: true
+require_scope: true
+types: [ci]
+scopes: ["mergify", "just", "github"]
+```
+
+```shell,script(name="make-a-commit-with-unknown-type")
+git commit --allow-empty -m "fix: Correct the automerge settings"
+```
+
+
+```shell,script(name="validate-missing-unknown-type",expected_exit_code=1)
+fast-conventional validate HEAD^..HEAD
+```
+
+```text,verify(script_name="validate-missing-unknown-type", stream=stderr)
+[✘] fix: Correct the automerge settings
+Error: 
+  × Some commits failed validation
+
+```

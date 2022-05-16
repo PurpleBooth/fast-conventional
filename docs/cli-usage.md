@@ -25,4 +25,5 @@ SUBCOMMANDS:
     editor            Edit a commit message
     example-config    Print an example configuration
     help              Print this message or the help of the given subcommand(s)
+    validate          Validate a commit message is conventional
 ```

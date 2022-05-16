@@ -1,15 +1,16 @@
+use crate::models::GitRevisionSelection;
 use clap::{Parser, Subcommand};
 use clap_complete::Shell;
 use std::path::PathBuf;
 
-#[derive(Parser, Debug)]
+#[derive(Parser)]
 #[clap(author, version, about)]
 pub struct Args {
     #[clap(subcommand)]
     pub command: Commands,
 }
 
-#[derive(Subcommand, Debug)]
+#[derive(Subcommand)]
 pub enum Commands {
     /// Generate completion for shell
     Completion {
@@ -31,6 +32,22 @@ pub enum Commands {
         )]
         config: PathBuf,
     },
+    /// Validate a commit message is conventional
+    Validate {
+        /// An optional range to limit the linting
+        #[clap()]
+        revision_or_range: Option<GitRevisionSelection>,
+        /// Git repository to search in
+        #[clap(
+            short = 'r',
+            long = "repository",
+            env = "FAST_CONVENTIONAL_GIT_REPOSITORY",
+            default_value = "."
+        )]
+        repository: PathBuf,
+    },
     /// Print an example configuration
     ExampleConfig,
 }
+
+impl Commands {}

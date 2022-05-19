@@ -34,12 +34,12 @@ OPTIONS:
 Given we have created a git repository with all conventional commits
 
 ```shell,script(name="initialise-repository")
-git init --template=/dev/null --quiet .
-git config user.name "Example Name"
-git config user.email "name@example.com"
-git config commit.gpgsign false
-git commit --allow-empty -m "feat: Initial Release"
-git commit --allow-empty -m "ci: Add pipeline"
+git init --template=/dev/null --quiet validate
+git -C validate config user.name "Example Name"
+git -C validate config user.email "name@example.com"
+git -C validate config commit.gpgsign false
+git -C validate commit --allow-empty -m "feat: Initial Release"
+git -C validate commit --allow-empty -m "ci: Add pipeline"
 ```
 
 and given we have this config
@@ -55,19 +55,19 @@ scopes: ["mergify", "just", "github"]
 When we validate, we get a successful status
 
 ```shell,script(name="validate-fine",expected_exit_code=0)
-fast-conventional validate
+fast-conventional validate -r validate
 ```
 
 If we add a non-conventional commit
 
 ```shell,script(name="make-a-non-conventional-commit")
-git commit --allow-empty -m "Non-coventional commit"
+git -C validate commit --allow-empty -m "Non-coventional commit"
 ```
 
 we get a failure
 
 ```shell,script(name="validate-non-conventional-commit",expected_exit_code=1)
-fast-conventional validate
+fast-conventional validate -r validate
 ```
 
 ```text,verify(script_name="validate-non-conventional-commit", stream=stdout)
@@ -85,7 +85,7 @@ Error:
 We can also restrict what we are validating, in this case we limit the range to a single commit
 
 ```shell,script(name="validate-commit-range",expected_exit_code=0)
-fast-conventional validate HEAD^^..HEAD^
+fast-conventional validate  -r validate HEAD^^..HEAD^
 ```
 
 ```text,verify(script_name="validate-commit-range", stream=stdout)
@@ -95,7 +95,7 @@ fast-conventional validate HEAD^^..HEAD^
 It's also possible start from a specific commit and go back like with `git log`
 
 ```shell,script(name="validate-single-commit",expected_exit_code=0)
-fast-conventional validate HEAD^
+fast-conventional validate -r validate HEAD^
 ```
 
 ```text,verify(script_name="validate-single-commit", stream=stdout)
@@ -106,12 +106,12 @@ fast-conventional validate HEAD^
 We have seen a failure because of a non-conventional commit, we also might get a failure if we use a type that isn't in the configuration file
 
 ```shell,script(name="make-a-commit-with-unknown-type")
-git commit --allow-empty -m "missing: Add a pipeline"
+git -C validate commit --allow-empty -m "missing: Add a pipeline"
 ```
 
 
 ```shell,script(name="validate-missing-unknown-type",expected_exit_code=1)
-fast-conventional validate HEAD^..HEAD
+fast-conventional validate -r validate HEAD^..HEAD
 ```
 
 ```text,verify(script_name="validate-missing-unknown-type", stream=stderr)
@@ -124,12 +124,12 @@ Error:
 You also validate the scopes
 
 ```shell,script(name="make-a-commit-with-unknown-type")
-git commit --allow-empty -m "fix(invalid): Correct the automerge settings"
+git -C validate commit --allow-empty -m "fix(invalid): Correct the automerge settings"
 ```
 
 
 ```shell,script(name="validate-missing-unknown-type",expected_exit_code=1)
-fast-conventional validate HEAD^..HEAD
+fast-conventional validate -r validate HEAD^..HEAD
 ```
 
 ```text,verify(script_name="validate-missing-unknown-type", stream=stderr)
@@ -150,12 +150,12 @@ scopes: ["mergify", "just", "github"]
 ```
 
 ```shell,script(name="make-a-commit-with-unknown-type")
-git commit --allow-empty -m "fix: Correct the automerge settings"
+git -C validate commit --allow-empty -m "fix: Correct the automerge settings"
 ```
 
 
 ```shell,script(name="validate-missing-unknown-type",expected_exit_code=1)
-fast-conventional validate HEAD^..HEAD
+fast-conventional validate -r validate HEAD^..HEAD
 ```
 
 ```text,verify(script_name="validate-missing-unknown-type", stream=stderr)

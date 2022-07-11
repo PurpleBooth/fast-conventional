@@ -11,7 +11,7 @@ authors = ["Billie Thompson <billie@billiecodes.com>"]
 
 [dependencies]
 nom = "7.1.1"
-serde = { version = "1.0.137", features = ["derive"] }
+serde = { version = "1.0.139", features = ["derive"] }
 serde_yaml = "0.8.24"
 inquire = { version = "0.2.1", features = [ "editor"] }
 miette = { version = "4.7.1", features = ["fancy"] }

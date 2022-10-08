@@ -12,7 +12,7 @@ const ANGULAR_TYPES: [&str; 10] = [
 ];
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Serialize, Deserialize, Default)]
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize, Default)]
 pub struct FastConventionalConfig {
     pub(crate) use_angular: Option<bool>,
     pub(crate) require_scope: Option<bool>,

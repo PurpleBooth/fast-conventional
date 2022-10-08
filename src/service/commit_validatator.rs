@@ -1,8 +1,9 @@
 use std::collections::BTreeMap;
 
+use mit_commit::CommitMessage;
+
 use crate::models::GitShortRef;
 use crate::{ConventionalCommit, FastConventionalConfig};
-use mit_commit::CommitMessage;
 
 pub fn run<'a, 'b>(
     config: &'a FastConventionalConfig,
@@ -18,10 +19,9 @@ fn is_valid_with(
     config: &FastConventionalConfig,
 ) -> impl Fn(&(GitShortRef, CommitMessage<'_>)) -> bool + '_ {
     |message: &(GitShortRef, CommitMessage<'_>)| -> bool {
-        match ConventionalCommit::try_from(message.clone().1) {
-            Ok(conventional_commit) => uses_configured_values(config, &conventional_commit),
-            Err(_) => false,
-        }
+        ConventionalCommit::try_from(message.clone().1).map_or(false, |conventional_commit| {
+            uses_configured_values(config, &conventional_commit)
+        })
     }
 }
 
@@ -45,21 +45,23 @@ fn is_scope_in_config(
     config: &FastConventionalConfig,
     conventional_commit: &ConventionalCommit,
 ) -> bool {
-    match &conventional_commit.scope {
-        None => !config.get_require_scope(),
-        Some(scope) => {
+    conventional_commit.scope.as_ref().map_or_else(
+        || !config.get_require_scope(),
+        |scope| {
             let expected_scope: String = scope.clone().into();
             config.get_scopes().contains(&expected_scope)
-        }
-    }
+        },
+    )
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use mit_commit::CommitMessage;
+
     use crate::models::GitShortRef;
     use crate::FastConventionalConfig;
-    use mit_commit::CommitMessage;
+
+    use super::*;
 
     #[test]
     fn fails_if_commit_is_not_conventional() {

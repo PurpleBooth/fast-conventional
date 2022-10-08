@@ -1,4 +1,4 @@
-#[derive(Clone, PartialOrd, PartialEq, Default, Debug)]
+#[derive(Clone, PartialOrd, PartialEq, Eq, Default, Debug)]
 pub struct TypeSlug(String);
 
 impl From<String> for TypeSlug {

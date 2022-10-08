@@ -3,7 +3,7 @@ use std::str::FromStr;
 use miette::Diagnostic;
 use thiserror::Error;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RevisionSelection(String);
 
 impl RevisionSelection {

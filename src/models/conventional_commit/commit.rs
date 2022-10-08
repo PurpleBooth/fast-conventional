@@ -15,7 +15,7 @@ use super::scope::Scope;
 use super::subject::Subject;
 use super::type_slug::TypeSlug;
 
-#[derive(Clone, PartialOrd, PartialEq, Default, Debug)]
+#[derive(Clone, PartialOrd, PartialEq, Eq, Default, Debug)]
 pub struct Commit {
     pub(crate) subject: Subject,
     pub(crate) body: Body,

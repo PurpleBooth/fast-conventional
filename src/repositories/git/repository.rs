@@ -30,12 +30,13 @@ impl Repository {
             .map(|oid| self.0.find_commit(oid))
             .collect::<Result<Vec<_>, _>>()?;
 
-        let mit_commits = git2_commits
-            .into_iter()
-            .map(|message| match message.message() {
-                None => CommitMessage::default(),
-                Some(message) => CommitMessage::from(message.to_string()),
-            });
+        let mit_commits = git2_commits.into_iter().map(|message| {
+            message
+                .message()
+                .map_or_else(CommitMessage::default, |message| {
+                    CommitMessage::from(message.to_string())
+                })
+        });
 
         let combined_commits: Vec<(GitShortRef, CommitMessage<'_>)> = git2_references
             .into_iter()

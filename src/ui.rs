@@ -102,7 +102,7 @@ pub fn ask_user(
                     conv.scope_index(config.get_scopes().into_iter().collect::<Vec<_>>()),
                     match conv.breaking {
                         ConventionalChange::BreakingWithMessage(message) => message,
-                        ConventionalChange::Compatible => "".to_string(),
+                        ConventionalChange::Compatible => String::new(),
                         ConventionalChange::BreakingWithoutMessage => "See description".to_string(),
                     },
                     conv.subject,

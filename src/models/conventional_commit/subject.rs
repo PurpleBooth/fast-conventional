@@ -1,4 +1,4 @@
-#[derive(Clone, PartialOrd, PartialEq, Default, Debug)]
+#[derive(Clone, PartialOrd, PartialEq, Eq, Default, Debug)]
 pub struct Subject(pub(crate) String);
 
 impl Subject {
@@ -39,7 +39,7 @@ mod tests {
 
     #[test]
     fn is_empty() {
-        assert!(Subject::from("".to_string()).is_empty(),);
+        assert!(Subject::from(String::new()).is_empty(),);
     }
 
     #[test]

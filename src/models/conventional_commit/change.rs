@@ -1,4 +1,4 @@
-#[derive(Clone, PartialOrd, PartialEq, Debug)]
+#[derive(Clone, PartialOrd, PartialEq, Eq, Debug)]
 pub enum Change {
     BreakingWithMessage(String),
     Compatible,
@@ -61,7 +61,7 @@ mod tests {
     #[test]
     fn from_option_string_with_out_message() {
         assert_eq!(
-            Change::from(Some("".to_string())),
+            Change::from(Some(String::new())),
             Change::BreakingWithoutMessage
         );
     }
@@ -81,7 +81,7 @@ mod tests {
 
     #[test]
     fn from_string_without_message() {
-        assert_eq!(Change::from("".to_string()), Change::BreakingWithoutMessage);
+        assert_eq!(Change::from(String::new()), Change::BreakingWithoutMessage);
     }
     #[test]
     fn from_str_with_message() {

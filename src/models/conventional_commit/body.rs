@@ -1,6 +1,6 @@
 use mit_commit::Bodies;
 
-#[derive(Clone, PartialOrd, PartialEq, Default, Debug)]
+#[derive(Clone, PartialOrd, PartialEq, Eq, Default, Debug)]
 pub struct Body(pub(crate) String);
 
 impl Body {
@@ -17,10 +17,7 @@ impl From<String> for Body {
 
 impl From<Option<String>> for Body {
     fn from(contents: Option<String>) -> Self {
-        match contents {
-            None => Self::from(""),
-            Some(contents) => Self::from(contents),
-        }
+        contents.map_or_else(|| Self::from(""), Self::from)
     }
 }
 
@@ -60,7 +57,7 @@ mod tests {
 
     #[test]
     fn it_can_tell_me_if_it_is_empty() {
-        assert!(Body::from("".to_string()).is_empty());
+        assert!(Body::from(String::new()).is_empty());
     }
 
     #[test]
@@ -83,7 +80,7 @@ mod tests {
 
     #[test]
     fn can_be_created_from_empty_option_string() {
-        assert_eq!(Body::from(None), Body("".to_string()));
+        assert_eq!(Body::from(None), Body(String::new()));
     }
 
     #[test]

@@ -18,7 +18,7 @@ pub fn run() -> Result<()> {
 
     let example: String = config.try_into()?;
 
-    println!("{}", example);
+    println!("{example}");
 
     Ok(())
 }

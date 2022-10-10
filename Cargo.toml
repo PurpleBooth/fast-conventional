@@ -18,7 +18,7 @@ miette = { version = "4.7.1", features = ["fancy"] }
 clap_complete = "3.1.4"
 clap = { version = "3.1.18", features = ["derive", "cargo", "wrap_help", "yaml", "env", "unicode" ] }
 mit-commit = "3.1.1"
-thiserror = "1.0.31"
+thiserror = "1.0.37"
 git2 = "0.14"
 [dev-dependencies]
 tempfile = "3.3.0"

@@ -13,16 +13,13 @@ class FastConventional < Formula
     system "cargo", "install", "--locked", "--root", prefix, "--path", "."
 
     # Install bash completion
-    output = Utils.safe_popen_read("#{bin}/fast-conventional", "completion", "bash")
-    (bash_completion/"fast-conventional").write output
+    generate_completions_from_executable(bin/"fast-conventional", "completion", "bash", shells: [:bash])
 
     # Install zsh completion
-    output = Utils.safe_popen_read("#{bin}/fast-conventional", "completion", "zsh")
-    (zsh_completion/"_fast-conventional").write output
+    generate_completions_from_executable(bin/"fast-conventional", "completion", "zsh", shells: [:zsh])
 
     # Install fish completion
-    output = Utils.safe_popen_read("#{bin}/fast-conventional", "completion", "fish")
-    (fish_completion/"fast-conventional.fish").write output
+    generate_completions_from_executable(bin/"fast-conventional", "completion", "fish", shells: [:fish])
 
     # Man pages
     output = Utils.safe_popen_read("help2man", "#{bin}/fast-conventional")

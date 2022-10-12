@@ -60,8 +60,8 @@ git fci
 
 ## Further Docs
 
--   [Shell completion](./docs/completion.md)
--   [Configuration](./docs/configuration.md)
--   [Editor](./docs/editor.md)
--   [Validate](./docs/validate.md)
--   [Cli usage](./docs/cli-usage.md)
+- [Shell completion](./docs/completion.md)
+- [Configuration](./docs/configuration.md)
+- [Editor](./docs/editor.md)
+- [Validate](./docs/validate.md)
+- [Cli usage](./docs/cli-usage.md)

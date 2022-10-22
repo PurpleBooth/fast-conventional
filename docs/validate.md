@@ -9,24 +9,20 @@ fast-conventional validate --help
 ```
 
 ``` text,verify(script_name="help-validate",stream=stdout)
-fast-conventional-validate 
 Validate a commit message is conventional
 
-USAGE:
-    fast-conventional validate [OPTIONS] [REVISION_SELECTION]
+Usage: fast-conventional validate [OPTIONS] [REVISION_SELECTION]
 
-ARGS:
-    <REVISION_SELECTION>    An optional range to limit the linting
+Arguments:
+  [REVISION_SELECTION]  An optional range to limit the linting
 
-OPTIONS:
-    -c, --config <CONFIG_PATH>
-            Configuration file [env: FAST_CONVENTIONAL_CONFIG=] [default: .fastconventional.yaml]
-
-    -h, --help
-            Print help information
-
-    -r, --repository <REPOSITORY_PATH>
-            Git repository to search in [env: FAST_CONVENTIONAL_GIT_REPOSITORY=] [default: .]
+Options:
+  -r, --repository <REPOSITORY_PATH>
+          Git repository to search in [env: FAST_CONVENTIONAL_GIT_REPOSITORY=] [default: .]
+  -c, --config <CONFIG_PATH>
+          Configuration file [env: FAST_CONVENTIONAL_CONFIG=] [default: .fastconventional.yaml]
+  -h, --help
+          Print help information
 ```
 
 ## Conventional Commits

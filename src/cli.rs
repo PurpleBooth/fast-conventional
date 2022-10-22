@@ -14,8 +14,7 @@ pub struct Args {
 pub enum Commands {
     /// Generate completion for shell
     Completion {
-        // The shell to generate for
-        #[clap(arg_enum)]
+        #[clap(value_enum, value_parser)]
         shell: Shell,
     },
     /// Edit a commit message

@@ -1,6 +1,7 @@
 use crate::models::ConventionalChange;
 use crate::models::ConventionalCommit;
 use crate::models::ConventionalScope;
+use inquire::validator::Validation;
 use inquire::{Editor, Select, Text};
 use miette::IntoDiagnostic;
 use miette::Result;
@@ -30,11 +31,11 @@ pub fn prompt_body(previous_body: &ConventionalBody) -> Result<Option<String>> {
 pub fn prompt_subject(previous_subject: &ConventionalSubject) -> Result<String> {
     let mut subject_ui = Text::new("subject")
         .with_help_message("Summary of the code changes")
-        .with_validator(&|subject: &str| {
+        .with_validator(|subject: &str| {
             if subject.is_empty() {
-                Err("subject can't be empty".to_string())
+                Ok(Validation::Invalid("subject can't be empty".into()))
             } else {
-                Ok(())
+                Ok(Validation::Valid)
             }
         });
 

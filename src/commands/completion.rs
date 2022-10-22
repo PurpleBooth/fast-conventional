@@ -2,7 +2,7 @@ use crate::cli;
 use clap_complete::{generate, Shell};
 use std::io;
 
-use clap::IntoApp;
+use clap::CommandFactory;
 
 pub fn run(shell: Shell) {
     let mut cmd = cli::Args::command();

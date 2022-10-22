@@ -9,21 +9,18 @@ fast-conventional --help
 ```
 
 ``` text,verify(script_name="help",stream=stdout)
-fast-conventional 2.3.4
-Billie Thompson <billie@billiecodes.com>
 Make conventional commits, faster, and consistently name scopes
 
-USAGE:
-    fast-conventional <SUBCOMMAND>
+Usage: fast-conventional <COMMAND>
 
-OPTIONS:
-    -h, --help       Print help information
-    -V, --version    Print version information
+Commands:
+  completion      Generate completion for shell
+  editor          Edit a commit message
+  validate        Validate a commit message is conventional
+  example-config  Print an example configuration
+  help            Print this message or the help of the given subcommand(s)
 
-SUBCOMMANDS:
-    completion        Generate completion for shell
-    editor            Edit a commit message
-    example-config    Print an example configuration
-    help              Print this message or the help of the given subcommand(s)
-    validate          Validate a commit message is conventional
+Options:
+  -h, --help     Print help information
+  -V, --version  Print version information
 ```

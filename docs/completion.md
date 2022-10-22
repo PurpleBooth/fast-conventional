@@ -9,15 +9,13 @@ fast-conventional completion --help
 ```
 
 ``` text,verify(script_name="help-completion",stream=stdout)
-fast-conventional-completion 
 Generate completion for shell
 
-USAGE:
-    fast-conventional completion <SHELL>
+Usage: fast-conventional completion <SHELL>
 
-ARGS:
-    <SHELL>    [possible values: bash, elvish, fish, powershell, zsh]
+Arguments:
+  <SHELL>  [possible values: bash, elvish, fish, powershell, zsh]
 
-OPTIONS:
-    -h, --help    Print help information
+Options:
+  -h, --help  Print help information
 ```

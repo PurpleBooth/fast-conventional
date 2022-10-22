@@ -9,14 +9,12 @@ fast-conventional example-config --help
 ```
 
 ``` text,verify(script_name="help-example",stream=stdout)
-fast-conventional-example-config 
 Print an example configuration
 
-USAGE:
-    fast-conventional example-config
+Usage: fast-conventional example-config
 
-OPTIONS:
-    -h, --help    Print help information
+Options:
+  -h, --help  Print help information
 ```
 
 To generate the example
@@ -30,18 +28,17 @@ fast-conventional example-config
 The file looks like this. All fields are optional.
 
 ``` yaml,verify(name="example-config")
----
 use_angular: true
-require_scope: ~
+require_scope: null
 types:
-  - custom_type
+- custom_type
 scopes:
-  - src
-  - actions
-  - manpages
-  - readme
-  - e2e
-  - unit
+- src
+- actions
+- manpages
+- readme
+- e2e
+- unit
 
 ```
 

@@ -10,19 +10,17 @@ fast-conventional editor --help
 ```
 
 ``` text,verify(script_name="help-editor",stream=stdout)
-fast-conventional-editor 
 Edit a commit message
 
-USAGE:
-    fast-conventional editor [OPTIONS] <COMMIT_MESSAGE_PATH>
+Usage: fast-conventional editor [OPTIONS] <COMMIT_MESSAGE_PATH>
 
-ARGS:
-    <COMMIT_MESSAGE_PATH>    The name of the file that contains the commit log message
+Arguments:
+  <COMMIT_MESSAGE_PATH>  The name of the file that contains the commit log message
 
-OPTIONS:
-    -c, --config <CONFIG_PATH>    Configuration file [env: FAST_CONVENTIONAL_CONFIG=]
-                                  [default: .fastconventional.yaml]
-    -h, --help                    Print help information
+Options:
+  -c, --config <CONFIG_PATH>  Configuration file [env: FAST_CONVENTIONAL_CONFIG=] [default:
+                              .fastconventional.yaml]
+  -h, --help                  Print help information
 ```
 
 ## Conventional Commits

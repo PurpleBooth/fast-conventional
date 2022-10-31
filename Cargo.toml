@@ -13,7 +13,7 @@ authors = ["Billie Thompson <billie@billiecodes.com>"]
 nom = "7.1.1"
 serde = { version = "1.0.147", features = ["derive"] }
 serde_yaml = "0.9.14"
-inquire = { version = "0.4.0", features = [ "editor"] }
+inquire = { version = "0.5.1", features = [ "editor"] }
 miette = { version = "5.3.0", features = ["fancy"] }
 clap_complete = "4.0.3"
 clap = { version = "4.0.18", features = ["derive", "cargo", "wrap_help", "env", "unicode" ] }

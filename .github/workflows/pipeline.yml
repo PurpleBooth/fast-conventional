@@ -8,6 +8,7 @@ on:
 
 env:
   HOMEBREW_NO_INSTALL_UPGRADE: true
+  HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: true
 
 jobs:
   lint-markdown:

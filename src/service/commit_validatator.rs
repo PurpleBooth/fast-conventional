@@ -5,8 +5,8 @@ use mit_commit::CommitMessage;
 use crate::models::GitShortRef;
 use crate::{ConventionalCommit, FastConventionalConfig};
 
-pub fn run<'a, 'b>(
-    config: &'a FastConventionalConfig,
+pub fn run<'b>(
+    config: &FastConventionalConfig,
     commit_messages: Vec<(GitShortRef, CommitMessage<'b>)>,
 ) -> (
     BTreeMap<GitShortRef, CommitMessage<'b>>,

@@ -33,6 +33,6 @@ class FastConventional < Formula
   test do
     system "#{bin}/fast-conventional", "-h"
     system "#{bin}/fast-conventional", "-V"
-    system "specdown run --temporary-workspace-dir --add-path \"#{bin}\" \"#{prefix}\/README.md\""
+    system "specdown run --temporary-workspace-dir --add-path \"#{bin}\" \"#{prefix}/README.md\""
   end
 end

@@ -5,6 +5,10 @@ on:
     - '*'
   pull_request:
   workflow_dispatch:
+
+env:
+  HOMEBREW_NO_INSTALL_UPGRADE: true
+
 jobs:
   lint-markdown:
     uses: PurpleBooth/common-pipelines/.github/workflows/markdown-check.yml@main

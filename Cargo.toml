@@ -12,7 +12,7 @@ authors = ["Billie Thompson <billie@billiecodes.com>"]
 [dependencies]
 nom = "7.1.1"
 serde = { version = "1.0.147", features = ["derive"] }
-serde_yaml = "0.9.14"
+serde_yaml = "0.9.17"
 inquire = { version = "0.5.2", features = [ "editor"] }
 miette = { version = "5.4.1", features = ["fancy"] }
 clap_complete = "4.0.5"

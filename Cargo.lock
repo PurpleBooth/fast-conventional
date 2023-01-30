@@ -304,9 +304,9 @@ dependencies = [
 
 [[package]]
 name = "indoc"
-version = "1.0.7"
+version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "adab1eaa3408fb7f0c777a73e7465fd5656136fc93b670eb6df3c88c2c1344e3"
+checksum = "6fe2b9d82064e8a0226fddb3547f37f28eaa46d0fc210e275d835f08cf3b76a7"
 
 [[package]]
 name = "inquire"
@@ -504,9 +504,9 @@ dependencies = [
 
 [[package]]
 name = "mit-commit"
-version = "3.1.4"
+version = "3.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f22b1dd8f762fca5c3d2088fc170c405190d59c9ff0365d8a5a84934eb1e3558"
+checksum = "84c4b5f3411cdc41b52356269328b4eb545deaeacf1cc75c366c2bffa8eaf29c"
 dependencies = [
  "indoc",
  "lazy_static",

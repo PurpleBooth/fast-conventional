@@ -17,7 +17,7 @@ inquire = { version = "0.5.3", features = [ "editor"] }
 miette = { version = "5.5.0", features = ["fancy"] }
 clap_complete = "4.0.5"
 clap = { version = "4.0.18", features = ["derive", "cargo", "wrap_help", "env", "unicode" ] }
-mit-commit = "3.1.4"
+mit-commit = "3.1.5"
 thiserror = "1.0.38"
 git2 = "0.16.1"
 [dev-dependencies]

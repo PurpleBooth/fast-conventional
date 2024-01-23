@@ -201,14 +201,14 @@ scopes: [src, fastconventional]"#
 
         assert_eq!(
             String::try_from(actual).unwrap(),
-            r#"use_angular: null
+            r"use_angular: null
 require_scope: null
 types:
 - ci
 scopes:
 - src
 - fastconventional
-"#
+"
             .to_string()
         );
     }

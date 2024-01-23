@@ -14,7 +14,7 @@ Print an example configuration
 Usage: fast-conventional example-config
 
 Options:
-  -h, --help  Print help information
+  -h, --help  Print help
 ```
 
 To generate the example

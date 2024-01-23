@@ -17,12 +17,11 @@ Arguments:
   [REVISION_SELECTION]  An optional range to limit the linting
 
 Options:
-  -r, --repository <REPOSITORY_PATH>
-          Git repository to search in [env: FAST_CONVENTIONAL_GIT_REPOSITORY=] [default: .]
-  -c, --config <CONFIG_PATH>
-          Configuration file [env: FAST_CONVENTIONAL_CONFIG=] [default: .fastconventional.yaml]
-  -h, --help
-          Print help information
+  -r, --repository <REPOSITORY_PATH>  Git repository to search in [env:
+                                      FAST_CONVENTIONAL_GIT_REPOSITORY=] [default: .]
+  -c, --config <CONFIG_PATH>          Configuration file [env: FAST_CONVENTIONAL_CONFIG=] [default:
+                                      .fastconventional.yaml]
+  -h, --help                          Print help
 ```
 
 ## Conventional Commits
@@ -73,8 +72,7 @@ fast-conventional validate -r validate
 
 ```text,verify(script_name="validate-non-conventional-commit", stream=stderr)
 [✘] Non-coventional commit
-Error: 
-  × Some commits failed validation
+Error:   × Some commits failed validation
 
 ```
 
@@ -112,8 +110,7 @@ fast-conventional validate -r validate HEAD^..HEAD
 
 ```text,verify(script_name="validate-missing-unknown-type", stream=stderr)
 [✘] missing: Add a pipeline
-Error: 
-  × Some commits failed validation
+Error:   × Some commits failed validation
 
 ```
 
@@ -130,8 +127,7 @@ fast-conventional validate -r validate HEAD^..HEAD
 
 ```text,verify(script_name="validate-missing-unknown-type", stream=stderr)
 [✘] fix(invalid): Correct the automerge settings
-Error: 
-  × Some commits failed validation
+Error:   × Some commits failed validation
 
 ```
 
@@ -156,7 +152,6 @@ fast-conventional validate -r validate HEAD^..HEAD
 
 ```text,verify(script_name="validate-missing-unknown-type", stream=stderr)
 [✘] fix: Correct the automerge settings
-Error: 
-  × Some commits failed validation
+Error:   × Some commits failed validation
 
 ```

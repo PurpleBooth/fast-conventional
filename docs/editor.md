@@ -20,7 +20,7 @@ Arguments:
 Options:
   -c, --config <CONFIG_PATH>  Configuration file [env: FAST_CONVENTIONAL_CONFIG=] [default:
                               .fastconventional.yaml]
-  -h, --help                  Print help information
+  -h, --help                  Print help
 ```
 
 ## Conventional Commits

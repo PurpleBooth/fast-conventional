@@ -17,5 +17,5 @@ Arguments:
   <SHELL>  [possible values: bash, elvish, fish, powershell, zsh]
 
 Options:
-  -h, --help  Print help information
+  -h, --help  Print help
 ```

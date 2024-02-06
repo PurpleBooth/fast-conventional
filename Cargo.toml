@@ -21,4 +21,4 @@ mit-commit = "3.1.5"
 thiserror = "1.0.38"
 git2 = "0.18.1"
 [dev-dependencies]
-tempfile = "3.3.0"
+tempfile = "3.10.0"

@@ -16,7 +16,7 @@ serde_yaml = "0.9.31"
 inquire = { version = "0.6.2", features = [ "editor"] }
 miette = { version = "7.0.0", features = ["fancy"] }
 clap_complete = "4.5.0"
-clap = { version = "4.5.0", features = ["derive", "cargo", "wrap_help", "env", "unicode" ] }
+clap = { version = "4.5.1", features = ["derive", "cargo", "wrap_help", "env", "unicode" ] }
 mit-commit = "3.1.5"
 thiserror = "1.0.57"
 git2 = "0.18.2"

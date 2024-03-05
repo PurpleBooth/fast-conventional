@@ -17,7 +17,7 @@ jobs:
     runs-on: docker
     name: "Tests"
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3
         name: Checkout
       - uses: specdown/setup-specdown-action@0.2.9
         name: Install specdown
@@ -47,7 +47,6 @@ jobs:
     steps:
     - uses: PurpleBooth/versio-release-action@965e279326016054156ba8bec4f733e0ee327956 # v0.1.18
       id: release
-
 
   release-binary:
     if: needs.release.outputs.version_bump

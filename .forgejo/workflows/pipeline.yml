@@ -13,28 +13,32 @@ env:
   HOMEBREW_NO_AUTO_UPDATE: 1
 
 jobs:
-  lint-markdown:
-    uses: PurpleBooth/common-pipelines/.github/workflows/markdown-check.yml@main
-    with:
-      skip_formatting: true
-  commit-checks:
-    uses: PurpleBooth/common-pipelines/.github/workflows/commit-check.yml@main
-  rust-checks:
-    uses: PurpleBooth/common-pipelines/.github/workflows/rust-check.yml@main
-  specdown:
-    uses: PurpleBooth/common-pipelines/.github/workflows/specdown-check.yml@main
-    with:
-      run_on_windows: false
-      ubuntu_before_script: brew install socat
-      mac_before_script: brew install socat
+  test:
+    runs-on: docker
+    name: "Tests"
+    steps:
+      - uses: actions/checkout@v3.5.3
+        name: Checkout
+      - uses: specdown/setup-specdown-action@0.2.9
+        name: Install specdown
+      - uses: PurpleBooth/common-pipelines/actions/install-rust@main
+        name: Install cargo
+      - uses: extractions/setup-just@v1
+        name: Install just
+      - run: rustup toolchain install nightly --component rustfmt --component clippy --allow-downgrade
+        name: rustup toolchain install nightly
+      - run: just lint
+      - run: just test
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y socat
+        name: apt-get install -y socat
+      - run: just specdown
 
   release:
     if: github.ref == 'refs/heads/main'
     needs:
-    - commit-checks
-    - specdown
-    - lint-markdown
-    - rust-checks
+    - test
     outputs:
       version_bump: ${{ steps.release.outputs.version_bump }}
       current_version: ${{ steps.release.outputs.current_version }}

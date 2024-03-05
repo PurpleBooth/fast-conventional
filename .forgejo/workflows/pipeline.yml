@@ -23,7 +23,7 @@ jobs:
         name: Install specdown
       - uses: PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install cargo
-      - uses: extractions/setup-just@v1
+      - uses: PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - run: rustup toolchain install nightly --component rustfmt --component clippy --allow-downgrade
         name: rustup toolchain install nightly

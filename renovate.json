@@ -1,33 +1,33 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices", "schedule:automergeNonOfficeHours", ":automergeAll", ":combinePatchMinorReleases"],
-  "timezone": "Europe/Berlin",
-  "kustomize": {
-    "pinDigests": true
-  },
-  "hostRules": [
-    {
-      "hostType": "docker",
-      "matchHost": "registry.gitlab.com",
-      "username": "{{ secrets.GITLAB_SOLACE_SYSTEM_USERNAME }}",
-      "password": "{{ secrets.GITLAB_SOLACE_SYSTEM_PASSWORD }}"
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": ["config:best-practices", "schedule:automergeNonOfficeHours", ":automergeAll", ":combinePatchMinorReleases"],
+    "timezone": "Europe/Berlin",
+    "kustomize": {
+        "pinDigests": true
     },
-    {
-      "hostType": "docker",
-      "matchHost": "ghcr.io",
-      "username": "{{ secrets.GHCR_USERNAME }}",
-      "password": "{{ secrets.GHCR_PASSWORD }}"
-    },
-    {
-      "hostType": "docker",
-      "matchHost": "docker.io",
-      "username": "{{ secrets.DOCKER_HUB_USERNAME }}",
-      "password": "{{ secrets.DOCKER_HUB_PASSWORD }}"
-    },
-    {
-      "hostType": "docker",
-      "username": "{{ secrets.DOCKER_HUB_USERNAME }}",
-      "password": "{{ secrets.DOCKER_HUB_PASSWORD }}"
-    }
-  ]
+    "hostRules": [
+        {
+            "hostType": "docker",
+            "matchHost": "registry.gitlab.com",
+            "username": "{{ secrets.GITLAB_SOLACE_SYSTEM_USERNAME }}",
+            "password": "{{ secrets.GITLAB_SOLACE_SYSTEM_PASSWORD }}"
+        },
+        {
+            "hostType": "docker",
+            "matchHost": "ghcr.io",
+            "username": "{{ secrets.GHCR_USERNAME }}",
+            "password": "{{ secrets.GHCR_PASSWORD }}"
+        },
+        {
+            "hostType": "docker",
+            "matchHost": "docker.io",
+            "username": "{{ secrets.DOCKER_HUB_USERNAME }}",
+            "password": "{{ secrets.DOCKER_HUB_PASSWORD }}"
+        },
+        {
+            "hostType": "docker",
+            "username": "{{ secrets.DOCKER_HUB_USERNAME }}",
+            "password": "{{ secrets.DOCKER_HUB_PASSWORD }}"
+        }
+    ]
 }

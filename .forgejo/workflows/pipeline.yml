@@ -25,8 +25,8 @@ jobs:
         name: Install cargo
       - uses: PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
-      - run: rustup toolchain install nightly --component rustfmt --component clippy --allow-downgrade
-        name: rustup toolchain install nightly
+      - uses: PurpleBooth/common-pipelines/actions/install-rust@main
+        name: Install rust
       - run: just lint
       - run: just test
       - run: |

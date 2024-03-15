@@ -131,8 +131,6 @@ impl TryFrom<CommitMessage<'_>> for Commit {
 
 #[cfg(test)]
 mod tests {
-    use mit_commit::CommitMessage;
-
     use super::*;
 
     #[test]

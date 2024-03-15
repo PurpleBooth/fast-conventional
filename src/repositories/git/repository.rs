@@ -118,7 +118,6 @@ mod tests {
 
     use git2::RepositoryInitOptions as Git2RepositoryInitOptions;
     use git2::{Repository as Git2Repository, Signature};
-    use mit_commit::CommitMessage;
     use tempfile::{tempdir, TempDir};
 
     use super::*;

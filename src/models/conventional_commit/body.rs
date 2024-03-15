@@ -47,8 +47,8 @@ impl From<Body> for String {
 
 #[cfg(test)]
 mod tests {
+
     use super::*;
-    use mit_commit::Bodies;
 
     #[test]
     fn can_be_created_from_string() {

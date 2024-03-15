@@ -56,11 +56,6 @@ fn is_scope_in_config(
 
 #[cfg(test)]
 mod tests {
-    use mit_commit::CommitMessage;
-
-    use crate::models::GitShortRef;
-    use crate::FastConventionalConfig;
-
     use super::*;
 
     #[test]

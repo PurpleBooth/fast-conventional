@@ -46,4 +46,6 @@ jobs:
         name: Install rust
       - uses: PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install Cocogitto
+      - uses: PurpleBooth/common-pipelines/actions/configure-git-user@main
+        name: Configure git user
       - run: cog bump --auto

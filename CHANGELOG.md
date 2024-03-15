@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.6](https://codeberg.org/PurpleBooth/git-mit/compare/v2.3.5..v2.3.6) - 2024-03-15
+#### Bug Fixes
+- **(deps)** update rust crate clap to 4.5.3 - ([f4c8e06](https://codeberg.org/PurpleBooth/git-mit/commit/f4c8e06f3f6481281ed65bcce0b385da46baa98d)) - Solace System Renovate Fox
+#### Continuous Integration
+- Set the git user before releasing - ([a83436b](https://codeberg.org/PurpleBooth/git-mit/commit/a83436b62768c4dee17dd0cc7cf3e9f255e9ad53)) - Billie Thompson
+
+- - -
+
 ## [v2.3.5](https://codeberg.org/PurpleBooth/git-mit/compare/v2.3.4..v2.3.5) - 2024-03-15
 #### Bug Fixes
 - **(deps)** update rust crate miette to 7.1.0 - ([6d71e74](https://codeberg.org/PurpleBooth/git-mit/commit/6d71e741219b35c7e5bc9dcccb9104fce30a0e4b)) - Renovate Bot

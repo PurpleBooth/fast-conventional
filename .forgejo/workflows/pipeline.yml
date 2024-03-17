@@ -51,7 +51,7 @@ jobs:
         name: Install Cocogitto
       - run: |
           sudo apt-get update
-          sudo apt-get install -y libssl-dev gcc-aarch64-linux-gnu
+          sudo apt-get install -y libssl-dev gcc-aarch64-linux-gnu gcc-mingw-w64-i686
         name: apt-get install -y libssl-dev
       - uses: PurpleBooth/common-pipelines/actions/configure-git-user@main
         name: Configure git user

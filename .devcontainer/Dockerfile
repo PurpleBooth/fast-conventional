@@ -62,9 +62,9 @@ RUN rustup-init -y \
 
 ENV PATH="/home/devcontainers/.cargo/bin:$PATH"
 RUN rustup toolchain install stable \
-      --component rustfmt \
-      --component clippy \
       --allow-downgrade \
+      --component clippy \
+      --component rustfmt \
       --target aarch64-apple-darwin \
       --target aarch64-unknown-linux-gnu \
       --target i686-pc-windows-gnu \
@@ -75,9 +75,9 @@ RUN rustup toolchain install stable \
       --target x86_64-pc-windows-msvc \
       --target x86_64-unknown-linux-gnu
 RUN rustup toolchain install nightly \
-      --component rustfmt \
-      --component clippy \
       --allow-downgrade \
+      --component clippy \
+      --component rustfmt \
       --target aarch64-apple-darwin \
       --target aarch64-unknown-linux-gnu \
       --target i686-pc-windows-gnu \

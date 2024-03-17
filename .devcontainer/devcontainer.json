@@ -1,4 +1,11 @@
 {
   dockerFile: "Dockerfile",
-  containerUser: "devcontainer"
+  containerUser: "devcontainer",
+  init: true,
+  "capAdd": ["SYS_PTRACE"],
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/apt-packages:1": {
+      packages: "apt-utils,zsh,fish,bash,zsh,fish,bash,curl,unzip,procps,libxext6,libxrender1,libxtst6,libxi6,libfreetype6,procps"
+    }
+  }
 }

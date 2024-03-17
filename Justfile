@@ -33,4 +33,3 @@ fmt:
 # Clean the build directory
 clean:
     cargo clean
-:

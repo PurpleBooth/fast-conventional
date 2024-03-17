@@ -48,6 +48,10 @@ jobs:
         name: Install rust
       - uses: PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install Cocogitto
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y libssl-dev
+        name: apt-get install -y libssl-dev
       - uses: PurpleBooth/common-pipelines/actions/configure-git-user@main
         name: Configure git user
       - run: cog bump --auto

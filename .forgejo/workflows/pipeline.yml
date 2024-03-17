@@ -25,6 +25,7 @@ jobs:
         name: Install rust
       - uses: PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
+      - run: just build
       - run: just lint
       - run: just test
       - run: |

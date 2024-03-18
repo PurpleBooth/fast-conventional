@@ -9,7 +9,7 @@ repository = "https://github.com/PurpleBooth/fast-conventional"
 license = "CC0-1.0"
 authors = ["Billie Thompson <billie@billiecodes.com>"]
 
-[target.gcc-aarch64-linux-gnu]
+[target.aarch64-unknown-linux-gnu]
 linker = "aarch64-linux-gnu-gcc"
 [target.i686-pc-windows-msvc]
 linker = "i686-w64-mingw32-gcc"

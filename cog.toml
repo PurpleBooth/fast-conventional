@@ -4,9 +4,10 @@ ignore_merge_commits = true
 branch_whitelist = ["main"]
 pre_bump_hooks = [
     "cargo set-version --workspace {{version}}",
-    "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc cargo build --release --target=aarch64-unknown-linux-gnu",
+    "cargo build --release --target=aarch64-apple-darwin",
+    "cargo build --release --target=aarch64-unknown-linux-gnu",
     "cargo build --release --target=i686-pc-windows-gnu",
-    "CARGO_TARGET_I686_PC_WINDOWS_MSVC_LINKER=i686-w64-mingw32-gcc cargo build --release --target=i686-pc-windows-msvc",
+    "cargo build --release --target=i686-pc-windows-msvc",
     "cargo build --release --target=i686-unknown-linux-gnu",
     "cargo build --release --target=x86_64-apple-darwin",
     "cargo build --release --target=x86_64-pc-windows-gnu",

@@ -56,3 +56,6 @@ jobs:
       - uses: PurpleBooth/common-pipelines/actions/configure-git-user@main
         name: Configure git user
       - run: cog bump --auto
+        env:
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
+          CARGO_TARGET_I686_PC_WINDOWS_MSVC_LINKER: i686-w64-mingw32-gcc

@@ -1,4 +1,4 @@
-FROM ghcr.io/catthehacker/ubuntu:act-latest@sha256:f9e2268057283b37d3a10fa9e64a201e3b6c82c84b3704cdd01b0797273d4c3a
+FROM ghcr.io/catthehacker/ubuntu:act-latest@sha256:3744c29fb1f3432304bbb4b118c5b947a2da14971ecdfe340c15430ae52c9216
 
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
     && addgroup \

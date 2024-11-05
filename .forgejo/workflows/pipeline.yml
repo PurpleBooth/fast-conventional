@@ -17,7 +17,7 @@ jobs:
     runs-on: docker
     name: "Tests"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
         name: Checkout
       - uses: PurpleBooth/common-pipelines/actions/install-specdown@main
         name: Install specdown
@@ -103,11 +103,11 @@ jobs:
           lfs: true
           submodules: recursive
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3.2.0
+        uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf # v3.2.0
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
         with:
           registry: codeberg.org
           username: ${{ github.actor }}
@@ -120,7 +120,7 @@ jobs:
       - name: Extract versioned metadata (tags, labels) for Docker
         if: inputs.current_version != ''
         id: meta-with-version
-        uses: docker/metadata-action@v5.5.1
+        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5.5.1
         with:
           bake-target: docker
           images: ${{ steps.docker.outputs.repository }}
@@ -172,7 +172,7 @@ jobs:
             mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
           done
           find target/bins/ -type d -empty -delete
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4
         name: Upload binaries
         with:
           name: built-bins

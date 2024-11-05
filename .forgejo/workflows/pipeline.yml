@@ -42,7 +42,7 @@ jobs:
     outputs:
       current_version: ${{ steps.current_version.outputs.current_version }}
       previous_version: ${{ steps.previous_version.outputs.previous_version }}
-    runs-on: ubuntu-latest
+    runs-on: docker
     steps:
       - uses: actions/checkout@main
         with:
@@ -83,7 +83,7 @@ jobs:
       packages: "write"
       contents: read
       attestations: "write"
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout
         if: ${{ inputs.current_version != '' }}

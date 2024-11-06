@@ -31,8 +31,8 @@ jobs:
       - run: just lint
       - run: just test
       - run: |
-          sudo apt-get update
-          sudo apt-get install -y socat
+          apt-get update
+          apt-get install -y socat
         name: apt-get install -y socat
       - run: just specdown
 

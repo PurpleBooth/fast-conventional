@@ -48,6 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
         with:
+          token: ${{ secrets.FJ_TOKEN }}
           fetch-depth: 0
       - uses: PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
@@ -84,17 +85,13 @@ jobs:
     if: jobs.release.outputs.current_version != jobs.release.outputs.previous_version
     needs:
       - release
-    permissions:
-      id-token: "write"
-      packages: "write"
-      contents: read
-      attestations: "write"
     runs-on: self-hosted
     steps:
       - name: Checkout
         if: ${{ inputs.current_version != '' }}
         uses: actions/checkout
         with:
+          token: ${{ secrets.FJ_TOKEN }}
           lfs: true
           ref: v${{ inputs.current_version }}
           submodules: recursive
@@ -113,7 +110,7 @@ jobs:
         with:
           registry: codeberg.org
           username: ${{ github.actor }}
-          password: ${{ github.token }}
+          password: ${{ secrets.FJ_TOKEN }}
       - run: echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
         id: docker
         name: Turn repository name into docker registry name

@@ -33,7 +33,11 @@ jobs:
       - run: |
           apt-get update
           apt-get install -y socat libc6
-        name: apt-get install -y socat libc6
+          cargo binstall \
+            --no-confirm \
+            specdown \
+            --git https://github.com/specdown/specdown.git
+        name: apt-get install -y socat libc6 specdown
       - run: just specdown
 
 

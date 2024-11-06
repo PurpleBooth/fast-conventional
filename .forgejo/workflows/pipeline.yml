@@ -49,8 +49,10 @@ jobs:
       - uses: actions/checkout@main
         with:
           fetch-depth: 0
-      - uses: cargo-bins/cargo-binstall@main
-        name: Install cargo binstall
+      - uses: PurpleBooth/common-pipelines/actions/install-rust@main
+        name: Install rust
+        secrets:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Get tags
         run: git fetch --tags origin
       - shell: bash

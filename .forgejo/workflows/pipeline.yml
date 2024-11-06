@@ -32,8 +32,8 @@ jobs:
       - run: just test
       - run: |
           apt-get update
-          apt-get install -y socat
-        name: apt-get install -y socat
+          apt-get install -y socat libc6
+        name: apt-get install -y socat libc6
       - run: just specdown
 
 

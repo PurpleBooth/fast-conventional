@@ -14,17 +14,17 @@ env:
 
 jobs:
   test:
-    runs-on: docker
+    runs-on:    docker
     name: "Tests"
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
         name: Checkout
-      - uses: PurpleBooth/common-pipelines/actions/install-specdown@main
-        name: Install specdown
       - uses: PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
         secrets:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - run: cargo install specdown --git https://github.com/specdown/specdown.git
+        name: Install specdown
       - uses: PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - run: just build
@@ -32,11 +32,7 @@ jobs:
       - run: just test
       - run: |
           apt-get update
-          apt-get install -y socat libc6
-          cargo binstall \
-            --no-confirm \
-            specdown \
-            --git https://github.com/specdown/specdown.git
+          apt-get install -y socat
         name: apt-get install -y socat libc6 specdown
       - run: just specdown
 

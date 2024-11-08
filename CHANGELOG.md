@@ -2,6 +2,60 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.7](https://codeberg.org/PurpleBooth/git-mit/compare/197f5b9e2eae8a1292eacc1188590a8fb8ac14bd..v2.3.7) - 2024-11-08
+#### Bug Fixes
+- **(deps)** update rust crate git2 to 0.19.0 - ([e295b71](https://codeberg.org/PurpleBooth/git-mit/commit/e295b716a61d67ef5eb88670b5eb4a236e47f07e)) - Solace System Renovate Fox
+- **(deps)** update rust crate thiserror to v2 - ([3a6e438](https://codeberg.org/PurpleBooth/git-mit/commit/3a6e438768f6cd1546b0c2bf46579b8cfa87213e)) - Solace System Renovate Fox
+- **(deps)** update rust crate clap_complete to v4.5.37 - ([93052af](https://codeberg.org/PurpleBooth/git-mit/commit/93052af9091cdf9dd716c8b41cbc108ad1b3b9ee)) - Solace System Renovate Fox
+- **(deps)** update rust crate clap to v4.5.20 - ([4e5c82f](https://codeberg.org/PurpleBooth/git-mit/commit/4e5c82f0031b27bd0b96daf3f45841520ac1b191)) - Solace System Renovate Fox
+- **(deps)** update rust crate thiserror to v1.0.68 - ([37a2441](https://codeberg.org/PurpleBooth/git-mit/commit/37a2441705979f6517c09ad83cb781935ae957b4)) - Solace System Renovate Fox
+- **(deps)** update rust crate serde_yaml to v0.9.34 - ([f5696d2](https://codeberg.org/PurpleBooth/git-mit/commit/f5696d20d7180e79e662e58a13c606f0a1bfffe6)) - Solace System Renovate Fox
+- **(deps)** update rust crate serde to v1.0.214 - ([2df56fc](https://codeberg.org/PurpleBooth/git-mit/commit/2df56fc0dbc637112d63c3ca0c8b9490dec23056)) - Solace System Renovate Fox
+- **(deps)** update rust crate inquire to v0.7.5 - ([847a88f](https://codeberg.org/PurpleBooth/git-mit/commit/847a88f88734bf66412362053627c9efc673255d)) - Solace System Renovate Fox
+- **(deps)** update rust crate inquire to 0.7.2 - ([62c8c1f](https://codeberg.org/PurpleBooth/git-mit/commit/62c8c1f11bab8304e705b1a7b89a7cac98beee2d)) - Solace System Renovate Fox
+- **(deps)** update rust crate serde_yaml to 0.9.33 - ([84f1191](https://codeberg.org/PurpleBooth/git-mit/commit/84f1191c7cd550907352defb74984ab6684bcf2e)) - Solace System Renovate Fox
+#### Build system
+- Set linkers via the pipeline - ([d2751ca](https://codeberg.org/PurpleBooth/git-mit/commit/d2751ca1e877cd911ac83f5dce71835b0a7117b7)) - Billie Thompson
+- Specify linker via environment variable - ([1b727a2](https://codeberg.org/PurpleBooth/git-mit/commit/1b727a2a6e414e31fe6b4e7d2ae2784ef8a212be)) - Billie Thompson
+- Correct tripple for linux arm - ([99b6f9d](https://codeberg.org/PurpleBooth/git-mit/commit/99b6f9d82b11ff5f6e9b3f46978ac86c1443df8b)) - Billie Thompson
+- Specify windows msvc compiler - ([9d2ee5c](https://codeberg.org/PurpleBooth/git-mit/commit/9d2ee5cf448b11f3a01697fd968ea7ef86e486cb)) - Billie Thompson
+- Add a dev container - ([474f53c](https://codeberg.org/PurpleBooth/git-mit/commit/474f53cd5e0f8ba544ac874561c8804bfaf55352)) - Billie Thompson
+- Specify gcc linker for aarch64 - ([d15fe3f](https://codeberg.org/PurpleBooth/git-mit/commit/d15fe3fc7b89c5402a83c1c7190127d275f2dcce)) - Billie Thompson
+- vendor openssl and libgit2 - ([6341383](https://codeberg.org/PurpleBooth/git-mit/commit/6341383b9b312567af84aef18058513ef9dd7e61)) - Billie Thompson
+- Vendor openssl when cross comiling - ([a04f934](https://codeberg.org/PurpleBooth/git-mit/commit/a04f9343e53743ca901b69d1f7c2f601d9b985da)) - Billie Thompson
+- Add a temporary dev container - ([89b2d8a](https://codeberg.org/PurpleBooth/git-mit/commit/89b2d8a224c09fb671957014d9b9e7791a8fb92d)) - Billie Thompson
+#### Continuous Integration
+- Compile specdown from source to avoid linking problems - ([370b90e](https://codeberg.org/PurpleBooth/git-mit/commit/370b90e26aef098325cea955b9a1cb622a5ac575)) - Billie Thompson
+- Install specdown from git with binstall - ([a81c34c](https://codeberg.org/PurpleBooth/git-mit/commit/a81c34c5e421b17062050d4d8403b5db8a2afd4a)) - Billie Thompson
+- Add missing libc library - ([de1a35c](https://codeberg.org/PurpleBooth/git-mit/commit/de1a35c7ea0bfac1dbc3ed1cc82d53c7bfd1ecca)) - Billie Thompson
+- Remove unneeded sudo - ([f2c4d04](https://codeberg.org/PurpleBooth/git-mit/commit/f2c4d04e09891fe7a58c5d69915fe1c13961ae27)) - Billie Thompson
+- Use a PAT rather than permissions - ([349a8eb](https://codeberg.org/PurpleBooth/git-mit/commit/349a8eb70494878ba5c7bd383a9f193872b1ed41)) - Billie Thompson
+- Use common rust install step - ([9795c46](https://codeberg.org/PurpleBooth/git-mit/commit/9795c466f9f5eb4243818d113695fcdc00ee1d09)) - Billie Thompson
+- set gh token for release action - ([7e59e88](https://codeberg.org/PurpleBooth/git-mit/commit/7e59e881aead4b98c6a843e01a7ce32de6578fc2)) - Billie Thompson
+- Pass GH Token to workflow - ([535f0ed](https://codeberg.org/PurpleBooth/git-mit/commit/535f0ed050d5c0f02210f81b235407816b93c1e8)) - Billie Thompson
+- Correct target host - ([69512cf](https://codeberg.org/PurpleBooth/git-mit/commit/69512cfd3a81a03faa45395077972b5d9718dba6)) - Billie Thompson
+- Try a different release mechanism - ([649ea26](https://codeberg.org/PurpleBooth/git-mit/commit/649ea261ea58567c88e2d2a646a04f6e6ed18e39)) - Billie Thompson
+- Use central config - ([dab0be3](https://codeberg.org/PurpleBooth/git-mit/commit/dab0be3dc1be7706b994c49e3ee39b0e27c5f9cd)) - Billie Thompson
+- Remove trailing colon - ([d36115d](https://codeberg.org/PurpleBooth/git-mit/commit/d36115d632be188cdbd1f29b01e8a296ae0c4685)) - Billie Thompson
+- Format justfile - ([e5b7876](https://codeberg.org/PurpleBooth/git-mit/commit/e5b78763b058fb51ac0dcdff9a466601d4f51093)) - Billie Thompson
+- Add mingw i686 - ([b3ac161](https://codeberg.org/PurpleBooth/git-mit/commit/b3ac161fc62f6296f2bf3ad15b08df5a2b2eff26)) - Billie Thompson
+- Add a build into the lint test pipeline - ([a912fd3](https://codeberg.org/PurpleBooth/git-mit/commit/a912fd3e86fe2e2adac05b2ab7550cff3384af24)) - Billie Thompson
+- Add aarch64 gnu linux compiler - ([be20ff7](https://codeberg.org/PurpleBooth/git-mit/commit/be20ff76921427d5b5a646077995f64c7f4a6311)) - Billie Thompson
+- Add libssl to the list of installed deps - ([f79a6c8](https://codeberg.org/PurpleBooth/git-mit/commit/f79a6c86df50d5457a3b60499979427eaceefbf0)) - Billie Thompson
+- Add targets to try to build for - ([ebc4613](https://codeberg.org/PurpleBooth/git-mit/commit/ebc4613ce188faae38f02c02d31cda64fef6cf88)) - Billie Thompson
+- Pull whole repo to release - ([197f5b9](https://codeberg.org/PurpleBooth/git-mit/commit/197f5b9e2eae8a1292eacc1188590a8fb8ac14bd)) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** update rust crate tempfile to v3.13.0 - ([1a6efc5](https://codeberg.org/PurpleBooth/git-mit/commit/1a6efc52f91e0b652ff3a941ca4f94d63dd28b7f)) - Solace System Renovate Fox
+- **(deps)** pin dependencies - ([ce91afa](https://codeberg.org/PurpleBooth/git-mit/commit/ce91afa83979f3ffe4ef98ae5b799d3e5ad05ba6)) - Solace System Renovate Fox
+- **(deps)** update ghcr.io/catthehacker/ubuntu:act-latest docker digest to 50da7b6 - ([f8ea8e4](https://codeberg.org/PurpleBooth/git-mit/commit/f8ea8e487a9b9c71cc09a8700730fea9759eadb8)) - Solace System Renovate Fox
+- **(deps)** pin ghcr.io/catthehacker/ubuntu docker tag to f9e2268 - ([4d5cc42](https://codeberg.org/PurpleBooth/git-mit/commit/4d5cc42fbea51dbe4d7a51082b9b3e3ecfab9e18)) - Solace System Renovate Fox
+- **(version)** v2.3.7 - ([65aacc9](https://codeberg.org/PurpleBooth/git-mit/commit/65aacc9b5d3e05754bd0ad8766b5a7622ab1fb5b)) - cog-bot
+- **(version)** v2.3.7 - ([34b248d](https://codeberg.org/PurpleBooth/git-mit/commit/34b248dfc28075d263d02a00d43737fde6b4e433)) - cog-bot
+#### Refactoring
+- Sort the lines in the dockerfile - ([5d08a96](https://codeberg.org/PurpleBooth/git-mit/commit/5d08a96c72daf930ba120f32d5f1d14d026adbda)) - Billie Thompson
+
+- - -
+
 ## [v2.3.7](https://codeberg.org/PurpleBooth/git-mit/compare/197f5b9e2eae8a1292eacc1188590a8fb8ac14bd..v2.3.7) - 2024-11-06
 #### Bug Fixes
 - **(deps)** update rust crate thiserror to v2 - ([3a6e438](https://codeberg.org/PurpleBooth/git-mit/commit/3a6e438768f6cd1546b0c2bf46579b8cfa87213e)) - Solace System Renovate Fox

@@ -116,7 +116,7 @@ jobs:
             type=ref,event=pr
             type=sha
       - name: Bake Docker (without version)
-        uses: docker/bake-action@v5
+        uses: docker/bake-action@v4
         with:
           set: |
             docker.cache-from=type=gha
@@ -216,7 +216,7 @@ jobs:
             ${{ steps.meta-with-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (with version)
-        uses: docker/bake-action@v5
+        uses: docker/bake-action@v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
           GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}

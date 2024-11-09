@@ -138,7 +138,7 @@ jobs:
           set: |
             docker.cache-from=type=gha
             docker.cache-to=type=gha,mode=max
-            bins*.args.VER=${{ inputs.current_version }}
+            bins*.args.VER=${{ jobs.release.outputs.current_version }}
           push: true
           files: |
             ./docker-bake.hcl

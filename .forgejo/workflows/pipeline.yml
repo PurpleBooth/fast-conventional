@@ -130,7 +130,7 @@ jobs:
             ${{ steps.meta-without-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (without version)
-        uses: docker/bake-action@v5
+        uses: docker/bake-action@v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
           GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}
@@ -202,7 +202,7 @@ jobs:
             type=semver,pattern={{version}},value=v${{ jobs.release.outputs.current_version }}
             type=sha
       - name: Bake Docker (with version)
-        uses: docker/bake-action@v5
+        uses: docker/bake-action@v4
         with:
           set: |
             docker.cache-from=type=gha

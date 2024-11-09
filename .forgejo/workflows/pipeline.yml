@@ -84,6 +84,8 @@ jobs:
   bake-edge-build:
     if: jobs.release.outputs.current_version == jobs.release.outputs.previous_version
     runs-on: docker
+    needs:
+      - release
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2

@@ -33,7 +33,7 @@ jobs:
       - run: |
           apt-get update
           apt-get install -y socat
-        name: apt-get install -y socat libc6 specdown
+        name: apt-get install -y socat
       - run: just specdown
 
 

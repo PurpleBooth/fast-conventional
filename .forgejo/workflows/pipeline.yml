@@ -153,7 +153,7 @@ jobs:
             mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
           done
           find target/bins/ -type d -empty -delete
-      - uses: actions/upload-artifact@v4
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@v4
         name: Upload binaries
         with:
           name: built-bins
@@ -237,7 +237,7 @@ jobs:
             mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
           done
           find target/bins/ -type d -empty -delete
-      - uses: actions/upload-artifact@v4
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@v4
         name: Upload binaries
         with:
           name: built-bins

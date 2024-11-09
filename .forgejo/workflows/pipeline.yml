@@ -73,7 +73,7 @@ jobs:
         run: |
           git config --global user.name "cog-bot"
           git config --global user.email "cog@example.com"
-          cog bump --auto
+          cog bump --auto --skip-ci
       - id: current_version
         run: |
           cog get-version | tee .version

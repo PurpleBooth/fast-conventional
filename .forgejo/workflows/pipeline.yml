@@ -90,7 +90,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3.7.1
+        uses: docker/setup-buildx-action@v3.7.1
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -116,7 +116,7 @@ jobs:
             type=ref,event=pr
             type=sha
       - name: Bake Docker (without version)
-        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
+        uses: docker/bake-action@v5
         with:
           set: |
             docker.cache-from=type=gha
@@ -130,7 +130,7 @@ jobs:
             ${{ steps.meta-without-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (without version)
-        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
+        uses: docker/bake-action@v5
         env:
           GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
           GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}
@@ -175,7 +175,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
+        uses: docker/login-action@v3
         with:
           registry: codeberg.org
           username: ${{ github.actor }}
@@ -187,7 +187,7 @@ jobs:
           REPOSITORY: ${{ github.repository }}
       - name: Extract versioned metadata (tags, labels) for Docker
         id: meta-with-version
-        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5.5.1
+        uses: docker/metadata-action@v5.5.1
         with:
           bake-target: docker
           images: ${{ steps.docker.outputs.repository }}
@@ -202,7 +202,7 @@ jobs:
             type=semver,pattern={{version}},value=v${{ jobs.release.outputs.current_version }}
             type=sha
       - name: Bake Docker (with version)
-        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
+        uses: docker/bake-action@v5
         with:
           set: |
             docker.cache-from=type=gha
@@ -216,7 +216,7 @@ jobs:
             ${{ steps.meta-with-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (with version)
-        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
+        uses: docker/bake-action@v5
         env:
           GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
           GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}
@@ -237,7 +237,7 @@ jobs:
             mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
           done
           find target/bins/ -type d -empty -delete
-      - uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4
+      - uses: actions/upload-artifact@v4
         name: Upload binaries
         with:
           name: built-bins

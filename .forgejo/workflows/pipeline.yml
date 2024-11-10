@@ -13,9 +13,8 @@ env:
   HOMEBREW_NO_AUTO_UPDATE: 1
 
 jobs:
-  test:
-    runs-on:    docker
-    name: "Tests"
+  lint:
+    runs-on: docker
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
         name: Checkout
@@ -27,8 +26,20 @@ jobs:
         name: Install specdown
       - uses: PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
-      - run: just build
       - run: just lint
+
+  test:
+    runs-on: docker
+    steps:
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+        name: Checkout
+      - uses: PurpleBooth/common-pipelines/actions/install-rust@main
+        name: Install rust
+        secrets:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - run: command -v specdown >/dev/null 2>&1 || cargo install specdown --git https://github.com/specdown/specdown.git
+        name: Install specdown
+      - uses: PurpleBooth/common-pipelines/actions/install-just@main
       - run: just test
       - run: |
           apt-get update
@@ -36,11 +47,11 @@ jobs:
         name: apt-get install -y socat
       - run: just specdown
 
-
   release:
     if: github.ref == 'refs/heads/main'
     needs:
       - test
+      - lint
     outputs:
       current_version: ${{ steps.current_version.outputs.current_version }}
       previous_version: ${{ steps.previous_version.outputs.previous_version }}

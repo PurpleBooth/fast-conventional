@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.15](https://codeberg.org/PurpleBooth/git-mit/compare/5b11b3db5219c0d62c32ccbea487cf52ef9e430d..v2.3.15) - 2024-11-10
+#### Bug Fixes
+- Upload zsts etc to repository - ([eeec625](https://codeberg.org/PurpleBooth/git-mit/commit/eeec625dd3a713f14fc26ebf50923b100b68ba9c)) - Billie Thompson
+#### Continuous Integration
+- Upload RPMs when done - ([9fc1872](https://codeberg.org/PurpleBooth/git-mit/commit/9fc187272b8c048b49ee82870ce4e37c89a57c8b)) - Billie Thompson
+- Sign releases - ([5b11b3d](https://codeberg.org/PurpleBooth/git-mit/commit/5b11b3db5219c0d62c32ccbea487cf52ef9e430d)) - Billie Thompson
+
+- - -
+
 ## [v2.3.14](https://codeberg.org/PurpleBooth/git-mit/compare/cd477e7b0ed1ff49dad50ea774d734e12897634f..v2.3.14) - 2024-11-10
 #### Bug Fixes
 - Provide sha for release - ([cd477e7](https://codeberg.org/PurpleBooth/git-mit/commit/cd477e7b0ed1ff49dad50ea774d734e12897634f)) - Billie Thompson

@@ -115,12 +115,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Get tags
         run: git fetch --tags origin
-      - shell: bash
-        secrets:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: GITHUB_TOKEN="$GH_TOKEN" cargo binstall --no-confirm cargo-edit
-      - shell: bash
-        run: GITHUB_TOKEN="$GH_TOKEN" cargo binstall --no-confirm --locked cocogitto
+      - uses: PurpleBooth/common-pipelines/actions/install-cocogitto@main
+        name: Install cocogitto
       - id: previous_version
         run: |
           cog get-version | tee .version
@@ -344,6 +340,7 @@ jobs:
           echo 'EOF' >> $GITHUB_OUTPUT
       - uses: actions/forgejo-release@v2
         with:
+          token: ${{ secrets.FJ_TOKEN }}
           direction: upload
           title: Release v${{ needs.release.outputs.current_version }}
           tag: v${{ needs.release.outputs.current_version }}

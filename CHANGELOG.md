@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.10](https://codeberg.org/PurpleBooth/git-mit/compare/e7c3b737cba534b40ddd9c03c2812945f29fab7a..v2.3.10) - 2024-11-10
+#### Bug Fixes
+- test release - ([64583c5](https://codeberg.org/PurpleBooth/git-mit/commit/64583c5f74af56052d71a92330ebd4e2e2639084)) - Billie Thompson
+#### Continuous Integration
+- Correct runs on to be docker - ([e7c3b73](https://codeberg.org/PurpleBooth/git-mit/commit/e7c3b737cba534b40ddd9c03c2812945f29fab7a)) - PurpleBooth
+
+- - -
+
 ## [v2.3.9](https://codeberg.org/PurpleBooth/git-mit/compare/e9d18e7625e29c87d3437db9ebacf13d700ed9f7..v2.3.9) - 2024-11-10
 #### Bug Fixes
 - test release - ([b66e07a](https://codeberg.org/PurpleBooth/git-mit/commit/b66e07ad3f34e330075c1e1266812920fc894f6e)) - Billie Thompson

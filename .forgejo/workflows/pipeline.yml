@@ -136,8 +136,8 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}
         with:
           set: |
-            docker.cache-from=type=gha
-            docker.cache-to=type=gha,mode=max
+            cache-from: type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache
+            cache-to: type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache,mode=max
             bins*.args.VER=${{ needs.release.outputs.current_version }}
           push: true
           files: |
@@ -205,8 +205,8 @@ jobs:
         uses: docker/bake-action@v4
         with:
           set: |
-            docker.cache-from=type=gha
-            docker.cache-to=type=gha,mode=max
+            cache-from: type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache
+            cache-to: type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache,mode=max
             docker.args.VER=${{ needs.release.outputs.current_version }}
           push: true
           files: |

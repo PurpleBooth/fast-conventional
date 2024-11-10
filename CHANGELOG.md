@@ -2,6 +2,32 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.8](https://codeberg.org/PurpleBooth/git-mit/compare/93c93182755eb88ec1a0b074f2e38ebdd8fd1699..v2.3.8) - 2024-11-10
+#### Bug Fixes
+- release with packages - ([0578a18](https://codeberg.org/PurpleBooth/git-mit/commit/0578a187a956ecad219df6e3a83e2ec01d3b4877)) - Billie Thompson
+#### Build system
+- remove some repeated builds - ([7a1e283](https://codeberg.org/PurpleBooth/git-mit/commit/7a1e283cc1648204b337f252cf9a3ae2844fe0de)) - Billie Thompson
+- Add basic packaging config - ([a8ad99f](https://codeberg.org/PurpleBooth/git-mit/commit/a8ad99f0f4b7abb6034f2180977a179586a4c0cb)) - Billie Thompson
+#### Continuous Integration
+- Add release step - ([ef057bb](https://codeberg.org/PurpleBooth/git-mit/commit/ef057bb9bdcb3d91ab596ab8590d9e73273a225c)) - Billie Thompson
+- Correct references to outputs - ([e5e774f](https://codeberg.org/PurpleBooth/git-mit/commit/e5e774f34889a5de623e702fe2942dee971a7b3d)) - Billie Thompson
+- replace some incorrect parameters - ([5fff3c7](https://codeberg.org/PurpleBooth/git-mit/commit/5fff3c7770c226f0ef77f84aba67d6bc3aa7c154)) - Billie Thompson
+- Switch to patched upload repo - ([a7db0f2](https://codeberg.org/PurpleBooth/git-mit/commit/a7db0f248d7509f827a2237b22bd6794837c7c3d)) - Billie Thompson
+- Remove vendored SSL - ([81f9339](https://codeberg.org/PurpleBooth/git-mit/commit/81f9339423c1f714939e1b566b36de7406ba67af)) - Billie Thompson
+- add missing version - ([3b95425](https://codeberg.org/PurpleBooth/git-mit/commit/3b9542570100bef3915582ea26c067a0926dcdf3)) - Billie Thompson
+- lowered other docker versions - ([5241ba8](https://codeberg.org/PurpleBooth/git-mit/commit/5241ba8e789381a655bd940e20e85e1309693fbe)) - Billie Thompson
+- Update the remaining actions to an appropriate version - ([0cba3eb](https://codeberg.org/PurpleBooth/git-mit/commit/0cba3eb1f292538678a9bcd535201f3371a35383)) - Billie Thompson
+- Reduce version to one that forgejo has - ([7f0bfd8](https://codeberg.org/PurpleBooth/git-mit/commit/7f0bfd84aecf29793357fcdafb54f4b18bb8a438)) - Billie Thompson
+- Remove pinning from versions - ([074a6c7](https://codeberg.org/PurpleBooth/git-mit/commit/074a6c74f59012e7b6a6bbb38018a5766da579d1)) - Billie Thompson
+- Change name to not include stuff we aren't installing - ([f4a878a](https://codeberg.org/PurpleBooth/git-mit/commit/f4a878a7cecbcd53aaa84717645afb3bc991944e)) - Billie Thompson
+- Skip installing specdown if it's retrieved from cache - ([15eda4b](https://codeberg.org/PurpleBooth/git-mit/commit/15eda4b31b2a64fe83976734d99e9c447d44de39)) - Billie Thompson
+- Remove unneeded qemu - ([757fdec](https://codeberg.org/PurpleBooth/git-mit/commit/757fdec53be481c0c7afb12a4bef85b03305be64)) - Billie Thompson
+- Ensure edge build happens after release - ([8285620](https://codeberg.org/PurpleBooth/git-mit/commit/8285620de63eea561cbfd486238d615bd3e29680)) - Billie Thompson
+- Correct the version variable - ([7891061](https://codeberg.org/PurpleBooth/git-mit/commit/7891061c06fe154a8cb63f7d35cfc2510f6b50f2)) - Billie Thompson
+- Skip ci for release commits - ([93c9318](https://codeberg.org/PurpleBooth/git-mit/commit/93c93182755eb88ec1a0b074f2e38ebdd8fd1699)) - PurpleBooth
+
+- - -
+
 ## [v2.3.7](https://codeberg.org/PurpleBooth/git-mit/compare/197f5b9e2eae8a1292eacc1188590a8fb8ac14bd..v2.3.7) - 2024-11-08
 #### Bug Fixes
 - **(deps)** update rust crate git2 to 0.19.0 - ([e295b71](https://codeberg.org/PurpleBooth/git-mit/commit/e295b716a61d67ef5eb88670b5eb4a236e47f07e)) - Solace System Renovate Fox

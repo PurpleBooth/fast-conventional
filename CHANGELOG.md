@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.12](https://codeberg.org/PurpleBooth/git-mit/compare/82467146e6cbfc2cdd2ffd8063015bb245e891d6..v2.3.12) - 2024-11-10
+#### Bug Fixes
+- set release token - ([8246714](https://codeberg.org/PurpleBooth/git-mit/commit/82467146e6cbfc2cdd2ffd8063015bb245e891d6)) - Billie Thompson
+
+- - -
+
 ## [v2.3.11](https://codeberg.org/PurpleBooth/git-mit/compare/35d7c52511cbcefd4cbef124780a6fe22b57ae91..v2.3.11) - 2024-11-10
 #### Bug Fixes
 - install cocogitto from our own action - ([073261f](https://codeberg.org/PurpleBooth/git-mit/commit/073261fcfc602d3931e9bb4c54f2c09a163cc80e)) - Billie Thompson

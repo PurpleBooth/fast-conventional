@@ -12,7 +12,7 @@ specdown: build
 
 # Build release version
 build:
-    cargo build
+    cargo build --release
 
 # Lint it
 lint:

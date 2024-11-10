@@ -56,6 +56,7 @@ jobs:
           apt-get update
           apt-get install -y socat
         name: apt-get install -y socat
+      - run: just build
       - run: just specdown
 
   release:

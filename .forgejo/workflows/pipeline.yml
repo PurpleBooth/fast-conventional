@@ -140,8 +140,6 @@ jobs:
         uses: docker/bake-action@v4
         with:
           set: |
-            docker.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache
-            docker.cache-to=type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache,mode=max
             docker.args.VER=${{ needs.release.outputs.current_version }}
           push: true
           files: |
@@ -157,8 +155,6 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}
         with:
           set: |
-            bins*.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache
-            bins*.cache-to=type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache,mode=max
             bins*.args.VER=${{ needs.release.outputs.current_version }}
           push: true
           files: |
@@ -226,8 +222,6 @@ jobs:
         uses: docker/bake-action@v4
         with:
           set: |
-            docker.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache
-            docker.cache-to=type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache,mode=max
             docker.args.VER=${{ needs.release.outputs.current_version }}
           push: true
           files: |
@@ -244,8 +238,6 @@ jobs:
         with:
           set: |
             bins*.args.VER=${{ needs.release.outputs.current_version }}
-            bins*.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache
-            bins*.cache-to=type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache,mode=max
           push: true
           files: |
             ./docker-bake.hcl

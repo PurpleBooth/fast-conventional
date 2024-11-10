@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.16](https://codeberg.org/PurpleBooth/git-mit/compare/f96f829240f8faef4c2d5131d84bf53bdddf6a1a..v2.3.16) - 2024-11-10
+#### Bug Fixes
+- **(deps)** update rust crate thiserror to v2.0.3 - ([54e522a](https://codeberg.org/PurpleBooth/git-mit/commit/54e522afe9073c5869bb9d71b4584edb6871a2df)) - Solace System Renovate Fox
+#### Miscellaneous Chores
+- **(deps)** pin dependencies - ([f96f829](https://codeberg.org/PurpleBooth/git-mit/commit/f96f829240f8faef4c2d5131d84bf53bdddf6a1a)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.15](https://codeberg.org/PurpleBooth/git-mit/compare/5b11b3db5219c0d62c32ccbea487cf52ef9e430d..v2.3.15) - 2024-11-10
 #### Bug Fixes
 - Upload zsts etc to repository - ([eeec625](https://codeberg.org/PurpleBooth/git-mit/commit/eeec625dd3a713f14fc26ebf50923b100b68ba9c)) - Billie Thompson

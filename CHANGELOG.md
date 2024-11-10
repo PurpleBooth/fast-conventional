@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.11](https://codeberg.org/PurpleBooth/git-mit/compare/35d7c52511cbcefd4cbef124780a6fe22b57ae91..v2.3.11) - 2024-11-10
+#### Bug Fixes
+- install cocogitto from our own action - ([073261f](https://codeberg.org/PurpleBooth/git-mit/commit/073261fcfc602d3931e9bb4c54f2c09a163cc80e)) - Billie Thompson
+#### Continuous Integration
+- build once and share - ([35d7c52](https://codeberg.org/PurpleBooth/git-mit/commit/35d7c52511cbcefd4cbef124780a6fe22b57ae91)) - Billie Thompson
+
+- - -
+
 ## [v2.3.10](https://codeberg.org/PurpleBooth/git-mit/compare/e7c3b737cba534b40ddd9c03c2812945f29fab7a..v2.3.10) - 2024-11-10
 #### Bug Fixes
 - test release - ([64583c5](https://codeberg.org/PurpleBooth/git-mit/commit/64583c5f74af56052d71a92330ebd4e2e2639084)) - Billie Thompson

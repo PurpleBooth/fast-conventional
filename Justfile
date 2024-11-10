@@ -7,12 +7,16 @@ test:
     RUST_BACKTRACE=1 cargo test
 
 # Test the markdown in the docs directory
-specdown: build
+specdown: build-release
     specdown run --temporary-workspace-dir --add-path "$PWD/target/release" "README.md" docs/*.md
 
 # Build release version
-build:
+build-release:
     cargo build --release
+
+# Build debug version
+build-debug:
+    cargo build
 
 # Lint it
 lint:

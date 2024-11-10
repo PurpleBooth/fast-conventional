@@ -119,8 +119,8 @@ jobs:
         uses: docker/bake-action@v4
         with:
           set: |
-            docker.cache-from=type=gha
-            docker.cache-to=type=gha,mode=max
+            cache-from: type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache
+            cache-to: type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache,mode=max
             docker.args.VER=${{ needs.release.outputs.current_version }}
           push: true
           files: |
@@ -223,6 +223,8 @@ jobs:
         with:
           set: |
             bins*.args.VER=${{ needs.release.outputs.current_version }}
+            cache-from: type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache
+            cache-to: type=registry,ref=${{ steps.docker.outputs.repository }}:buildcache,mode=max
           push: true
           files: |
             ./docker-bake.hcl

@@ -1,8 +1,6 @@
 name: Test
 on:
   push:
-    branches:
-      - '*'
   pull_request:
   workflow_dispatch:
 
@@ -338,9 +336,13 @@ jobs:
           echo 'release_notes<<EOF' >> $GITHUB_OUTPUT
           cat CHANGELOG.md >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
+      - id: git_sha
+        run: |
+          echo "sha=$(git rev-parse  HEAD)" >> $GITHUB_OUTPUT
       - uses: actions/forgejo-release@v2
         with:
           token: ${{ secrets.FJ_TOKEN }}
+          sha: ${{ steps.git_sha.outputs.sha }}
           direction: upload
           title: Release v${{ needs.release.outputs.current_version }}
           tag: v${{ needs.release.outputs.current_version }}

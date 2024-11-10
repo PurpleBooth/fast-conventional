@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.9](https://codeberg.org/PurpleBooth/git-mit/compare/e9d18e7625e29c87d3437db9ebacf13d700ed9f7..v2.3.9) - 2024-11-10
+#### Bug Fixes
+- test release - ([b66e07a](https://codeberg.org/PurpleBooth/git-mit/commit/b66e07ad3f34e330075c1e1266812920fc894f6e)) - Billie Thompson
+#### Build system
+- Build a release version - ([3edda4b](https://codeberg.org/PurpleBooth/git-mit/commit/3edda4b78743bbd7db6ddaf78b183ca39b3f42db)) - Billie Thompson
+#### Continuous Integration
+- Remove caching - ([3f5debb](https://codeberg.org/PurpleBooth/git-mit/commit/3f5debbf85707f883d42354e009b48047f0683d0)) - Billie Thompson
+- correct cache syntax - ([f51655b](https://codeberg.org/PurpleBooth/git-mit/commit/f51655b91878d3efc639086714ebaa496ba8b183)) - Billie Thompson
+- Build built into specdown anyway - ([6539b41](https://codeberg.org/PurpleBooth/git-mit/commit/6539b415b9f9eaff6d627cb2100b1e28edf88d8d)) - Billie Thompson
+- Don't need specdown to lint - ([ecfb8a7](https://codeberg.org/PurpleBooth/git-mit/commit/ecfb8a78b5b3ffe007b27ac1de37cf9ef235f48d)) - Billie Thompson
+- Split the integration tests from unit tests - ([fbc8fbe](https://codeberg.org/PurpleBooth/git-mit/commit/fbc8fbef1de10f720cc543621b8ea8548044f6d2)) - Billie Thompson
+- Run lint and test at the same time - ([98c2c0b](https://codeberg.org/PurpleBooth/git-mit/commit/98c2c0b93030a3c483e2e3d6521fd314d746c4aa)) - Billie Thompson
+- set buildcache for more things - ([6078b62](https://codeberg.org/PurpleBooth/git-mit/commit/6078b62330a31d399775dd211998e8cfb32dd805)) - Billie Thompson
+- Add buildcache rather than gha cache - ([e9d18e7](https://codeberg.org/PurpleBooth/git-mit/commit/e9d18e7625e29c87d3437db9ebacf13d700ed9f7)) - Billie Thompson
+
+- - -
+
 ## [v2.3.8](https://codeberg.org/PurpleBooth/git-mit/compare/93c93182755eb88ec1a0b074f2e38ebdd8fd1699..v2.3.8) - 2024-11-10
 #### Bug Fixes
 - release with packages - ([0578a18](https://codeberg.org/PurpleBooth/git-mit/commit/0578a187a956ecad219df6e3a83e2ec01d3b4877)) - Billie Thompson

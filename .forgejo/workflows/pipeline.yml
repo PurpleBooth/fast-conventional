@@ -344,6 +344,6 @@ jobs:
           direction: upload
           title: Release v${{ needs.release.outputs.current_version }}
           tag: v${{ needs.release.outputs.current_version }}
-          url: https://code.forgejo.org
+          url: https://codeberg.org
           release-dir: ./bins/built-bins
           release-notes: ${{ steps.release_notes.outputs.release_notes }}

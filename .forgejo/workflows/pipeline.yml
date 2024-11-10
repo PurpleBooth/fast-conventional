@@ -343,6 +343,8 @@ jobs:
         with:
           token: ${{ secrets.FJ_TOKEN }}
           sha: ${{ steps.git_sha.outputs.sha }}
+          gpg-private-key: ${{ secrets.gpg_private_key }}
+          gpg-passphrase: ${{ secrets.gpg_passphrase }}
           direction: upload
           title: Release v${{ needs.release.outputs.current_version }}
           tag: v${{ needs.release.outputs.current_version }}

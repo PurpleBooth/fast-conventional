@@ -351,3 +351,11 @@ jobs:
           url: https://codeberg.org
           release-dir: ./bins/built-bins
           release-notes: ${{ steps.release_notes.outputs.release_notes }}
+      - run: |
+          for RPM in ./bins/built-bins/*.rpm ; do
+            curl --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
+               --upload-file "$RPM" \
+               https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/rpm/${GITHUB_REPOSITORY#*/}/upload
+          done
+        env:
+          FJ_TOKEN: ${{ secrets.FJ_TOKEN }

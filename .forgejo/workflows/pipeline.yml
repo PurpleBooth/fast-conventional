@@ -263,7 +263,7 @@ jobs:
     needs:
       - bake-release-build
       - release
-    runs-on: ubuntu-latest
+    runs-on: docker
     env:
       VER: ${{ needs.release.outputs.current_version }}
     steps:

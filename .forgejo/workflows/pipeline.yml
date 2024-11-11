@@ -355,34 +355,35 @@ jobs:
         shell: bash
         env:
           TAG_V: v${{ needs.release.outputs.current_version }}
-      - name: Add hashes to release
+      - name: Add hashes
         run: |
-          {
-            echo ""
-            echo ""
-            echo "## Hashes"
-            echo ""
             (
               cd ./target/bins/
               for file in *; do
                 if [[ -f "$file" ]]; then
-                  echo " * $( sha256sum "$file" )"
+                  sha256sum "$file" > "$file.sha256"
                 fi
               done
             )
-          } >> CHANGELOG.md
       - id: release_notes
         run: |
           echo 'release_notes<<EOF' >> $GITHUB_OUTPUT
           cat CHANGELOG.md >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
-      - id: git_sha
+      - id: release_option_prep
         run: |
           echo "sha=$(git rev-parse  HEAD)" >> $GITHUB_OUTPUT
+          GPGHOME="$(mktemp -d)"
+          echo "gnupghome=$GPGHOME" >> $GITHUB_OUTPUT
+          touch "$GPGHOME/gpg.conf"
+          echo >> "$GPGHOME/gpg.conf"
+          echo "default-key F22CBA47E6251A59E1C1E964ECA586E842C3929F" >> "$GPGHOME/gpg.conf"
       - uses: https://code.forgejo.org/actions/forgejo-release@v2
+        env:
+          GNUPGHOME: ${{ steps.release_option_prep.outputs.gnupghome }}
         with:
           token: ${{ secrets.FJ_TOKEN }}
-          sha: ${{ steps.git_sha.outputs.sha }}
+          sha: ${{ steps.release_option_prep.outputs.sha }}
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
           direction: upload

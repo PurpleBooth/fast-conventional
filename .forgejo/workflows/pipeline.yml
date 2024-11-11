@@ -373,20 +373,12 @@ jobs:
       - id: release_option_prep
         run: |
           echo "sha=$(git rev-parse  HEAD)" >> $GITHUB_OUTPUT
-          GPGHOME="$(mktemp -d)"
-          echo "gnupghome=$GPGHOME" >> $GITHUB_OUTPUT
-          touch "$GPGHOME/gpg.conf"
-          echo >> "$GPGHOME/gpg.conf"
-          echo "default-key F22CBA47E6251A59E1C1E964ECA586E842C3929F" >> "$GPGHOME/gpg.conf"
-          chmod -v 600 "$GPGHOME/gpg.conf"
       - uses: https://code.forgejo.org/actions/forgejo-release@v2
         env:
           GNUPGHOME: ${{ steps.release_option_prep.outputs.gnupghome }}
         with:
           token: ${{ secrets.FJ_TOKEN }}
           sha: ${{ steps.release_option_prep.outputs.sha }}
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
           direction: upload
           title: Release v${{ needs.release.outputs.current_version }}
           tag: v${{ needs.release.outputs.current_version }}

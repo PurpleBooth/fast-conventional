@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.23](https://codeberg.org/PurpleBooth/git-mit/compare/310a0370d7e744aae5a3a862415472ff753bb943..v2.3.23) - 2024-11-11
+#### Bug Fixes
+- Remove old key and try release - ([310a037](https://codeberg.org/PurpleBooth/git-mit/commit/310a0370d7e744aae5a3a862415472ff753bb943)) - Billie Thompson
+
+- - -
+
 ## [v2.3.22](https://codeberg.org/PurpleBooth/git-mit/compare/ed825f97c7076a11daaf41c60c74290487b66e83..v2.3.22) - 2024-11-11
 #### Bug Fixes
 - Manually configure the defauult key before importing keys - ([2a29e25](https://codeberg.org/PurpleBooth/git-mit/commit/2a29e25010268e12cfcd46d0ff8161ba3e82fcc8)) - Billie Thompson

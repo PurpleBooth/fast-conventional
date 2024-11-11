@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.18](https://codeberg.org/PurpleBooth/git-mit/compare/26eed7448bba2998b1bdb17ea04e1a73d8f87ec4..v2.3.18) - 2024-11-11
+#### Bug Fixes
+- test release - ([18a9bfb](https://codeberg.org/PurpleBooth/git-mit/commit/18a9bfbc1756c529ede9f66bcc9b571d3ff5daec)) - Billie Thompson
+#### Continuous Integration
+- Add docker bake test step - ([97443fe](https://codeberg.org/PurpleBooth/git-mit/commit/97443fedc31977d8e23a901356fa24cfb7a12611)) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** update docker/bake-action action to v5 - ([84b0bde](https://codeberg.org/PurpleBooth/git-mit/commit/84b0bde4da0996912ac33b503cbf54227b912248)) - Solace System Renovate Fox
+- **(deps)** update actions/checkout action to v4 - ([26eed74](https://codeberg.org/PurpleBooth/git-mit/commit/26eed7448bba2998b1bdb17ea04e1a73d8f87ec4)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.17](https://codeberg.org/PurpleBooth/git-mit/compare/fb3d49f0f48e395201828547e53fc273bf2a6e18..v2.3.17) - 2024-11-11
 #### Bug Fixes
 - **(deps)** update rust crate mit-commit to v3.2.1 - ([8791a19](https://codeberg.org/PurpleBooth/git-mit/commit/8791a1949bb968d3287f217f910ad1b1c5431e0b)) - Solace System Renovate Fox

@@ -378,6 +378,7 @@ jobs:
           touch "$GPGHOME/gpg.conf"
           echo >> "$GPGHOME/gpg.conf"
           echo "default-key F22CBA47E6251A59E1C1E964ECA586E842C3929F" >> "$GPGHOME/gpg.conf"
+          chmod -v 600 "$GPGHOME/gpg.conf"
       - uses: https://code.forgejo.org/actions/forgejo-release@v2
         env:
           GNUPGHOME: ${{ steps.release_option_prep.outputs.gnupghome }}

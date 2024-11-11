@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.25](https://codeberg.org/PurpleBooth/git-mit/compare/ce2bb9d79c92a317dc5d86f50e03e68fb576a2ff..v2.3.25) - 2024-11-11
+#### Bug Fixes
+- retry uploads because codeberg loves to 429 - ([ce2bb9d](https://codeberg.org/PurpleBooth/git-mit/commit/ce2bb9d79c92a317dc5d86f50e03e68fb576a2ff)) - Billie Thompson
+
+- - -
+
 ## [v2.3.24](https://codeberg.org/PurpleBooth/git-mit/compare/600c4b8c67cae815d961c0cbbb43ca70d2a0f026..v2.3.24) - 2024-11-11
 #### Bug Fixes
 - correct apk and zst uploads - ([cf9371c](https://codeberg.org/PurpleBooth/git-mit/commit/cf9371c577ea05d6fda35b7cec0c7e3036f86399)) - Billie Thompson

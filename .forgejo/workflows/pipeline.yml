@@ -121,7 +121,7 @@ jobs:
         uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
         with:
           set: |
-            docker.args.VER=${{ needs.release.outputs.current_version }}
+            docker.args.VER=0.1.0
           push: false
           files: |
             ./docker-bake.hcl
@@ -244,8 +244,8 @@ jobs:
       - name: Bake Bins (without version)
         uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
         env:
-          GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
-          GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         with:
           set: |
             bins*.args.VER=${{ needs.release.outputs.current_version }}
@@ -280,6 +280,8 @@ jobs:
         with:
           token: ${{ secrets.FJ_TOKEN }}
           ref: v${{ needs.release.outputs.current_version }}
+      - uses: PurpleBooth/common-pipelines/actions/install-cocogitto@main
+        name: Install cocogitto
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3
       - name: Login to GitHub Container Registry
@@ -324,8 +326,8 @@ jobs:
       - name: Bake Bins (with version)
         uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
         env:
-          GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
-          GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         with:
           set: |
             bins*.args.VER=${{ needs.release.outputs.current_version }}
@@ -348,28 +350,6 @@ jobs:
         with:
           name: built-bins
           path: target/bins/
-
-
-  github-release:
-    needs:
-      - bake-release-build
-      - release
-    runs-on: docker
-    env:
-      VER: ${{ needs.release.outputs.current_version }}
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        name: Checkout the repository
-        with:
-          ref: v${{ needs.release.outputs.current_version }}
-          fetch-depth: 0
-      - uses: PurpleBooth/common-pipelines/actions/install-cocogitto@main
-        name: Install cocogitto
-      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        with:
-          path: bins
-          pattern: built-bins
-        name: Retrieve assets
       - run: cog changelog --at "$TAG_V" > CHANGELOG.md
         shell: bash
         env:
@@ -382,7 +362,7 @@ jobs:
             echo "## Hashes"
             echo ""
             (
-              cd ./bins/built-bins
+              cd ./target/bins/
               for file in *; do
                 if [[ -f "$file" ]]; then
                   echo " * $( sha256sum "$file" )"
@@ -402,16 +382,16 @@ jobs:
         with:
           token: ${{ secrets.FJ_TOKEN }}
           sha: ${{ steps.git_sha.outputs.sha }}
-          gpg-private-key: ${{ secrets.gpg_private_key }}
-          gpg-passphrase: ${{ secrets.gpg_passphrase }}
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
           direction: upload
           title: Release v${{ needs.release.outputs.current_version }}
           tag: v${{ needs.release.outputs.current_version }}
           url: https://codeberg.org
-          release-dir: ./bins/built-bins
+          release-dir: ./target/bins/
           release-notes: ${{ steps.release_notes.outputs.release_notes }}
       - run: |
-          for RPM in ./bins/built-bins/*.rpm ; do
+          for RPM in ./target/bins/*.rpm ; do
             curl --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
                --upload-file "$RPM" \
                https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/rpm/${GITHUB_REPOSITORY#*/}/upload
@@ -419,7 +399,7 @@ jobs:
         env:
           FJ_TOKEN: ${{ secrets.FJ_TOKEN }}
       - run: |
-          for DEB in ./bins/built-bins/*.deb ; do
+          for DEB in ./target/bins/*.deb ; do
             curl --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
                --upload-file "$DEB" \
                https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/debian/pool/stable/${GITHUB_REPOSITORY#*/}/upload
@@ -427,7 +407,7 @@ jobs:
         env:
           FJ_TOKEN: ${{ secrets.FJ_TOKEN }}
       - run: |
-          for APK in ./bins/built-bins/*.apk ; do
+          for APK in ./target/bins/*.apk ; do
             curl --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
                --upload-file "$APK" \
                https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/alpine/${GITHUB_REPOSITORY#*/}
@@ -435,7 +415,7 @@ jobs:
         env:
           FJ_TOKEN: ${{ secrets.FJ_TOKEN }}
       - run: |
-          for ZST in ./bins/built-bins/*.zst ; do
+          for ZST in ./target/bins/*.zst ; do
             curl --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
                --header "Content-Type: application/octet-stream" \
                --upload-file "$APK" \

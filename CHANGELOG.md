@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.19](https://codeberg.org/PurpleBooth/git-mit/compare/f11f2633bde0f87234886a0eeeaa7ebdcab8f1a0..v2.3.19) - 2024-11-11
+#### Bug Fixes
+- test release - ([90e6025](https://codeberg.org/PurpleBooth/git-mit/commit/90e60251928614a24b91284542e59b066f872645)) - Billie Thompson
+#### Continuous Integration
+- Correct pipelines to use absolute locations - ([1fbfde3](https://codeberg.org/PurpleBooth/git-mit/commit/1fbfde37aa6437b6300563e23ad6ed2677d788f6)) - Billie Thompson
+- Switch to explicit version rather than implicit docker - ([e6623c3](https://codeberg.org/PurpleBooth/git-mit/commit/e6623c3975275dbd81d0faa14dbd3ab05ea10ba6)) - Billie Thompson
+- Combine upload and release build steps - ([f0aba10](https://codeberg.org/PurpleBooth/git-mit/commit/f0aba100a90fd061fa9f86c7300f030219d7e5cc)) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** pin dependencies - ([2eb6508](https://codeberg.org/PurpleBooth/git-mit/commit/2eb65088cf75e5ba3590f2d7bbd91d9cfdefe587)) - Solace System Renovate Fox
+- **(deps)** pin dependencies - ([f11f263](https://codeberg.org/PurpleBooth/git-mit/commit/f11f2633bde0f87234886a0eeeaa7ebdcab8f1a0)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.18](https://codeberg.org/PurpleBooth/git-mit/compare/26eed7448bba2998b1bdb17ea04e1a73d8f87ec4..v2.3.18) - 2024-11-11
 #### Bug Fixes
 - test release - ([18a9bfb](https://codeberg.org/PurpleBooth/git-mit/commit/18a9bfbc1756c529ede9f66bcc9b571d3ff5daec)) - Billie Thompson

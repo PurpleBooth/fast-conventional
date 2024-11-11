@@ -169,7 +169,7 @@ jobs:
             type=ref,event=pr
             type=sha
       - name: Bake Docker (without version)
-        uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
+        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
         with:
           set: |
             docker.args.VER=${{ needs.release.outputs.current_version }}
@@ -181,7 +181,7 @@ jobs:
             ${{ steps.meta-without-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (without version)
-        uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
+        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
         env:
           GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
           GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}
@@ -251,7 +251,7 @@ jobs:
             type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }}
             type=sha
       - name: Bake Docker (with version)
-        uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
+        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
         with:
           set: |
             docker.args.VER=${{ needs.release.outputs.current_version }}
@@ -263,7 +263,7 @@ jobs:
             ${{ steps.meta-with-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (with version)
-        uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
+        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
         env:
           GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
           GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}

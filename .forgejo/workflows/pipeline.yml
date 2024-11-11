@@ -118,7 +118,7 @@ jobs:
             type=ref,event=pr
             type=sha
       - name: Bake Docker (without version)
-        uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
+        uses: docker/bake-action@v4
         with:
           set: |
             docker.args.VER=0.1.0
@@ -130,7 +130,7 @@ jobs:
             ${{ steps.meta-without-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (without version)
-        uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
+        uses: https://code.forgejo.org/docker/bake-action@v4
         env:
           GPG_PRIVATE_KEY: ""
           GPG_PASSPHRASE: ""
@@ -230,7 +230,7 @@ jobs:
             type=ref,event=pr
             type=sha
       - name: Bake Docker (without version)
-        uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
+        uses: https://code.forgejo.org/docker/bake-action@v4
         with:
           set: |
             docker.args.VER=${{ needs.release.outputs.current_version }}
@@ -242,7 +242,7 @@ jobs:
             ${{ steps.meta-without-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (without version)
-        uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
+        uses: https://code.forgejo.org/docker/bake-action@v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
@@ -312,7 +312,7 @@ jobs:
             type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }}
             type=sha
       - name: Bake Docker (with version)
-        uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
+        uses: https://code.forgejo.org/docker/bake-action@v4
         with:
           set: |
             docker.args.VER=${{ needs.release.outputs.current_version }}
@@ -324,7 +324,7 @@ jobs:
             ${{ steps.meta-with-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (with version)
-        uses: docker/bake-action@a99697dcb6a3c90dfa91a96de6490ad7bbbe5f29 # v4
+        uses: https://code.forgejo.org/docker/bake-action@v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

@@ -202,11 +202,11 @@ jobs:
       - release
     steps:
       - name: Checkout
-        uses: https://code.forgejo.org/actions/checkout@v4
+        uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: Set up Docker Buildx
-        uses: https://code.forgejo.org/docker/setup-buildx-action@v3
+        uses: https://code.forgejo.org/docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3
       - name: Login to GitHub Container Registry
-        uses: https://code.forgejo.org/docker/login-action@v3
+        uses: https://code.forgejo.org/docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
         with:
           registry: codeberg.org
           username: ${{ github.actor }}
@@ -218,7 +218,7 @@ jobs:
           REPOSITORY: ${{ github.repository }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta-without-version
-        uses: https://code.forgejo.org/docker/metadata-action@v5
+        uses: https://code.forgejo.org/docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5
         with:
           bake-target: docker
           images: ${{ steps.docker.outputs.repository }}
@@ -230,7 +230,7 @@ jobs:
             type=ref,event=pr
             type=sha
       - name: Bake Docker (without version)
-        uses: https://code.forgejo.org/docker/bake-action@v4
+        uses: https://code.forgejo.org/docker/bake-action@511fde2517761e303af548ec9e0ea74a8a100112 # v4
         with:
           set: |
             docker.args.VER=${{ needs.release.outputs.current_version }}
@@ -242,7 +242,7 @@ jobs:
             ${{ steps.meta-without-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (without version)
-        uses: https://code.forgejo.org/docker/bake-action@v4
+        uses: https://code.forgejo.org/docker/bake-action@511fde2517761e303af548ec9e0ea74a8a100112 # v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
@@ -263,7 +263,7 @@ jobs:
             mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
           done
           find target/bins/ -type d -empty -delete
-      - uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
         name: Upload binaries
         with:
           name: built-bins
@@ -276,7 +276,7 @@ jobs:
     runs-on: docker
     steps:
       - name: Checkout
-        uses: https://code.forgejo.org/actions/checkout@v4
+        uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           token: ${{ secrets.FJ_TOKEN }}
           ref: v${{ needs.release.outputs.current_version }}
@@ -284,9 +284,9 @@ jobs:
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
       - name: Set up Docker Buildx
-        uses: https://code.forgejo.org/docker/setup-buildx-action@v3
+        uses: https://code.forgejo.org/docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3
       - name: Login to GitHub Container Registry
-        uses: https://code.forgejo.org/docker/login-action@v3
+        uses: https://code.forgejo.org/docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
         with:
           registry: codeberg.org
           username: ${{ github.actor }}
@@ -298,7 +298,7 @@ jobs:
           REPOSITORY: ${{ github.repository }}
       - name: Extract versioned metadata (tags, labels) for Docker
         id: meta-with-version
-        uses: https://code.forgejo.org/docker/metadata-action@v5
+        uses: https://code.forgejo.org/docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5
         with:
           bake-target: docker
           images: ${{ steps.docker.outputs.repository }}

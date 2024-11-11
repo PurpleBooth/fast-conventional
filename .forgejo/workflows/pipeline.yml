@@ -92,12 +92,73 @@ jobs:
           pattern: target
       - run: just specdown
 
+  bake-edge-test:
+    runs-on: docker
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - run: echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+        id: docker
+        name: Turn repository name into docker registry name
+        env:
+          REPOSITORY: ${{ github.repository }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta-without-version
+        uses: docker/metadata-action@v5
+        with:
+          bake-target: docker
+          images: ${{ steps.docker.outputs.repository }}
+          tags: |
+            type=edge,branch=main
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
+            type=sha
+      - name: Bake Docker (without version)
+        uses: docker/bake-action@v4
+        with:
+          set: |
+            docker.args.VER=${{ needs.release.outputs.current_version }}
+          push: false
+          files: |
+            ./docker-bake.hcl
+            ${{ steps.meta-without-version.outputs.bake-file-tags }}
+            ${{ steps.meta-without-version.outputs.bake-file-annotations }}
+            ${{ steps.meta-without-version.outputs.bake-file-labels }}
+          targets: docker
+      - name: Bake Bins (without version)
+        uses: docker/bake-action@v4
+        env:
+          GPG_PRIVATE_KEY: ""
+          GPG_PASSPHRASE: ""
+        with:
+          set: |
+            bins*.args.VER=${{ needs.release.outputs.current_version }}
+          push: true
+          files: |
+            ./docker-bake.hcl
+            ${{ steps.meta-without-version.outputs.bake-file-tags }}
+            ${{ steps.meta-without-version.outputs.bake-file-annotations }}
+            ${{ steps.meta-without-version.outputs.bake-file-labels }}
+          targets: bins
+      - shell: bash
+        name: "Flatten filenames"
+        run: |
+          for I in target/bins/*/*/* ; do
+            mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
+          done
+          find target/bins/ -type d -empty -delete
+
   release:
     if: github.ref == 'refs/heads/main'
     needs:
       - unit-test
       - integration-test
       - lint
+      - bake-edge-test
     outputs:
       current_version: ${{ steps.current_version.outputs.current_version }}
       previous_version: ${{ steps.previous_version.outputs.previous_version }}
@@ -169,7 +230,7 @@ jobs:
             type=ref,event=pr
             type=sha
       - name: Bake Docker (without version)
-        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
+        uses: docker/bake-action@v4
         with:
           set: |
             docker.args.VER=${{ needs.release.outputs.current_version }}
@@ -181,7 +242,7 @@ jobs:
             ${{ steps.meta-without-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (without version)
-        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
+        uses: docker/bake-action@v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
           GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}
@@ -218,9 +279,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           token: ${{ secrets.FJ_TOKEN }}
-          lfs: true
           ref: v${{ needs.release.outputs.current_version }}
-          submodules: recursive
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3
       - name: Login to GitHub Container Registry
@@ -251,7 +310,7 @@ jobs:
             type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }}
             type=sha
       - name: Bake Docker (with version)
-        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
+        uses: docker/bake-action@v4
         with:
           set: |
             docker.args.VER=${{ needs.release.outputs.current_version }}
@@ -263,7 +322,7 @@ jobs:
             ${{ steps.meta-with-version.outputs.bake-file-labels }}
           targets: docker
       - name: Bake Bins (with version)
-        uses: docker/bake-action@2e3d19baedb14545e5d41222653874f25d5b4dfb # v5
+        uses: docker/bake-action@v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
           GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}

@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.22](https://codeberg.org/PurpleBooth/git-mit/compare/ed825f97c7076a11daaf41c60c74290487b66e83..v2.3.22) - 2024-11-11
+#### Bug Fixes
+- Manually configure the defauult key before importing keys - ([2a29e25](https://codeberg.org/PurpleBooth/git-mit/commit/2a29e25010268e12cfcd46d0ff8161ba3e82fcc8)) - Billie Thompson
+#### Continuous Integration
+- Chmod gpg config - ([cbc5732](https://codeberg.org/PurpleBooth/git-mit/commit/cbc57329e537f0c38ea0f48227bb1bc0517b536b)) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** pin dependencies - ([ed825f9](https://codeberg.org/PurpleBooth/git-mit/commit/ed825f97c7076a11daaf41c60c74290487b66e83)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.21](https://codeberg.org/PurpleBooth/git-mit/compare/2d837350d66ac42746421dd7e3f2efad78473dba..v2.3.21) - 2024-11-11
 #### Bug Fixes
 - For releases set fetchdepth of 0 to allow changelog generation - ([2d83735](https://codeberg.org/PurpleBooth/git-mit/commit/2d837350d66ac42746421dd7e3f2efad78473dba)) - Billie Thompson

@@ -413,7 +413,7 @@ jobs:
           for ZST in ./target/bins/*.zst ; do
             curl --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
                --header "Content-Type: application/octet-stream" \
-               --upload-file "$APK" \
+               --upload-file "$ZST" \
                https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/arch/${GITHUB_REPOSITORY#*/}
           done
         env:

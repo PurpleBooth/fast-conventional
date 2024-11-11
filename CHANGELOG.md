@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.21](https://codeberg.org/PurpleBooth/git-mit/compare/2d837350d66ac42746421dd7e3f2efad78473dba..v2.3.21) - 2024-11-11
+#### Bug Fixes
+- For releases set fetchdepth of 0 to allow changelog generation - ([2d83735](https://codeberg.org/PurpleBooth/git-mit/commit/2d837350d66ac42746421dd7e3f2efad78473dba)) - Billie Thompson
+
+- - -
+
 ## [v2.3.20](https://codeberg.org/PurpleBooth/git-mit/compare/af6ea93087843969d23644275fdb5d8ceba9c3ea..v2.3.20) - 2024-11-11
 #### Bug Fixes
 - Correct buildx action - ([af6ea93](https://codeberg.org/PurpleBooth/git-mit/commit/af6ea93087843969d23644275fdb5d8ceba9c3ea)) - Billie Thompson

@@ -389,7 +389,7 @@ jobs:
           for RPM in ./target/bins/*.rpm ; do
             curl --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
                --upload-file "$RPM" \
-               https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/rpm/${GITHUB_REPOSITORY#*/}/upload
+               "https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/rpm/${GITHUB_REPOSITORY#*/}/upload"
           done
         env:
           FJ_TOKEN: ${{ secrets.FJ_TOKEN }}
@@ -397,24 +397,25 @@ jobs:
           for DEB in ./target/bins/*.deb ; do
             curl --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
                --upload-file "$DEB" \
-               https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/debian/pool/stable/${GITHUB_REPOSITORY#*/}/upload
+               "https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/debian/pool/stable/${GITHUB_REPOSITORY#*/}/upload"
           done
         env:
           FJ_TOKEN: ${{ secrets.FJ_TOKEN }}
       - run: |
           for APK in ./target/bins/*.apk ; do
             curl --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
-               --upload-file "$APK" \
-               https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/alpine/${GITHUB_REPOSITORY#*/}
+              --upload-file "$APK" \
+              "https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/alpine/stable/${GITHUB_REPOSITORY#*/}"
           done
         env:
           FJ_TOKEN: ${{ secrets.FJ_TOKEN }}
       - run: |
           for ZST in ./target/bins/*.zst ; do
-            curl --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
-               --header "Content-Type: application/octet-stream" \
-               --upload-file "$ZST" \
-               https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/arch/${GITHUB_REPOSITORY#*/}
+            curl -X PUT \
+              "https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/arch/${GITHUB_REPOSITORY#*/}" \
+              --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
+              --header "Content-Type: application/octet-stream" \
+              --data-binary "@$ZST"
           done
         env:
           FJ_TOKEN: ${{ secrets.FJ_TOKEN }}

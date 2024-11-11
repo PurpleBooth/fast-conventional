@@ -4,7 +4,7 @@
 #
 name: "fast-conventional"
 arch: "${GOARCH}"
-platform: "linux"
+platform: "${GOOS}"
 version: "${VER}"
 section: "default"
 priority: "extra"
@@ -16,6 +16,7 @@ license: "CC0"
 contents:
   - src: ./fast-conventional
     dst: /usr/bin/fast-conventional
+
 
 rpm:
   signature:

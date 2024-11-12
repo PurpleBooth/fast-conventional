@@ -13,7 +13,7 @@ authors = ["Billie Thompson <billie@billiecodes.com>"]
 clap = { version = "4.5.3", features = ["derive", "cargo", "wrap_help", "env", "unicode" ] }
 clap_complete = "4.5.1"
 git2 = { version = "0.19.0"}
-inquire = { version = "0.7.2", features = [ "editor"] }
+inquire = { version = "0.7.5", features = [ "editor"] }
 miette = { version = "7.2.0", features = ["fancy"] }
 mit-commit = "3.1.8"
 nom = "7.1.3"

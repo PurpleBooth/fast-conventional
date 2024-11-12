@@ -160,8 +160,9 @@ jobs:
       - lint
       - bake-edge-test
     outputs:
-      current_version: ${{ steps.current_version.outputs.current_version }}
-      previous_version: ${{ steps.previous_version.outputs.previous_version }}
+      current_version: ${{ steps.release.outputs.current_version }}
+      previous_version: ${{ steps.release.outputs.previous_version }}
+      changelog: ${{ steps.release.outputs.changelog }}
     runs-on: docker
     steps:
       - uses: https://code.forgejo.org/actions/checkout@main
@@ -176,24 +177,9 @@ jobs:
         run: git fetch --tags origin
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
-      - id: previous_version
-        run: |
-          cog get-version | tee .version
-          echo "previous_version=$( cat .version )"  >> "$GITHUB_OUTPUT"
-          rm .version
-        shell: bash
       - name: Semver release
         id: release
-        run: |
-          git config --global user.name "cog-bot"
-          git config --global user.email "cog@example.com"
-          cog bump --auto --skip-ci
-      - id: current_version
-        run: |
-          cog get-version | tee .version
-          echo "current_version=$( cat .version )"  >> "$GITHUB_OUTPUT"
-          rm .version
-        shell: bash
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/release-with-cog@main
 
   bake-edge-build:
     if: needs.release.outputs.current_version == needs.release.outputs.previous_version

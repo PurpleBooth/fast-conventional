@@ -337,25 +337,10 @@ jobs:
         with:
           name: built-bins
           path: target/bins/
-      - run: cog changelog --at "$TAG_V" > CHANGELOG.md
-        shell: bash
-        env:
-          TAG_V: v${{ needs.release.outputs.current_version }}
-      - name: Add hashes
-        run: |
-            (
-              cd ./target/bins/
-              for file in *; do
-                if [[ -f "$file" ]]; then
-                  sha256sum "$file" > "$file.sha256"
-                fi
-              done
-            )
-      - id: release_notes
-        run: |
-          echo 'release_notes<<EOF' >> $GITHUB_OUTPUT
-          cat CHANGELOG.md >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/generate-sha256-files@main
+        name: Generate .sha256 files
+        with:
+          target: target/bins/
       - id: release_option_prep
         run: |
           echo "sha=$(git rev-parse  HEAD)" >> $GITHUB_OUTPUT
@@ -370,7 +355,7 @@ jobs:
           tag: v${{ needs.release.outputs.current_version }}
           url: https://codeberg.org
           release-dir: ./target/bins/
-          release-notes: ${{ steps.release_notes.outputs.release_notes }}
+          release-notes: ${{ needs.release.outputs.changelog }}
       - run: |
           for RPM in ./target/bins/*.rpm ; do
             curl --retry 12 --retry-all-errors --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \

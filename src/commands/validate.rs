@@ -42,7 +42,7 @@ pub struct Failed {
 }
 
 impl Failed {
-    fn new(failed_commits: Vec<GitShortRef>) -> Self {
+    const fn new(failed_commits: Vec<GitShortRef>) -> Self {
         Self { failed_commits }
     }
 }

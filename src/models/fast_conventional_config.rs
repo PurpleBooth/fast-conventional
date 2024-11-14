@@ -171,7 +171,7 @@ scopes: ["mergify", "just", "github"]"#;
             tempfile::NamedTempFile::new().expect("failed to create temporary file");
         let path = temp_file.path().to_path_buf();
 
-        write!(temp_file, r#"types: [ci]"#).expect("failed to write test config");
+        write!(temp_file, r"types: [ci]").expect("failed to write test config");
 
         let actual: FastConventionalConfig = path.try_into().expect("Yaml unexpectedly invalid");
 
@@ -192,8 +192,8 @@ scopes: ["mergify", "just", "github"]"#;
 
         write!(
             temp_file,
-            r#"types: [ci]
-scopes: [src, fastconventional]"#
+            r"types: [ci]
+scopes: [src, fastconventional]"
         )
         .expect("failed to write test config");
 

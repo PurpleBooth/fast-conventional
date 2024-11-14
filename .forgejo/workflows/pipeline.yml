@@ -4,12 +4,6 @@ on:
   pull_request:
   workflow_dispatch:
 
-env:
-  HOMEBREW_NO_INSTALL_UPGRADE: 1
-  HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
-  HOMEBREW_NO_INSTALL_CLEANUP: 1
-  HOMEBREW_NO_AUTO_UPDATE: 1
-
 jobs:
   build:
     runs-on: docker
@@ -29,7 +23,6 @@ jobs:
         with:
           name: target
           path: target
-
 
   lint:
     runs-on: docker

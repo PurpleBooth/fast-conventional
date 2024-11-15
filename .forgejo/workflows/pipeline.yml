@@ -325,61 +325,10 @@ jobs:
             mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
           done
           find target/bins/ -type d -empty -delete
-      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
-        name: Upload binaries
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/forgejo-release@main
+        name: Upload release
         with:
-          name: built-bins
-          path: target/bins/
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/generate-sha256-files@main
-        name: Generate .sha256 files
-        with:
+          fj_token: ${{ secrets.FJ_TOKEN }}
           target: target/bins/
-      - id: release_option_prep
-        run: |
-          echo "sha=$(git rev-parse  HEAD)" >> $GITHUB_OUTPUT
-      - uses: https://code.forgejo.org/actions/forgejo-release@v2
-        env:
-          GNUPGHOME: ${{ steps.release_option_prep.outputs.gnupghome }}
-        with:
-          token: ${{ secrets.FJ_TOKEN }}
-          sha: ${{ steps.release_option_prep.outputs.sha }}
-          direction: upload
-          title: Release v${{ needs.release.outputs.current_version }}
           tag: v${{ needs.release.outputs.current_version }}
-          url: https://codeberg.org
-          release-dir: ./target/bins/
-          release-notes: ${{ needs.release.outputs.changelog }}
-      - run: |
-          for RPM in ./target/bins/*.rpm ; do
-            curl --retry 12 --retry-all-errors --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
-               --upload-file "$RPM" \
-               "https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/rpm/${GITHUB_REPOSITORY#*/}/upload"
-          done
-        env:
-          FJ_TOKEN: ${{ secrets.FJ_TOKEN }}
-      - run: |
-          for DEB in ./target/bins/*.deb ; do
-            curl --retry 12 --retry-all-errors --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
-               --upload-file "$DEB" \
-               "https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/debian/pool/stable/${GITHUB_REPOSITORY#*/}/upload"
-          done
-        env:
-          FJ_TOKEN: ${{ secrets.FJ_TOKEN }}
-      - run: |
-          for APK in ./target/bins/*.apk ; do
-            curl --retry 12 --retry-all-errors --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
-              --upload-file "$APK" \
-              "https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/alpine/stable/${GITHUB_REPOSITORY#*/}"
-          done
-        env:
-          FJ_TOKEN: ${{ secrets.FJ_TOKEN }}
-      - run: |
-          for ZST in ./target/bins/*.zst ; do
-            curl --retry 12 --retry-all-errors -X PUT \
-              "https://codeberg.org/api/packages/$GITHUB_REPOSITORY_OWNER/arch/${GITHUB_REPOSITORY#*/}" \
-              --user "$GITHUB_REPOSITORY_OWNER:$FJ_TOKEN" \
-              --header "Content-Type: application/octet-stream" \
-              --data-binary "@$ZST"
-          done
-        env:
-          FJ_TOKEN: ${{ secrets.FJ_TOKEN }}
+          changelog: ${{ needs.release.outputs.changelog }}

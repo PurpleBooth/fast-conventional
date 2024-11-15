@@ -166,13 +166,12 @@ jobs:
         name: Install rust
         secrets:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - name: Get tags
-        run: git fetch --tags origin
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
-      - name: Semver release
-        id: release
-        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/release-with-cog@main
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/configure-git-user@main
+        name: Configure git user
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/release-with-cog@main
+        name: Release using Cog
 
   bake-edge-build:
     if: needs.release.outputs.current_version == needs.release.outputs.previous_version

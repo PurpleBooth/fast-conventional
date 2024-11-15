@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.30](https://codeberg.org/PurpleBooth/git-mit/compare/d1f9cd7bb81873d61fa51afb51aed12c3bcdd775..v2.3.30) - 2024-11-15
+#### Bug Fixes
+- Add missing ids - ([d1f9cd7](https://codeberg.org/PurpleBooth/git-mit/commit/d1f9cd7bb81873d61fa51afb51aed12c3bcdd775)) - Billie Thompson
+
+- - -
+
 ## [v2.3.29](https://codeberg.org/PurpleBooth/git-mit/compare/41701f8311687fdff70ac9be811f06bfa8f0c03f..v2.3.29) - 2024-11-15
 #### Bug Fixes
 - test release - ([41701f8](https://codeberg.org/PurpleBooth/git-mit/commit/41701f8311687fdff70ac9be811f06bfa8f0c03f)) - Billie Thompson

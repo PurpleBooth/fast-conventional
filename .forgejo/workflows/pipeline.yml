@@ -172,6 +172,7 @@ jobs:
         name: Configure git user
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/release-with-cog@main
         name: Release using Cog
+        id: release
 
   bake-edge-build:
     if: needs.release.outputs.current_version == needs.release.outputs.previous_version

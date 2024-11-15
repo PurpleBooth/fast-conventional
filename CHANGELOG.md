@@ -2,6 +2,22 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.28](https://codeberg.org/PurpleBooth/git-mit/compare/9e18d99d808746013914d37eeb7fb41b8edbb0bc..v2.3.28) - 2024-11-15
+#### Bug Fixes
+- **(deps)** update rust crate clap_complete to v4.5.38 - ([e2b27ad](https://codeberg.org/PurpleBooth/git-mit/commit/e2b27ad1085644b478ab8434a033958534f2edde)) - Solace System Renovate Fox
+- **(deps)** update rust crate clap to v4.5.21 - ([4fe74c7](https://codeberg.org/PurpleBooth/git-mit/commit/4fe74c7e4f901f4f87a9fbcd13a60c32eb648ac4)) - Solace System Renovate Fox
+#### Continuous Integration
+- set git user - ([d2442fe](https://codeberg.org/PurpleBooth/git-mit/commit/d2442fef74d8703c086443140eb3bbaa4121c82c)) - Billie Thompson
+- Remove stray envs - ([4c885fa](https://codeberg.org/PurpleBooth/git-mit/commit/4c885fa7e24e5edb1d403d06a48db088edc5b3de)) - Billie Thompson
+- Use shared sha generation - ([04ece66](https://codeberg.org/PurpleBooth/git-mit/commit/04ece66772dc8b7b177be99228b95201ded97564)) - Billie Thompson
+- use common release - ([31f68d7](https://codeberg.org/PurpleBooth/git-mit/commit/31f68d7ccc7faf945c030834546305d3dff5634f)) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** update rust:alpine docker digest to 2f42ce0 - ([54a8a97](https://codeberg.org/PurpleBooth/git-mit/commit/54a8a97880f024842158695e1699d95566083a16)) - Solace System Renovate Fox
+- **(deps)** update rust:alpine docker digest to 00c2107 - ([9e18d99](https://codeberg.org/PurpleBooth/git-mit/commit/9e18d99d808746013914d37eeb7fb41b8edbb0bc)) - Solace System Renovate Fox
+- follow clippies advice - ([b05c874](https://codeberg.org/PurpleBooth/git-mit/commit/b05c8749fafe8627af83de300a9e09cb8de8bea4)) - Billie Thompson
+
+- - -
+
 ## [v2.3.27](https://codeberg.org/PurpleBooth/git-mit/compare/2759a98f116ff882b0d65be8fea2628327de8ff0..v2.3.27) - 2024-11-12
 #### Bug Fixes
 - Test release with platform set - ([ea2add1](https://codeberg.org/PurpleBooth/git-mit/commit/ea2add17566a927f086c8f074f701456926c955c)) - Billie Thompson

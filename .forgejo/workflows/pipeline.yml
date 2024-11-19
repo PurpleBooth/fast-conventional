@@ -63,7 +63,7 @@ jobs:
     needs:
       - lint
     runs-on: docker
-    if: always() && contains(needs.*.result, 'failure') && github.ref == 'refs/heads/main'
+    if: always() && contains(needs.lint.result, 'failure') && github.ref == 'refs/heads/main'
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         name: Checkout
@@ -73,6 +73,14 @@ jobs:
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - run: |
+          apt-get update
+          apt-get install -y socat
+        name: Install socat
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-specdown@main
+        name: Install specdown
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
+        name: Install just
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
@@ -81,14 +89,17 @@ jobs:
           name: target
       - name: 'Unpack built assets'
         run: tar -xvf target.tar && rm target.tar
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
-        name: Install just
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/configure-git-user@main
-        name: Configure git user
       - run: just fmt
         name: Format
       - run: just lint
         name: Lint
+      - run: just test
+        name: Unit test
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-specdown@main
+      - run: just specdown
+        name: Integration test
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/configure-git-user@main
+        name: Configure git user
       - name: Commit formatting
         run: |
           git add .

@@ -47,7 +47,6 @@ jobs:
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download built files
         with:
-          path: target
           pattern: target
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
@@ -73,7 +72,6 @@ jobs:
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download built files
         with:
-          path: target
           pattern: target
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
@@ -104,7 +102,6 @@ jobs:
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download built files
         with:
-          path: target
           pattern: target
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
@@ -134,7 +131,6 @@ jobs:
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download built files
         with:
-          path: target
           pattern: target
       - run: just specdown
         name: Integration test
@@ -258,7 +254,6 @@ jobs:
         name: Download docker cache
         with:
           name: target-docker-bake
-          path: target/docker-bake
       - name: Set up Docker Buildx
         uses: https://code.forgejo.org/docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3
       - name: Login to GitHub Container Registry
@@ -346,7 +341,6 @@ jobs:
         name: Download docker cache
         with:
           name: target-docker-bake
-          path: target/docker-bake
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
       - name: Set up Docker Buildx

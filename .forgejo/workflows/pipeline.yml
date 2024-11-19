@@ -176,7 +176,7 @@ jobs:
           set: |
             docker.args.VER=0.1.0
             *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake
+            *.cache-to=type=local,dest=target/docker-bake,mode=max
           push: false
           files: |
             ./docker-bake.hcl
@@ -193,7 +193,7 @@ jobs:
           set: |
             bins*.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake
+            *.cache-to=type=local,dest=target/docker-bake,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -291,7 +291,7 @@ jobs:
           set: |
             docker.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake
+            *.cache-to=type=local,dest=target/docker-bake,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -308,7 +308,7 @@ jobs:
           set: |
             bins*.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake
+            *.cache-to=type=local,dest=target/docker-bake,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -384,7 +384,7 @@ jobs:
           set: |
             docker.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake
+            *.cache-to=type=local,dest=target/docker-bake,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -401,7 +401,7 @@ jobs:
           set: |
             bins*.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake
+            *.cache-to=type=local,dest=target/docker-bake,mode=max
           push: true
           files: |
             ./docker-bake.hcl

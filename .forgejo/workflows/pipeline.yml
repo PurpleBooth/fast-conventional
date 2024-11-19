@@ -42,6 +42,36 @@ jobs:
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - run: just lint
+      - run: just fmt
+        if: failure() && github.ref == 'refs/heads/main'
+  fix:
+    needs:
+      - lint
+    runs-on: docker
+    if: always() && contains(needs.*.result, 'failure') && github.ref == 'refs/heads/main'
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        name: Checkout
+        with:
+          token: ${{ secrets.FJ_TOKEN }}
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
+        name: Install rust
+        with:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
+        name: Install cocogitto
+      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
+        with:
+          path: target
+          pattern: target
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
+        name: Install just
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/configure-git-user@main
+        name: Configure git user
+      - run: just fmt
+      - run: git add .
+      - run: cog commit ci "fix formatting"
+      - run: git push origin main
 
   unit-test:
     needs:

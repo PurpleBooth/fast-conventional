@@ -12,7 +12,7 @@ jobs:
         name: Checkout
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
-        secrets:
+        with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
@@ -33,7 +33,7 @@ jobs:
         name: Checkout
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
-        secrets:
+        with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         with:
@@ -52,7 +52,7 @@ jobs:
         name: Checkout
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
-        secrets:
+        with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         with:
@@ -70,7 +70,7 @@ jobs:
         name: Checkout
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
-        secrets:
+        with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - run: command -v specdown >/dev/null 2>&1 || cargo install specdown --git https://github.com/specdown/specdown.git
         name: Install specdown
@@ -164,7 +164,7 @@ jobs:
           fetch-depth: 0
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
-        secrets:
+        with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto

@@ -71,7 +71,7 @@ jobs:
       - run: just fmt
       - run: just lint
       - run: git add .
-      - run: cog commit ci "fix formatting"
+      - run: cog commit chore "fix formatting"
       - run: git push origin main
 
   unit-test:

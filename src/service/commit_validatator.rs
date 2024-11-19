@@ -19,9 +19,8 @@ fn is_valid_with(
     config: &FastConventionalConfig,
 ) -> impl Fn(&(GitShortRef, CommitMessage<'_>)) -> bool + '_ {
     |message: &(GitShortRef, CommitMessage<'_>)| -> bool {
-        ConventionalCommit::try_from(message.clone().1).map_or(false, |conventional_commit| {
-            uses_configured_values(config, &conventional_commit)
-        })
+        ConventionalCommit::try_from(message.clone().1)
+            .is_ok_and(|conventional_commit| uses_configured_values(config, &conventional_commit))
     }
 }
 

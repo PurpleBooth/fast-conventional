@@ -42,8 +42,7 @@ jobs:
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - run: just lint
-      - run: just fmt
-        if: failure() && github.ref == 'refs/heads/main'
+
   fix:
     needs:
       - lint

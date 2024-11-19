@@ -26,11 +26,13 @@ jobs:
         name: Release build
       - run: just build-debug
         name: Debug build
+      - name: 'Package built assets'
+        run: tar -cvf target.tar target
       - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
         name: Upload built files
         with:
           name: target
-          path: target
+          path: target.tar
 
   lint:
     name: "Lint"
@@ -47,7 +49,9 @@ jobs:
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download built files
         with:
-          pattern: target
+          name: target
+      - name: 'Unpack built assets'
+        run: tar -xvf target.tar && rm target.tar
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - run: just lint || ( just clean && just lint )
@@ -72,7 +76,9 @@ jobs:
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download built files
         with:
-          pattern: target
+          name: target
+      - name: 'Unpack built assets'
+        run: tar -xvf target.tar && rm target.tar
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/configure-git-user@main
@@ -102,7 +108,9 @@ jobs:
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download built files
         with:
-          pattern: target
+          name: target
+      - name: 'Unpack built assets'
+        run: tar -xvf target.tar && rm target.tar
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - run: just test || ( just clean && just test )
@@ -131,7 +139,9 @@ jobs:
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download built files
         with:
-          pattern: target
+          name: target
+      - name: 'Unpack built assets'
+        run: tar -xvf target.tar && rm target.tar
       - run: just specdown || ( just clean && just specdown )
         name: Integration test
 

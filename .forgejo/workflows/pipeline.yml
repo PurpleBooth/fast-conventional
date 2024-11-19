@@ -175,7 +175,7 @@ jobs:
         with:
           set: |
             docker.args.VER=0.1.0
-            *.cache-from=type=local,dest=target/docker-bake
+            *.cache-from=type=local,src=target/docker-bake
             *.cache-to=type=local,dest=target/docker-bake
           push: false
           files: |
@@ -192,7 +192,7 @@ jobs:
         with:
           set: |
             bins*.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,dest=target/docker-bake
+            *.cache-from=type=local,src=target/docker-bake
             *.cache-to=type=local,dest=target/docker-bake
           push: true
           files: |
@@ -290,7 +290,7 @@ jobs:
         with:
           set: |
             docker.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,dest=target/docker-bake
+            *.cache-from=type=local,src=target/docker-bake
             *.cache-to=type=local,dest=target/docker-bake
           push: true
           files: |
@@ -307,7 +307,7 @@ jobs:
         with:
           set: |
             bins*.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,dest=target/docker-bake
+            *.cache-from=type=local,src=target/docker-bake
             *.cache-to=type=local,dest=target/docker-bake
           push: true
           files: |
@@ -383,7 +383,7 @@ jobs:
         with:
           set: |
             docker.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,dest=target/docker-bake
+            *.cache-from=type=local,src=target/docker-bake
             *.cache-to=type=local,dest=target/docker-bake
           push: true
           files: |
@@ -400,7 +400,7 @@ jobs:
         with:
           set: |
             bins*.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,dest=target/docker-bake
+            *.cache-from=type=local,src=target/docker-bake
             *.cache-to=type=local,dest=target/docker-bake
           push: true
           files: |

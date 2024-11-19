@@ -163,6 +163,8 @@ jobs:
         name: Turn repository name into docker registry name
         env:
           REPOSITORY: ${{ github.repository }}
+      - run: mkdir -p target/docker-bake
+        name: Create docker cache directory
       - name: Extract metadata (tags, labels) for Docker
         id: meta-without-version
         uses: https://code.forgejo.org/docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5

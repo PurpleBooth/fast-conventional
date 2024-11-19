@@ -6,6 +6,7 @@ on:
 
 jobs:
   build:
+    name: "Build binaries"
     runs-on: docker
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -17,18 +18,22 @@ jobs:
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - uses: https://code.forgejo.org/actions/cache@v4
+        name: Restore from cache
         with:
           path: target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - run: just build-release
+        name: Release build
       - run: just build-debug
+        name: Debug build
       - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
-        name: Upload binaries
+        name: Upload built files
         with:
           name: target
           path: target
 
   lint:
+    name: "Lint"
     runs-on: docker
     needs:
       - build
@@ -40,6 +45,7 @@ jobs:
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
+        name: Download built files
         with:
           path: target
           pattern: target
@@ -48,6 +54,7 @@ jobs:
       - run: just lint
 
   fix:
+    name: "Fix formatting"
     needs:
       - lint
     runs-on: docker
@@ -64,6 +71,7 @@ jobs:
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
+        name: Download built files
         with:
           path: target
           pattern: target
@@ -72,12 +80,17 @@ jobs:
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/configure-git-user@main
         name: Configure git user
       - run: just fmt
+        name: Format
       - run: just lint
-      - run: git add .
-      - run: cog commit chore "fix formatting"
-      - run: git push origin main
+        name: Lint
+      - name: Commit formatting
+        run: |
+          git add .
+          cog commit chore "fix formatting"
+          git push origin main
 
   unit-test:
+    name: "Unit test"
     needs:
       - build
     runs-on: docker
@@ -89,13 +102,17 @@ jobs:
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
+        name: Download built files
         with:
           path: target
           pattern: target
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
+        name: Install just
       - run: just test
+        name: Test
 
   integration-test:
+    name: "Integration test"
     needs:
       - build
     runs-on: docker
@@ -109,18 +126,22 @@ jobs:
       - run: command -v specdown >/dev/null 2>&1 || cargo install specdown --git https://github.com/specdown/specdown.git
         name: Install specdown
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
+        name: Install just
       - run: |
           apt-get update
           apt-get install -y socat
-        name: apt-get install -y socat
+        name: Install socat
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
+        name: Download built files
         with:
           path: target
           pattern: target
       - run: just specdown
+        name: Integration test
 
   bake-edge-test:
     runs-on: docker
+    name: "Test release build"
     steps:
       - name: Checkout
         uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -172,7 +193,7 @@ jobs:
             ${{ steps.meta-without-version.outputs.bake-file-labels }}
           targets: bins
       - shell: bash
-        name: "Flatten filenames"
+        name: "Move binaries to release path"
         run: |
           for I in target/bins/*/*/* ; do
             mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
@@ -181,6 +202,7 @@ jobs:
 
   release:
     if: github.ref == 'refs/heads/main'
+    name: Release
     needs:
       - unit-test
       - integration-test
@@ -196,6 +218,7 @@ jobs:
         with:
           token: ${{ secrets.FJ_TOKEN }}
           fetch-depth: 0
+        name: Checkout
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
         with:
@@ -209,6 +232,7 @@ jobs:
         id: release
 
   bake-edge-build:
+    name: Create pre-release assets
     if: needs.release.outputs.current_version == needs.release.outputs.previous_version
     runs-on: docker
     needs:
@@ -270,7 +294,7 @@ jobs:
             ${{ steps.meta-without-version.outputs.bake-file-labels }}
           targets: bins
       - shell: bash
-        name: "Flatten filenames"
+        name: "Move binaries to release path"
         run: |
           for I in target/bins/*/*/* ; do
             mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
@@ -283,6 +307,7 @@ jobs:
           path: target/bins/
 
   bake-release-build:
+    name: Create release assets
     if: needs.release.outputs.current_version != needs.release.outputs.previous_version
     needs:
       - release
@@ -353,7 +378,7 @@ jobs:
             ${{ steps.meta-with-version.outputs.bake-file-labels }}
           targets: bins
       - shell: bash
-        name: "Flatten filenames"
+        name: "Move binaries to release path"
         run: |
           for I in target/bins/*/*/* ; do
             mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"

@@ -167,7 +167,7 @@ jobs:
         name: Create docker cache directory
       - name: Extract metadata (tags, labels) for Docker
         id: meta-without-version
-        uses: https://code.forgejo.org/docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5
+        uses: https://code.forgejo.org/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
         with:
           bake-target: docker
           images: ${{ steps.docker.outputs.repository }}
@@ -281,7 +281,7 @@ jobs:
           REPOSITORY: ${{ github.repository }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta-without-version
-        uses: https://code.forgejo.org/docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5
+        uses: https://code.forgejo.org/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
         with:
           bake-target: docker
           images: ${{ steps.docker.outputs.repository }}
@@ -370,7 +370,7 @@ jobs:
           REPOSITORY: ${{ github.repository }}
       - name: Extract versioned metadata (tags, labels) for Docker
         id: meta-with-version
-        uses: https://code.forgejo.org/docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5
+        uses: https://code.forgejo.org/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
         with:
           bake-target: docker
           images: ${{ steps.docker.outputs.repository }}

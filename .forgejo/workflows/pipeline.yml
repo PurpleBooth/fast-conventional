@@ -47,14 +47,14 @@ jobs:
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built files
+        name: Download built archive
         with:
           name: target
       - name: 'Unpack built assets'
         run: tar -xvf target.tar && rm target.tar
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
-      - run: just lint || ( just clean && just lint )
+      - run: just lint
 
   fix:
     name: "Fix formatting"
@@ -74,7 +74,7 @@ jobs:
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built files
+        name: Download built archive
         with:
           name: target
       - name: 'Unpack built assets'
@@ -106,14 +106,14 @@ jobs:
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built files
+        name: Download built archive
         with:
           name: target
       - name: 'Unpack built assets'
         run: tar -xvf target.tar && rm target.tar
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
-      - run: just test || ( just clean && just test )
+      - run: just test
         name: Test
 
   integration-test:
@@ -137,12 +137,12 @@ jobs:
           apt-get install -y socat
         name: Install socat
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built files
+        name: Download built archive
         with:
           name: target
       - name: 'Unpack built assets'
         run: tar -xvf target.tar && rm target.tar
-      - run: just specdown || ( just clean && just specdown )
+      - run: just specdown
         name: Integration test
 
   bake-edge-test:

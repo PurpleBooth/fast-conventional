@@ -50,7 +50,7 @@ jobs:
           pattern: target
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
-      - run: just lint
+      - run: just lint || ( just clean && just lint )
 
   fix:
     name: "Fix formatting"
@@ -105,7 +105,7 @@ jobs:
           pattern: target
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
-      - run: just test
+      - run: just test || ( just clean && just test )
         name: Test
 
   integration-test:
@@ -132,7 +132,7 @@ jobs:
         name: Download built files
         with:
           pattern: target
-      - run: just specdown
+      - run: just specdown || ( just clean && just specdown )
         name: Integration test
 
   bake-edge-test:

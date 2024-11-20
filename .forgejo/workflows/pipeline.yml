@@ -169,14 +169,14 @@ jobs:
       - uses: https://code.forgejo.org/actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
         name: Restore from cache
         with:
-          path: target/docker-bake
-          key: ${{ runner.os }}-docker
+          path: target/bake-edge-test
+          key: ${{ runner.os }}-bake-edge-test
       - run: echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
         id: docker
         name: Turn repository name into docker registry name
         env:
           REPOSITORY: ${{ github.repository }}
-      - run: mkdir -p target/docker-bake
+      - run: mkdir -p target/docker-bake-edge-test
         name: Create docker cache directory
       - name: Extract metadata (tags, labels) for Docker
         id: meta-without-version
@@ -197,8 +197,8 @@ jobs:
           set: |
             *.attest=type=provenance,mode=max
             *.args.VER=0.1.0
-            *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake,mode=max
+            *.cache-from=type=local,src=target/docker-bake-edge-test
+            *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max
           push: false
           files: |
             ./docker-bake.hcl
@@ -215,8 +215,8 @@ jobs:
           set: |
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake,mode=max
+            *.cache-from=type=local,src=target/docker-bake-edge-test
+            *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -235,7 +235,7 @@ jobs:
         name: Upload docker cache
         with:
           name: target-docker-bake
-          path: target/docker-bake
+          path: target/docker-bake-edge-test
 
   release:
     if: github.ref == 'refs/heads/main'
@@ -289,6 +289,13 @@ jobs:
           registry: codeberg.org
           username: ${{ github.actor }}
           password: ${{ secrets.FJ_TOKEN }}
+      - uses: https://code.forgejo.org/actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
+        name: Restore from cache
+        with:
+          path: target/bake-edge-release
+          key: ${{ runner.os }}-bake-edge-release
+      - run: mkdir -p target/docker-bake-edge-release
+        name: Create docker cache directory
       - run: echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
         id: docker
         name: Turn repository name into docker registry name
@@ -313,8 +320,9 @@ jobs:
           set: |
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake,mode=max
+            *.cache-from=type=local,src=target/docker-bake-edge-test
+            *.cache-from=type=local,src=target/docker-bake-edge-release
+            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -331,8 +339,9 @@ jobs:
           set: |
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake,mode=max
+            *.cache-from=type=local,src=target/docker-bake-edge-test
+            *.cache-from=type=local,src=target/docker-bake-edge-release
+            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -380,6 +389,13 @@ jobs:
           registry: codeberg.org
           username: ${{ github.actor }}
           password: ${{ secrets.FJ_TOKEN }}
+      - uses: https://code.forgejo.org/actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
+        name: Restore from cache
+        with:
+          path: target/bake-edge-release
+          key: ${{ runner.os }}-bake-edge-release
+      - run: mkdir -p target/docker-bake-edge-release
+        name: Create docker cache directory
       - run: echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
         id: docker
         name: Turn repository name into docker registry name
@@ -407,8 +423,9 @@ jobs:
           set: |
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake,mode=max
+            *.cache-from=type=local,src=target/docker-bake-edge-test
+            *.cache-from=type=local,src=target/docker-bake-edge-release
+            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -425,8 +442,9 @@ jobs:
           set: |
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,src=target/docker-bake
-            *.cache-to=type=local,dest=target/docker-bake,mode=max
+            *.cache-from=type=local,src=target/docker-bake-edge-test
+            *.cache-from=type=local,src=target/docker-bake-edge-release
+            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl

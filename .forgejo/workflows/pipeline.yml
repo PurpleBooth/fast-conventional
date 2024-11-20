@@ -46,14 +46,14 @@ jobs:
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
+        name: Install just
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download built assets archive
         with:
           name: target
       - name: 'Unpack built assets'
         run: tar -xvf target.tar && rm target.tar
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
-        name: Install just
       - run: just lint
 
   fix:
@@ -115,14 +115,14 @@ jobs:
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
+        name: Install just
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download built assets archive
         with:
           name: target
       - name: 'Unpack built assets'
         run: tar -xvf target.tar && rm target.tar
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
-        name: Install just
       - run: just test
         name: Test
 
@@ -138,7 +138,7 @@ jobs:
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - run: command -v specdown >/dev/null 2>&1 || cargo install specdown --git https://github.com/specdown/specdown.git
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-specdown@main
         name: Install specdown
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just

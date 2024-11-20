@@ -324,8 +324,8 @@ jobs:
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
-            *.cache-from=type=local,src=target/docker-bake-edge-release
-            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
+#            *.cache-from=type=local,src=target/docker-bake-edge-release
+#            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
           push: true
           files: |
             ./docker-bake.hcl
@@ -343,8 +343,8 @@ jobs:
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
-            *.cache-from=type=local,src=target/docker-bake-edge-release
-            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
+#            *.cache-from=type=local,src=target/docker-bake-edge-release
+#            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
           push: true
           files: |
             ./docker-bake.hcl
@@ -428,8 +428,8 @@ jobs:
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
-            *.cache-from=type=local,src=target/docker-bake-edge-release
-            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
+#            *.cache-from=type=local,src=target/docker-bake-edge-release
+#            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
           push: true
           files: |
             ./docker-bake.hcl
@@ -447,8 +447,8 @@ jobs:
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
-            *.cache-from=type=local,src=target/docker-bake-edge-release
-            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
+#            *.cache-from=type=local,src=target/docker-bake-edge-release
+#            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
           push: true
           files: |
             ./docker-bake.hcl

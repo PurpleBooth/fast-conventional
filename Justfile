@@ -18,6 +18,13 @@ build-release:
 build-debug:
     cargo build
 
+# Build supported rust targets
+build:
+    cargo +stable build
+    cargo +stable build --release
+    cargo +nightly build
+    cargo +nightly build --release
+
 # Lint it
 lint:
     cargo +nightly fmt --all -- --check

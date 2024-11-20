@@ -47,7 +47,7 @@ jobs:
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built archive
+        name: Download built assets archive
         with:
           name: target
       - name: 'Unpack built assets'
@@ -82,7 +82,7 @@ jobs:
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built archive
+        name: Download built assets archive
         with:
           name: target
       - name: 'Unpack built assets'
@@ -117,7 +117,7 @@ jobs:
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built archive
+        name: Download built assets archive
         with:
           name: target
       - name: 'Unpack built assets'
@@ -148,7 +148,7 @@ jobs:
           apt-get install -y socat
         name: Install socat
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built archive
+        name: Download built assets archive
         with:
           name: target
       - name: 'Unpack built assets'

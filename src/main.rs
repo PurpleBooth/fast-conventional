@@ -45,4 +45,4 @@ fn main() -> Result<()> {
             config_path,
         } => commands::validate(repository_path, revision_selection, config_path),
     }
-}
+     }

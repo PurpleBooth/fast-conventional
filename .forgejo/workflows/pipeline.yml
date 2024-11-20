@@ -232,7 +232,7 @@ jobs:
       - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
         name: Upload docker cache
         with:
-          name: target-docker-bake
+          name: docker-bake-cache
           path: target/docker-bake-edge-test
 
   release:
@@ -278,7 +278,7 @@ jobs:
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download docker cache
         with:
-          name: target-docker-bake
+          name: docker-bake-cache
       - name: Set up Docker Buildx
         uses: https://code.forgejo.org/docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3
       - name: Login to GitHub Container Registry
@@ -376,7 +376,7 @@ jobs:
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download docker cache
         with:
-          name: target-docker-bake
+          name: docker-bake-cache
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
       - name: Set up Docker Buildx

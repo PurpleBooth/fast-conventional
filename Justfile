@@ -41,3 +41,6 @@ fmt:
 # Clean the build directory
 clean:
     cargo clean
+
+bake:
+    bash -c "GPG_PRIVATE_KEY=\"\" GPG_PASSPHRASE=\"\" docker buildx bake"

@@ -278,7 +278,7 @@ jobs:
     needs:
       - release
     steps:
-      - uses: https://github.com/PurpleBooth/generate-formula-action@v0.1.14
+      - uses: https://github.com/PurpleBooth/generate-formula-action@03882ef6068c2622837703f93b664dcc8840d43e # v0.1.14
         name: Create PR for formula
         with:
           current_version: ${{ needs.release.outputs.current_version }}

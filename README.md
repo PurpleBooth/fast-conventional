@@ -39,8 +39,10 @@ blow](demo.gif "A demo of the app running")
 ## Installing
 
 See the [releases
-page](https://github.com/PurpleBooth/fast-conventional/releases/latest)
-we build for linux and mac (all x86_64), alternatively use brew
+page](https://codeberg.org/PurpleBooth/fast-conventional/releases/latest)
+for binaries, and see the [packages
+page](https://codeberg.org/PurpleBooth/fast-conventional/packages) for
+RPM, Arch, Alpine, Debian and Docker repositories.
 
 ``` shell,skip()
 brew install PurpleBooth/repo/fast-conventional

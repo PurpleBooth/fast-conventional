@@ -271,6 +271,22 @@ jobs:
         name: Release using Cog
         id: release
 
+  update-homebrew-tap:
+    name: Update homebrew repo
+    if: needs.release.outputs.current_version != needs.release.outputs.previous_version
+    runs-on: docker
+    needs:
+      - release
+    steps:
+      - uses: https://github.com/PurpleBooth/generate-formula-action@v0.1.14
+        name: Create PR for formula
+        with:
+          current_version: ${{ needs.release.outputs.current_version }}
+          previous_version: ${{ needs.release.outputs.previous_version }}
+          committer_token: ${{ secrets.GH_PR_TOKEN }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
   bake-edge-build:
     name: Create pre-release assets
     if: needs.release.outputs.current_version == needs.release.outputs.previous_version

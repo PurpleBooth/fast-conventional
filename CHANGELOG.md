@@ -2,6 +2,60 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.32](https://codeberg.org/PurpleBooth/git-mit/compare/403dc9d2bb8a5313695847f133816558c13f0488..v2.3.32) - 2024-11-23
+#### Bug Fixes
+- test release - ([183351d](https://codeberg.org/PurpleBooth/git-mit/commit/183351df6c51b0a480c54ebe9fc5063e8ef27b67)) - Billie Thompson
+#### Build system
+- remove duplicate - ([0311ec1](https://codeberg.org/PurpleBooth/git-mit/commit/0311ec1c1d5ddd6272944e9a9b8abfa4321dd99a)) - Billie Thompson
+- Copy less into the docker files - ([a2e271f](https://codeberg.org/PurpleBooth/git-mit/commit/a2e271f410e618d482b81ee086434ea7f95c77dd)) - Billie Thompson
+- Add a target that builds for all supported rust targets - ([02a0b50](https://codeberg.org/PurpleBooth/git-mit/commit/02a0b50858aadc41901b74a1edf505a1bf006d87)) - Billie Thompson
+#### Continuous Integration
+- add homebrew release step - ([43d2aa7](https://codeberg.org/PurpleBooth/git-mit/commit/43d2aa777f7c98493db4a03020db2c3474091eab)) - Billie Thompson
+- use cached action rather than plain cargo - ([3e43678](https://codeberg.org/PurpleBooth/git-mit/commit/3e436781645f0b9cc828cb7a7b6eb56c0c4b1c60)) - Billie Thompson
+- correct the version output - ([d5b392a](https://codeberg.org/PurpleBooth/git-mit/commit/d5b392aa0813f759e987a43894abf3689dcf0a40)) - Billie Thompson
+- pull full repo for version - ([4810429](https://codeberg.org/PurpleBooth/git-mit/commit/481042928fd6f81c6c3f7c4ed3d33881ea246e0f)) - PurpleBooth
+- Change the version to be the latest version number - ([a8ba9aa](https://codeberg.org/PurpleBooth/git-mit/commit/a8ba9aac28b9388c95bd60b08a3fc360381a5ae4)) - Billie Thompson
+- Compress cache output - ([e9ba912](https://codeberg.org/PurpleBooth/git-mit/commit/e9ba9127e1fad3f2d45bb9e5e7633593bdb16971)) - Billie Thompson
+- Correct target for asset - ([88493ac](https://codeberg.org/PurpleBooth/git-mit/commit/88493acdafe4b68812e446612181793c0d12e848)) - Billie Thompson
+- Make the artifact name more accurate - ([34223e9](https://codeberg.org/PurpleBooth/git-mit/commit/34223e9e667689b70d2374daf13666eff4fdd386)) - Billie Thompson
+- Change name of step - ([160c867](https://codeberg.org/PurpleBooth/git-mit/commit/160c867dafd7bf735853683bb23d29c89ceda942)) - Billie Thompson
+- Add secondary cache for the release part - ([6271e21](https://codeberg.org/PurpleBooth/git-mit/commit/6271e219acf7b32ee5c88bde7af58455c33cca28)) - Billie Thompson
+- add some provenance and apply the args to all targets - ([20e623b](https://codeberg.org/PurpleBooth/git-mit/commit/20e623bcfadd5c960e93185e6c117403b288b0f3)) - Billie Thompson
+- Move all the install bits together - ([3b8e96e](https://codeberg.org/PurpleBooth/git-mit/commit/3b8e96ef5434e5d2e5fa43934ad87d547c9c6628)) - Billie Thompson
+- add a crontab to keep the result fresh - ([f898a73](https://codeberg.org/PurpleBooth/git-mit/commit/f898a73de217af7bea22e69833c999710fc10480)) - Billie Thompson
+- add cache directory for test build - ([099e937](https://codeberg.org/PurpleBooth/git-mit/commit/099e9378a27c8d1d2237ce155f39c86fd4db8140)) - Billie Thompson
+- Remove fallback build - ([0a8fc34](https://codeberg.org/PurpleBooth/git-mit/commit/0a8fc3452a599db415d6a0f58d1322128cb5152e)) - Billie Thompson
+- package target cache - ([e647115](https://codeberg.org/PurpleBooth/git-mit/commit/e6471154d0051e13b21ca2aae4e15842b24baad2)) - Billie Thompson
+- Sometimes there are out of target dependencies, this tries a clean - ([eca428d](https://codeberg.org/PurpleBooth/git-mit/commit/eca428d6f263c891da770e9801127e7ed0420096)) - Billie Thompson
+- Correct cache dir - ([8ba9763](https://codeberg.org/PurpleBooth/git-mit/commit/8ba97634df272e00a21aec862e7588c90ad7bd13)) - Billie Thompson
+- Add mode max to cache - ([93c8f9e](https://codeberg.org/PurpleBooth/git-mit/commit/93c8f9eb084e874471ff0fd2d60ca7f4cba115f0)) - Billie Thompson
+- Correct cache from - ([d6efc07](https://codeberg.org/PurpleBooth/git-mit/commit/d6efc07f8270a14eeb881a60145aa149766a31dd)) - Billie Thompson
+- Cache docker assets - ([2f60502](https://codeberg.org/PurpleBooth/git-mit/commit/2f605023b80d3bac767b07e1f43d1df38ee34618)) - Billie Thompson
+- Add names for jobs - ([d99bb04](https://codeberg.org/PurpleBooth/git-mit/commit/d99bb048a6c526e099c449957d39e6f1dc57c4de)) - Billie Thompson
+- Cache build step - ([4050f4c](https://codeberg.org/PurpleBooth/git-mit/commit/4050f4c9c32531f7fe56939f72b51119f4f1357e)) - Billie Thompson
+- Swap to chore, rather than ci, for fixes - ([cd40016](https://codeberg.org/PurpleBooth/git-mit/commit/cd40016b6e73ed7de1c6e7db1912cb54914f1ca4)) - Billie Thompson
+- run lint after fixing before trying to commit - ([da34281](https://codeberg.org/PurpleBooth/git-mit/commit/da3428173c7158fec657b23da0c02086d6eb384c)) - Billie Thompson
+- try and fix changes - ([f2a739c](https://codeberg.org/PurpleBooth/git-mit/commit/f2a739c8f5802ed8985767ae025520675642ada8)) - Billie Thompson
+- change secrets to with as with is incorrect - ([a14ffa4](https://codeberg.org/PurpleBooth/git-mit/commit/a14ffa4f399540841ec55d29e8a80d56a6b1f4db)) - Billie Thompson
+#### Documentation
+- Update the links to be for codeberg - ([ba40940](https://codeberg.org/PurpleBooth/git-mit/commit/ba409408a6ab8a750b0aa9764fb8d701adf72566)) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** update ghcr.io/catthehacker/ubuntu:act-latest docker digest to 117899b - ([b4e78d7](https://codeberg.org/PurpleBooth/git-mit/commit/b4e78d7e1676e8abaa37d43b80a37f5c549f17f3)) - Solace System Renovate Fox
+- **(deps)** pin dependencies - ([d3f572a](https://codeberg.org/PurpleBooth/git-mit/commit/d3f572a2973914d4b0756f4fc6e1022c49546ce9)) - Solace System Renovate Fox
+- **(deps)** update docker/metadata-action digest to 369eb59 - ([928d25b](https://codeberg.org/PurpleBooth/git-mit/commit/928d25b2109cb566bbfb768a6d1004d053421f31)) - Solace System Renovate Fox
+- **(deps)** pin dependencies - ([838bf85](https://codeberg.org/PurpleBooth/git-mit/commit/838bf856e79c65b27796fa9e770fe5afaf517b2c)) - Solace System Renovate Fox
+- **(deps)** update goreleaser/nfpm docker digest to ae35b40 - ([a3f6b2c](https://codeberg.org/PurpleBooth/git-mit/commit/a3f6b2cdaa74cd53be8f0b46ab8d9bcf5bd56c21)) - Solace System Renovate Fox
+- **(deps)** update ghcr.io/catthehacker/ubuntu:act-latest docker digest to 19701a9 - ([403dc9d](https://codeberg.org/PurpleBooth/git-mit/commit/403dc9d2bb8a5313695847f133816558c13f0488)) - Solace System Renovate Fox
+- fix formatting - ([16580d7](https://codeberg.org/PurpleBooth/git-mit/commit/16580d71cb624d8d7002ddeb5f95b3074933e6c9)) - PurpleBooth
+- add undocumented docker bake config to just - ([43c40d8](https://codeberg.org/PurpleBooth/git-mit/commit/43c40d8194008684c76bfd1a53d67617dd2f53b6)) - Billie Thompson
+- Rename download cache action - ([d18ea57](https://codeberg.org/PurpleBooth/git-mit/commit/d18ea573e30cbd94c9a26dd8fa805e6eaa5ac13c)) - Billie Thompson
+- formatting - ([617cad5](https://codeberg.org/PurpleBooth/git-mit/commit/617cad5d08d793568f10101ae27bfee816ddcc58)) - Billie Thompson
+- follow clippy advice - ([e5d5383](https://codeberg.org/PurpleBooth/git-mit/commit/e5d53830430a986aab412cef8297b3cbf6a1f486)) - Billie Thompson
+#### Tests
+- auto fixture - ([dc41aac](https://codeberg.org/PurpleBooth/git-mit/commit/dc41aaceae3c4e83942ceded5fa89505528eea9e)) - Billie Thompson
+
+- - -
+
 ## [v2.3.31](https://codeberg.org/PurpleBooth/git-mit/compare/5738687c8f781b8a9d5404a064fb91eb42e517e4..v2.3.31) - 2024-11-15
 #### Bug Fixes
 - centralise release - ([5738687](https://codeberg.org/PurpleBooth/git-mit/commit/5738687c8f781b8a9d5404a064fb91eb42e517e4)) - Billie Thompson

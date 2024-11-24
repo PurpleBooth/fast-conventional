@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.34](https://codeberg.org/PurpleBooth/git-mit/compare/5c05460090a38844b3652ef7f238eef3bd8cc48b..v2.3.34) - 2024-11-24
+#### Bug Fixes
+- correct token key - ([734abb3](https://codeberg.org/PurpleBooth/git-mit/commit/734abb3bb5e940881ca817037762ecb16fc05a8a)) - Billie Thompson
+- correct token parameter - ([5c05460](https://codeberg.org/PurpleBooth/git-mit/commit/5c05460090a38844b3652ef7f238eef3bd8cc48b)) - Billie Thompson
+
+- - -
+
 ## [v2.3.33](https://codeberg.org/PurpleBooth/git-mit/compare/2e8b57ae818b187a615c6ba8ba789b7319bb9636..v2.3.33) - 2024-11-23
 #### Bug Fixes
 - test release - ([2e8b57a](https://codeberg.org/PurpleBooth/git-mit/commit/2e8b57ae818b187a615c6ba8ba789b7319bb9636)) - Billie Thompson

@@ -241,6 +241,7 @@ jobs:
             *.attest=type=provenance,mode=max
             *.args.VER=${{ steps.docker.outputs.target_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
+            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
             *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max,compression=zstd
           push: false
           files: |
@@ -259,6 +260,7 @@ jobs:
             *.attest=type=provenance,mode=max
             *.args.VER=${{ steps.docker.outputs.target_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
+            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
             *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max,compression=zstd
           push: true
           files: |
@@ -382,6 +384,7 @@ jobs:
             *.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
+            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
             *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
           push: true
           files: |
@@ -401,6 +404,7 @@ jobs:
             *.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
+            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
             *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
           push: true
           files: |
@@ -486,6 +490,7 @@ jobs:
             *.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
+            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
             *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
           push: true
           files: |
@@ -505,6 +510,7 @@ jobs:
             *.args.VER=${{ needs.release.outputs.current_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
+            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
             *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
           push: true
           files: |

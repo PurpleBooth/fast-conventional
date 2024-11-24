@@ -234,8 +234,11 @@ jobs:
             type=ref,event=tag
             type=ref,event=pr
             type=sha
-      - name: Bake Docker (without version)
+      - name: Bake (without version)
         uses: https://code.forgejo.org/docker/bake-action@511fde2517761e303af548ec9e0ea74a8a100112 # v4
+        env:
+          GPG_PRIVATE_KEY: ""
+          GPG_PASSPHRASE: ""
         with:
           set: |
             *.attest=type=provenance,mode=max
@@ -249,26 +252,7 @@ jobs:
             ${{ steps.meta-without-version.outputs.bake-file-tags }}
             ${{ steps.meta-without-version.outputs.bake-file-annotations }}
             ${{ steps.meta-without-version.outputs.bake-file-labels }}
-          targets: docker
-      - name: Bake Bins (without version)
-        uses: https://code.forgejo.org/docker/bake-action@511fde2517761e303af548ec9e0ea74a8a100112 # v4
-        env:
-          GPG_PRIVATE_KEY: ""
-          GPG_PASSPHRASE: ""
-        with:
-          set: |
-            *.attest=type=provenance,mode=max
-            *.args.VER=${{ steps.docker.outputs.target_version }}
-            *.cache-from=type=local,src=target/docker-bake-edge-test
-            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-            *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max,compression=zstd
-          push: true
-          files: |
-            ./docker-bake.hcl
-            ${{ steps.meta-without-version.outputs.bake-file-tags }}
-            ${{ steps.meta-without-version.outputs.bake-file-annotations }}
-            ${{ steps.meta-without-version.outputs.bake-file-labels }}
-          targets: bins
+          targets: docker,bins
       - shell: bash
         name: "Move binaries to release path"
         run: |
@@ -376,24 +360,7 @@ jobs:
             type=ref,event=tag
             type=ref,event=pr
             type=sha
-      - name: Bake Docker (without version)
-        uses: https://code.forgejo.org/docker/bake-action@511fde2517761e303af548ec9e0ea74a8a100112 # v4
-        with:
-          set: |
-            *.attest=type=provenance,mode=max
-            *.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,src=target/docker-bake-edge-test
-            *.cache-from=type=local,src=target/docker-bake-edge-release
-            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
-          push: true
-          files: |
-            ./docker-bake.hcl
-            ${{ steps.meta-without-version.outputs.bake-file-tags }}
-            ${{ steps.meta-without-version.outputs.bake-file-annotations }}
-            ${{ steps.meta-without-version.outputs.bake-file-labels }}
-          targets: docker
-      - name: Bake Bins (without version)
+      - name: Bake (without version)
         uses: https://code.forgejo.org/docker/bake-action@511fde2517761e303af548ec9e0ea74a8a100112 # v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -412,7 +379,7 @@ jobs:
             ${{ steps.meta-without-version.outputs.bake-file-tags }}
             ${{ steps.meta-without-version.outputs.bake-file-annotations }}
             ${{ steps.meta-without-version.outputs.bake-file-labels }}
-          targets: bins
+          targets: docker,bins
       - shell: bash
         name: "Move binaries to release path"
         run: |
@@ -482,24 +449,7 @@ jobs:
             type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }},prefix=v
             type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }}
             type=sha
-      - name: Bake Docker (with version)
-        uses: https://code.forgejo.org/docker/bake-action@511fde2517761e303af548ec9e0ea74a8a100112 # v4
-        with:
-          set: |
-            *.attest=type=provenance,mode=max
-            *.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,src=target/docker-bake-edge-test
-            *.cache-from=type=local,src=target/docker-bake-edge-release
-            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
-          push: true
-          files: |
-            ./docker-bake.hcl
-            ${{ steps.meta-with-version.outputs.bake-file-tags }}
-            ${{ steps.meta-with-version.outputs.bake-file-annotations }}
-            ${{ steps.meta-with-version.outputs.bake-file-labels }}
-          targets: docker
-      - name: Bake Bins (with version)
+      - name: Bake (with version)
         uses: https://code.forgejo.org/docker/bake-action@511fde2517761e303af548ec9e0ea74a8a100112 # v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -518,7 +468,7 @@ jobs:
             ${{ steps.meta-with-version.outputs.bake-file-tags }}
             ${{ steps.meta-with-version.outputs.bake-file-annotations }}
             ${{ steps.meta-with-version.outputs.bake-file-labels }}
-          targets: bins
+          targets: docker,bins
       - shell: bash
         name: "Move binaries to release path"
         run: |

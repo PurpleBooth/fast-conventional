@@ -487,3 +487,5 @@ jobs:
           target: target/bins
           tag: v${{ needs.release.outputs.current_version }}
           changelog: ${{ needs.release.outputs.changelog }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}

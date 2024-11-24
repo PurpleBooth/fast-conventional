@@ -17,6 +17,8 @@ jobs:
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
+        name: Install cocogitto
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - uses: https://code.forgejo.org/actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
@@ -50,6 +52,8 @@ jobs:
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
+        name: Install cocogitto
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
@@ -123,6 +127,8 @@ jobs:
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
+        name: Install cocogitto
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
@@ -150,6 +156,8 @@ jobs:
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
+        name: Install cocogitto
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-specdown@main
         name: Install specdown
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main

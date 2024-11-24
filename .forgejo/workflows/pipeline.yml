@@ -165,6 +165,10 @@ jobs:
           fetch-depth: 0
       - name: Set up Docker Buildx
         uses: https://code.forgejo.org/docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
+        name: Install rust
+        with:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
       - uses: https://code.forgejo.org/actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
@@ -174,7 +178,8 @@ jobs:
           key: ${{ runner.os }}-bake-edge-test
       - run: |
           echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
-          echo "target_version=$( cog get-version )" >> $GITHUB_OUTPUT
+          echo "target_version=$( cog bump --auto --skip-ci --dry-run )" >> $GITHUB_OUTPUT
+          cargo set-version "$( cog bump --auto --skip-ci --dry-run )"
         id: docker
         name: Turn repository name into docker registry name
         env:

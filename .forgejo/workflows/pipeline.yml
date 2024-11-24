@@ -198,7 +198,7 @@ jobs:
           [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run )"
       - run: |
           echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
-          echo "target_version=$( cog bump --auto --skip-ci --dry-run )" >> $GITHUB_OUTPUT
+          echo "target_version=$( cog get-version )" >> $GITHUB_OUTPUT
         id: docker
         name: Turn repository name into docker registry name
         env:

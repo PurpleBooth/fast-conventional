@@ -24,6 +24,10 @@ jobs:
         with:
           path: target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - name: Update version to next
+        shell: bash
+        run: |
+          [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run )"
       - run: just build
         name: Build supported targets
       - name: 'Package built assets'
@@ -54,6 +58,10 @@ jobs:
           name: target
       - name: 'Unpack built assets'
         run: tar -xvf target.tar && rm target.tar
+      - name: Update version to next
+        shell: bash
+        run: |
+          [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run )"
       - run: just lint
 
   fix:
@@ -123,6 +131,10 @@ jobs:
           name: target
       - name: 'Unpack built assets'
         run: tar -xvf target.tar && rm target.tar
+      - name: Update version to next
+        shell: bash
+        run: |
+          [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run )"
       - run: just test
         name: Test
 
@@ -152,6 +164,10 @@ jobs:
           name: target
       - name: 'Unpack built assets'
         run: tar -xvf target.tar && rm target.tar
+      - name: Update version to next
+        shell: bash
+        run: |
+          [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run )"
       - run: just specdown
         name: Integration test
 
@@ -176,10 +192,13 @@ jobs:
         with:
           path: target/bake-edge-test
           key: ${{ runner.os }}-bake-edge-test
+      - name: Update version to next
+        shell: bash
+        run: |
+          [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run )"
       - run: |
           echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
           echo "target_version=$( cog bump --auto --skip-ci --dry-run )" >> $GITHUB_OUTPUT
-          [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run )"
         id: docker
         name: Turn repository name into docker registry name
         env:

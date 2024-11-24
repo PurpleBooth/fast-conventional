@@ -484,6 +484,6 @@ jobs:
         name: Upload release
         with:
           fj_token: ${{ secrets.FJ_TOKEN }}
-          target: target/bins/
+          target: target/bins
           tag: v${{ needs.release.outputs.current_version }}
           changelog: ${{ needs.release.outputs.changelog }}

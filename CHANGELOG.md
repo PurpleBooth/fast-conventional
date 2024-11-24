@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.36](https://codeberg.org/PurpleBooth/git-mit/compare/6a7ed5bd084c760836c57ae4f397ccda0a05f36f..v2.3.36) - 2024-11-24
+#### Bug Fixes
+- add gpg key when releasing - ([52f9ffe](https://codeberg.org/PurpleBooth/git-mit/commit/52f9ffea82e66ef45859cc354220bc44c108f941)) - Billie Thompson
+#### Continuous Integration
+- try removing trailing slash - ([6a7ed5b](https://codeberg.org/PurpleBooth/git-mit/commit/6a7ed5bd084c760836c57ae4f397ccda0a05f36f)) - Billie Thompson
+
+- - -
+
 ## [v2.3.35](https://codeberg.org/PurpleBooth/git-mit/compare/95a248ef7be94850ea3e67ba24ed630017b13ca9..v2.3.35) - 2024-11-24
 #### Bug Fixes
 - test release - ([95a248e](https://codeberg.org/PurpleBooth/git-mit/commit/95a248ef7be94850ea3e67ba24ed630017b13ca9)) - Billie Thompson

@@ -13,6 +13,8 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         name: Checkout
+        with:
+          fetch-depth: 0
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
         with:
@@ -48,6 +50,8 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         name: Checkout
+        with:
+          fetch-depth: 0
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
         with:
@@ -123,6 +127,8 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         name: Checkout
+        with:
+          fetch-depth: 0
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
         with:
@@ -152,6 +158,8 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         name: Checkout
+        with:
+          fetch-depth: 0
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
         with:

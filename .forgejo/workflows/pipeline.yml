@@ -234,7 +234,7 @@ jobs:
             type=ref,event=tag
             type=ref,event=pr
             type=sha
-      - name: Bake (without version)
+      - name: Bake
         uses: https://code.forgejo.org/docker/bake-action@511fde2517761e303af548ec9e0ea74a8a100112 # v4
         env:
           GPG_PRIVATE_KEY: ""
@@ -360,7 +360,7 @@ jobs:
             type=ref,event=tag
             type=ref,event=pr
             type=sha
-      - name: Bake (without version)
+      - name: Bake
         uses: https://code.forgejo.org/docker/bake-action@511fde2517761e303af548ec9e0ea74a8a100112 # v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -449,7 +449,7 @@ jobs:
             type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }},prefix=v
             type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }}
             type=sha
-      - name: Bake (with version)
+      - name: Bake
         uses: https://code.forgejo.org/docker/bake-action@511fde2517761e303af548ec9e0ea74a8a100112 # v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}

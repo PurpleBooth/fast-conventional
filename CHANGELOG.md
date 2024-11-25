@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.38](https://codeberg.org/PurpleBooth/git-mit/compare/e14c7497d3640a672a50e8641fc9d85672cbf718..v2.3.38) - 2024-11-25
+#### Bug Fixes
+- test release - ([1f4f21d](https://codeberg.org/PurpleBooth/git-mit/commit/1f4f21d5df7f20533eba043cadbdc82cde100cfe)) - Billie Thompson
+#### Continuous Integration
+- Remove uneeded zstd compression - ([b13c0a8](https://codeberg.org/PurpleBooth/git-mit/commit/b13c0a8defb4774a38fa56e0b11dbb37ee9a9da8)) - Billie Thompson
+- remove v from retrieved version - ([014a5df](https://codeberg.org/PurpleBooth/git-mit/commit/014a5df3e27ab9dd1d4cd94a85b94c1f26159a3c)) - Billie Thompson
+- run both targets at once - ([007c8fd](https://codeberg.org/PurpleBooth/git-mit/commit/007c8fd747692210207c00d3615e0cb2b3ebeb19)) - Billie Thompson
+- cache from built image - ([56c64e5](https://codeberg.org/PurpleBooth/git-mit/commit/56c64e56a30bcb6501ce39386cce64b85338f523)) - Billie Thompson
+- pull the tags - ([1227f74](https://codeberg.org/PurpleBooth/git-mit/commit/1227f7477cc14dffab883248a7ea20f736f0ee86)) - Billie Thompson
+- add missing cog - ([976f721](https://codeberg.org/PurpleBooth/git-mit/commit/976f721b18be130d92aaf012b23fb6b695f24561)) - Billie Thompson
+- set version before running tests if needed - ([dd50626](https://codeberg.org/PurpleBooth/git-mit/commit/dd5062693c1f10ccd8872a1400f6522e17ddc1aa)) - Billie Thompson
+- update the version before running tests - ([476c192](https://codeberg.org/PurpleBooth/git-mit/commit/476c192578683adbde26f2ba8054cee4f5309872)) - Billie Thompson
+- only update version if needed - ([973142f](https://codeberg.org/PurpleBooth/git-mit/commit/973142ff74ae4c91194fe712b12b257cd5c738e6)) - Billie Thompson
+- build for next version rather than current - ([e14c749](https://codeberg.org/PurpleBooth/git-mit/commit/e14c7497d3640a672a50e8641fc9d85672cbf718)) - Billie Thompson
+
+- - -
+
 ## [v2.3.37](https://codeberg.org/PurpleBooth/git-mit/compare/a4cfcfbacb1f44bea63c35b340661ff58d5689d6..v2.3.37) - 2024-11-24
 #### Bug Fixes
 - test release - ([a4cfcfb](https://codeberg.org/PurpleBooth/git-mit/commit/a4cfcfbacb1f44bea63c35b340661ff58d5689d6)) - Billie Thompson

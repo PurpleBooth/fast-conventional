@@ -245,7 +245,7 @@ jobs:
             *.args.VER=${{ steps.docker.outputs.target_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-            *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max
+#            *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max
           push: false
           files: |
             ./docker-bake.hcl
@@ -372,7 +372,7 @@ jobs:
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
+#            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -386,7 +386,7 @@ jobs:
           for I in target/bins/*/*/* ; do
             mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
           done
-          find target/bins/ -type d -empty -delete
+          find target/bins/*.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max -type d -empty -delete
       - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
         name: Upload binaries
         with:
@@ -461,7 +461,7 @@ jobs:
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
+#            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl

@@ -245,7 +245,7 @@ dependencies = [
 
 [[package]]
 name = "fast-conventional"
-version = "2.3.38"
+version = "2.3.39"
 dependencies = [
  "clap",
  "clap_complete",

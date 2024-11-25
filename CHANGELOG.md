@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.39](https://codeberg.org/PurpleBooth/git-mit/compare/6a85e05ea23ba84814a905648a831a5d6d36961a..v2.3.39) - 2024-11-25
+#### Bug Fixes
+- test release - ([74c7051](https://codeberg.org/PurpleBooth/git-mit/commit/74c7051924f047afe188c6c1b51448f2a65d29f3)) - Billie Thompson
+#### Continuous Integration
+- fix names to be a bit nicer - ([7faf64f](https://codeberg.org/PurpleBooth/git-mit/commit/7faf64ffe789ff0aaaba86c123569b9fcd5ead6e)) - Billie Thompson
+- Remove typo - ([3998a7a](https://codeberg.org/PurpleBooth/git-mit/commit/3998a7a57c2c392269c0f83170586733be535298)) - Billie Thompson
+- add cache for docker build - ([157038c](https://codeberg.org/PurpleBooth/git-mit/commit/157038c2e842b30f1d96efd22d384f65e186bfd6)) - Billie Thompson
+- remove cache to - ([6a85e05](https://codeberg.org/PurpleBooth/git-mit/commit/6a85e05ea23ba84814a905648a831a5d6d36961a)) - Billie Thompson
+
+- - -
+
 ## [v2.3.38](https://codeberg.org/PurpleBooth/git-mit/compare/e14c7497d3640a672a50e8641fc9d85672cbf718..v2.3.38) - 2024-11-25
 #### Bug Fixes
 - test release - ([1f4f21d](https://codeberg.org/PurpleBooth/git-mit/commit/1f4f21d5df7f20533eba043cadbdc82cde100cfe)) - Billie Thompson

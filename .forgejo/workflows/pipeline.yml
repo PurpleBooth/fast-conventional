@@ -245,7 +245,7 @@ jobs:
             *.args.VER=${{ steps.docker.outputs.target_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-#            *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max
+            *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max
           push: false
           files: |
             ./docker-bake.hcl

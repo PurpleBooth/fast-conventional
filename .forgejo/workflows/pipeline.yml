@@ -245,7 +245,7 @@ jobs:
             *.args.VER=${{ steps.docker.outputs.target_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-            *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max,compression=zstd
+            *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max
           push: false
           files: |
             ./docker-bake.hcl
@@ -372,7 +372,7 @@ jobs:
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
+            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -461,7 +461,7 @@ jobs:
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max,compression=zstd
+            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl

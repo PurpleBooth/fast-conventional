@@ -7,6 +7,16 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
+  generate-repo:
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        name: Checkout
+        with:
+          fetch-depth: 0
+      - run: |
+          FILE_SHA="$(curl --silent --fail-with-body -output=- https://codeberg.org/PurpleBooth/fast-conventional/archive/v2.3.41.tar.gz | sha256sum --binary | cut -d' ' -f1)" envsubst < homebrew/formula.rb.j2
+    runs-on: docker
+
   build:
     name: "Build binaries"
     runs-on: docker
@@ -304,21 +314,21 @@ jobs:
         name: Release using Cog
         id: release
 
-#  update-homebrew-tap:
-#    name: Update homebrew repo
-#    if: needs.release.outputs.current_version != needs.release.outputs.previous_version
-#    runs-on: docker
-#    needs:
-#      - release
-#    steps:
-#      - uses: https://github.com/PurpleBooth/generate-formula-action@03882ef6068c2622837703f93b664dcc8840d43e # v0.1.14
-#        name: Create PR for formula
-#        with:
-#          current_version: ${{ needs.release.outputs.current_version }}
-#          previous_version: ${{ needs.release.outputs.previous_version }}
-#          committer_token: ${{ secrets.GH_PR_TOKEN }}
-#          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-#          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
+  #  update-homebrew-tap:
+  #    name: Update homebrew repo
+  #    if: needs.release.outputs.current_version != needs.release.outputs.previous_version
+  #    runs-on: docker
+  #    needs:
+  #      - release
+  #    steps:
+  #      - uses: https://github.com/PurpleBooth/generate-formula-action@03882ef6068c2622837703f93b664dcc8840d43e # v0.1.14
+  #        name: Create PR for formula
+  #        with:
+  #          current_version: ${{ needs.release.outputs.current_version }}
+  #          previous_version: ${{ needs.release.outputs.previous_version }}
+  #          committer_token: ${{ secrets.GH_PR_TOKEN }}
+  #          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+  #          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
   bake-edge-build:
     name: Create pre-release assets
@@ -379,7 +389,7 @@ jobs:
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-#            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
+          #            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -468,7 +478,7 @@ jobs:
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-#            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
+          #            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl

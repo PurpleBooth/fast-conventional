@@ -1,8 +1,8 @@
 class FastConventional < Formula
   desc "Make conventional commits, faster, and consistently name scopes"
-  homepage "https://github.com/{{ github_repo }}"
-  url "https://codeberg.org/{{ github_repo }}/archive/{{ git_tag }}.tar.gz"
-  sha256 "{{ file_sha }}"
+  homepage "https://codeberg.org/${GITHUB_REPOSITORY}"
+  url "https://codeberg.org/${GITHUB_REPOSITORY}/archive/${GITHUB_REF_NAME}.tar.gz"
+  sha256 "${FILE_SHA}"
 
   depends_on "help2man" => :build
   depends_on "rust" => :build

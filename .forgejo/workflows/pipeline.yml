@@ -14,6 +14,8 @@ jobs:
         with:
           fetch-depth: 0
       - run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
           FILE_SHA="$(curl --silent --fail-with-body -output=- https://codeberg.org/PurpleBooth/fast-conventional/archive/v2.3.41.tar.gz | sha256sum --binary | cut -d' ' -f1)" envsubst < homebrew/formula.rb.j2
     runs-on: docker
 

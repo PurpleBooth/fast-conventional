@@ -72,7 +72,8 @@ fast-conventional validate -r validate
 
 ```text,verify(script_name="validate-non-conventional-commit", stream=stderr)
 [✘] Non-coventional commit
-Error:   × Some commits failed validation
+Error: 
+  × Some commits failed validation
 
 ```
 

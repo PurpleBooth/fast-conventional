@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.41](https://codeberg.org/PurpleBooth/git-mit/compare/5462c4351837049582655e069ef27c4ffe6924bb..v2.3.41) - 2024-11-26
+#### Bug Fixes
+- **(deps)** update rust crate miette to v7.3.0 - ([8a9d515](https://codeberg.org/PurpleBooth/git-mit/commit/8a9d5156a654ba41c568a042752f8b08492fb8a3)) - Solace System Renovate Fox
+- test release - ([d6c5941](https://codeberg.org/PurpleBooth/git-mit/commit/d6c5941682e5bae18ab3448d75d85c604b531692)) - Billie Thompson
+#### Continuous Integration
+- disable unimplemented task - ([277768b](https://codeberg.org/PurpleBooth/git-mit/commit/277768bfa9d5c6ed3728700e90840e277e267e59)) - Billie Thompson
+- Correctly load version from cargo - ([83ca837](https://codeberg.org/PurpleBooth/git-mit/commit/83ca837f86677a4ec1542761c46311f5ed2f9e95)) - Billie Thompson
+- no need to bump on schedule - ([5462c43](https://codeberg.org/PurpleBooth/git-mit/commit/5462c4351837049582655e069ef27c4ffe6924bb)) - Billie Thompson
+#### Miscellaneous Chores
+- minor formatting changes from mittie - ([6c08495](https://codeberg.org/PurpleBooth/git-mit/commit/6c08495f54173ade5d8728d7b9e8ca00a1b5ffc3)) - Billie Thompson
+#### Tests
+- new mitte formatting - ([bdf948e](https://codeberg.org/PurpleBooth/git-mit/commit/bdf948e0d234ed29b565c7169d75c392cd9df5bb)) - Billie Thompson
+
+- - -
+
 ## [v2.3.40](https://codeberg.org/PurpleBooth/git-mit/compare/04e4a0fe39aa1e07241cb067a557014f4b04c503..v2.3.40) - 2024-11-25
 #### Bug Fixes
 - test release - ([04e4a0f](https://codeberg.org/PurpleBooth/git-mit/commit/04e4a0fe39aa1e07241cb067a557014f4b04c503)) - Billie Thompson

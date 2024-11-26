@@ -30,6 +30,7 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - name: Update version to next
         shell: bash
+        if: ${{ github.event_name != 'schedule' }}
         run: |
           [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
       - run: just build
@@ -68,6 +69,7 @@ jobs:
         run: tar -xvf target.tar && rm target.tar
       - name: Update version to next
         shell: bash
+        if: ${{ github.event_name != 'schedule' }}
         run: |
           [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
       - run: just lint
@@ -145,6 +147,7 @@ jobs:
         run: tar -xvf target.tar && rm target.tar
       - name: Update version to next
         shell: bash
+        if: ${{ github.event_name != 'schedule' }}
         run: |
           [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
       - run: just test
@@ -182,6 +185,7 @@ jobs:
         run: tar -xvf target.tar && rm target.tar
       - name: Update version to next
         shell: bash
+        if: ${{ github.event_name != 'schedule' }}
         run: |
           [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
       - run: just specdown
@@ -210,6 +214,7 @@ jobs:
           key: ${{ runner.os }}-bake-edge-test
       - name: Update version to next
         shell: bash
+        if: ${{ github.event_name != 'schedule' }}
         run: |
           [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
       - run: |

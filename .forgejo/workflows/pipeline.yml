@@ -207,6 +207,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-yq@main
+        name: Install yq
       - uses: https://code.forgejo.org/actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
         name: Restore from cache
         with:
@@ -219,7 +221,7 @@ jobs:
           [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
       - run: |
           echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
-          echo "target_version=$( cog get-version )" >> $GITHUB_OUTPUT
+          echo "target_version=$( yq .package.version Cargo.toml )" >> $GITHUB_OUTPUT
         id: docker
         name: Turn repository name into docker registry name
         env:

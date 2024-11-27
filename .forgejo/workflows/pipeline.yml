@@ -30,7 +30,7 @@ jobs:
                 https://codeberg.org/PurpleBooth/fast-conventional/archive/v2.3.41.tar.gz \
               | sha256sum --binary \
               | cut -d' ' -f1
-            )" envsubst < homebrew/formula.rb.j2 > formula.rb
+            )" envsubst < homebrew/formula.rb.j2 > FastConventional.rb
           
             brew tap-new homebrew-releaser/test --no-git
             cp -r FastConventional.rb $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula

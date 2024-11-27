@@ -3,6 +3,7 @@ class FastConventional < Formula
   homepage "https://codeberg.org/${GITHUB_REPOSITORY}"
   url "https://codeberg.org/${GITHUB_REPOSITORY}/archive/${GITHUB_REF_NAME}.tar.gz"
   sha256 "${FILE_SHA}"
+  version "${VERSION}"
 
   depends_on "help2man" => :build
   depends_on "rust" => :build

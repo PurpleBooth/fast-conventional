@@ -14,9 +14,25 @@ jobs:
         with:
           fetch-depth: 0
       - run: |
-          DEBIAN_FRONTEND=noninteractive apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
-          FILE_SHA="$(curl --silent --fail-with-body -output=- https://codeberg.org/PurpleBooth/fast-conventional/archive/v2.3.41.tar.gz | sha256sum --binary | cut -d' ' -f1)" envsubst < homebrew/formula.rb.j2
+            DEBIAN_FRONTEND=noninteractive apt-get update
+            DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
+          
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          
+            test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+            test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+            echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+          
+            FILE_SHA="$(
+              curl --silent \
+                --fail-with-body \
+                --output=- \
+                https://codeberg.org/PurpleBooth/fast-conventional/archive/v2.3.41.tar.gz \
+              | sha256sum --binary \
+              | cut -d' ' -f1
+            )" envsubst < homebrew/formula.rb.j2 > formula.rb
+          
+            brew audit --strict --online ./formula.rb
     runs-on: docker
 
   build:

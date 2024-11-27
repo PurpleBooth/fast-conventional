@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.42](https://codeberg.org/PurpleBooth/git-mit/compare/c4159fff2076c4330d475512b4f6f8c41f70eeba..v2.3.42) - 2024-11-27
+#### Bug Fixes
+- **(deps)** update rust crate miette to v7.4.0 - ([12194b1](https://codeberg.org/PurpleBooth/git-mit/commit/12194b16808b8c040a1055f9fa6ba7dc33b77403)) - Solace System Renovate Fox
+#### Continuous Integration
+- add missing readline - ([295893b](https://codeberg.org/PurpleBooth/git-mit/commit/295893b16be5e1dbdbf94025910f126ac083af08)) - Billie Thompson
+- remove unused ci block - ([7ce3e2c](https://codeberg.org/PurpleBooth/git-mit/commit/7ce3e2cbdbfd2ad071137d5de5fa9a0c6bf739b6)) - Billie Thompson
+- generate homebrew repo formula - ([c4159ff](https://codeberg.org/PurpleBooth/git-mit/commit/c4159fff2076c4330d475512b4f6f8c41f70eeba)) - Billie Thompson
+
+- - -
+
 ## [v2.3.41](https://codeberg.org/PurpleBooth/git-mit/compare/5462c4351837049582655e069ef27c4ffe6924bb..v2.3.41) - 2024-11-26
 #### Bug Fixes
 - **(deps)** update rust crate miette to v7.3.0 - ([8a9d515](https://codeberg.org/PurpleBooth/git-mit/commit/8a9d5156a654ba41c568a042752f8b08492fb8a3)) - Solace System Renovate Fox

@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.43](https://codeberg.org/PurpleBooth/git-mit/compare/818e7864c181317d72ed110b946227c4ca044a00..v2.3.43) - 2024-11-27
+#### Bug Fixes
+- correct order of version and sha - ([4c5f108](https://codeberg.org/PurpleBooth/git-mit/commit/4c5f1083a497ee56111e983583beb8f3a98a4cc9)) - Billie Thompson
+#### Build system
+- add a version to the image - ([d42d918](https://codeberg.org/PurpleBooth/git-mit/commit/d42d918d40d9467c833fb902a020d975de1f68a6)) - Billie Thompson
+#### Continuous Integration
+- correct name of formula - ([019499a](https://codeberg.org/PurpleBooth/git-mit/commit/019499a2aa7e7ab5a3b970512cad0fab8ababfba)) - Billie Thompson
+- add fast conventional as a name of the formula - ([695eb6e](https://codeberg.org/PurpleBooth/git-mit/commit/695eb6e467901b6cc7aaf4f75bb44553f27255ba)) - Billie Thompson
+- change audit to modern method - ([e0c9205](https://codeberg.org/PurpleBooth/git-mit/commit/e0c9205c0e94efdb5b91d1d6db0969ad56dfe412)) - Billie Thompson
+- generate and hopefully audit a homebrew formula - ([818e786](https://codeberg.org/PurpleBooth/git-mit/commit/818e7864c181317d72ed110b946227c4ca044a00)) - Billie Thompson
+
+- - -
+
 ## [v2.3.42](https://codeberg.org/PurpleBooth/git-mit/compare/c4159fff2076c4330d475512b4f6f8c41f70eeba..v2.3.42) - 2024-11-27
 #### Bug Fixes
 - **(deps)** update rust crate miette to v7.4.0 - ([12194b1](https://codeberg.org/PurpleBooth/git-mit/commit/12194b16808b8c040a1055f9fa6ba7dc33b77403)) - Solace System Renovate Fox

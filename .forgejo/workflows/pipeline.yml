@@ -30,10 +30,10 @@ jobs:
                 https://codeberg.org/PurpleBooth/fast-conventional/archive/v2.3.41.tar.gz \
               | sha256sum --binary \
               | cut -d' ' -f1
-            )" envsubst < homebrew/formula.rb.j2 > FastConventional.rb
+            )" envsubst < homebrew/formula.rb.j2 > fast-conventional.rb
           
             brew tap-new homebrew-releaser/test --no-git
-            cp -r FastConventional.rb $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula
+            cp -r fast-conventional.rb $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula
             for file in $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula/*
             do
                brew audit --formula "homebrew-releaser/test/$(basename ${file%.rb})"

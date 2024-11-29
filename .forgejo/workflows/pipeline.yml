@@ -19,12 +19,6 @@ jobs:
             DEBIAN_FRONTEND=noninteractive apt-get update
             DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
           
-            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          
-            test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
-            test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-            echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
-          
             FILE_SHA="$(
               curl --silent \
                 --fail-with-body \
@@ -35,6 +29,12 @@ jobs:
             )" VERSION="2.3.41" envsubst < homebrew/formula.rb.j2 > fast-conventional.rb
       - name: Lint formula
         run: |
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          
+            test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+            test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+            echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+          
             brew tap-new homebrew-releaser/test --no-git
             cp -r fast-conventional.rb $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula
             for file in $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula/*

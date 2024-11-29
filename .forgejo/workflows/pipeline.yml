@@ -318,6 +318,7 @@ jobs:
       - integration-test
       - lint
       - bake-edge-test
+      - lint-homebrew-formula
     outputs:
       current_version: ${{ steps.release.outputs.current_version }}
       previous_version: ${{ steps.release.outputs.previous_version }}

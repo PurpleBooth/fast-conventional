@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.44](https://codeberg.org/PurpleBooth/git-mit/compare/545d18193bf8edc29cb645c866c507ac4f77fb74..v2.3.44) - 2024-12-03
+#### Bug Fixes
+- **(deps)** update rust crate thiserror to v2.0.4 - ([a0aad16](https://codeberg.org/PurpleBooth/git-mit/commit/a0aad16e3eb1ab822b97edec92cea57b0b2460f7)) - Solace System Renovate Fox
+#### Continuous Integration
+- Only bump on main - ([5da3ded](https://codeberg.org/PurpleBooth/git-mit/commit/5da3deda8fbe62f1f888322b5adc8c0ca97b4d6f)) - Billie Thompson
+- Ensure a well formed homebrew formula before proceeding - ([3651974](https://codeberg.org/PurpleBooth/git-mit/commit/365197485744090b83cbcbbfb8dece4067b567f8)) - PurpleBooth
+- install homebrew with the brew releated steps - ([17696ac](https://codeberg.org/PurpleBooth/git-mit/commit/17696ac7f2aad2c5c505f4096b1befde0f3fe170)) - PurpleBooth
+- Tidy the homebrew linter a little - ([545d181](https://codeberg.org/PurpleBooth/git-mit/commit/545d18193bf8edc29cb645c866c507ac4f77fb74)) - PurpleBooth
+#### Miscellaneous Chores
+- **(deps)** update rust:alpine docker digest to 838d384 - ([7a4276e](https://codeberg.org/PurpleBooth/git-mit/commit/7a4276e5afc5626b1cdb58fe758261be4ad1d06c)) - Solace System Renovate Fox
+- **(deps)** update ghcr.io/catthehacker/ubuntu:act-latest docker digest to 9718faa - ([0dc3f29](https://codeberg.org/PurpleBooth/git-mit/commit/0dc3f29446ab3494f33b6611690a38e200e36364)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.43](https://codeberg.org/PurpleBooth/git-mit/compare/818e7864c181317d72ed110b946227c4ca044a00..v2.3.43) - 2024-11-27
 #### Bug Fixes
 - correct order of version and sha - ([4c5f108](https://codeberg.org/PurpleBooth/git-mit/commit/4c5f1083a497ee56111e983583beb8f3a98a4cc9)) - Billie Thompson

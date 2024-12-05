@@ -60,7 +60,7 @@ jobs:
         name: Install cocogitto
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
-      - uses: https://code.forgejo.org/actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
+      - uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
         name: Restore from cache
         with:
           path: target/
@@ -246,7 +246,7 @@ jobs:
         name: Install cocogitto
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-yq@main
         name: Install yq
-      - uses: https://code.forgejo.org/actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
+      - uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
         name: Restore from cache
         with:
           path: target/bake-edge-test
@@ -364,7 +364,7 @@ jobs:
           registry: codeberg.org
           username: ${{ github.actor }}
           password: ${{ secrets.FJ_TOKEN }}
-      - uses: https://code.forgejo.org/actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
+      - uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
         name: Restore from cache
         with:
           path: target/bake-edge-release
@@ -450,7 +450,7 @@ jobs:
           registry: codeberg.org
           username: ${{ github.actor }}
           password: ${{ secrets.FJ_TOKEN }}
-      - uses: https://code.forgejo.org/actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
+      - uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
         name: Restore from cache
         with:
           path: target/bake-edge-release

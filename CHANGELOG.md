@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.45](https://codeberg.org/PurpleBooth/git-mit/compare/1db75d4a97520882935811bd1431608dc3ef6fbe..v2.3.45) - 2024-12-05
+#### Bug Fixes
+- **(deps)** update rust crate clap to v4.5.22 - ([522768c](https://codeberg.org/PurpleBooth/git-mit/commit/522768c40596791de03aefda0df9ba2d5d53c286)) - Solace System Renovate Fox
+#### Miscellaneous Chores
+- **(deps)** update actions/cache digest to 1bd1e32 - ([bc55668](https://codeberg.org/PurpleBooth/git-mit/commit/bc556686ad06b72347daf8469421556cdcf24b48)) - Solace System Renovate Fox
+- **(deps)** update ghcr.io/catthehacker/ubuntu:act-latest docker digest to f409965 - ([1db75d4](https://codeberg.org/PurpleBooth/git-mit/commit/1db75d4a97520882935811bd1431608dc3ef6fbe)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.44](https://codeberg.org/PurpleBooth/git-mit/compare/545d18193bf8edc29cb645c866c507ac4f77fb74..v2.3.44) - 2024-12-03
 #### Bug Fixes
 - **(deps)** update rust crate thiserror to v2.0.4 - ([a0aad16](https://codeberg.org/PurpleBooth/git-mit/commit/a0aad16e3eb1ab822b97edec92cea57b0b2460f7)) - Solace System Renovate Fox

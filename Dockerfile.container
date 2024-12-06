@@ -2,7 +2,7 @@ ARG BUILDKIT_SBOM_SCAN_CONTEXT=true
 FROM --platform=$BUILDPLATFORM tonistiigi/xx@sha256:0c6a569797744e45955f39d4f7538ac344bfb7ebf0a54006a0a4297b153ccf0f AS xx
 ARG TARGETPLATFORM
 
-FROM --platform=$BUILDPLATFORM rust:alpine@sha256:838d384a1138fe1f2e448e3901bb3d23683570ba3dca581160880ffad760332b AS builder
+FROM --platform=$BUILDPLATFORM rust:alpine@sha256:10c5186ce24e556b47c29253558933618c05141e5f068ed4d147f46a73d64327 AS builder
 ARG BUILDKIT_SBOM_SCAN_CONTEXT=true
 RUN apk add clang lld openssl-dev curl bash
 # copy xx scripts to your build stage

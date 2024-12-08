@@ -14,34 +14,41 @@ jobs:
         name: Checkout
         with:
           fetch-depth: 0
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
+        name: Install cocogitto
       - name: Generate formula
         run: |
-            DEBIAN_FRONTEND=noninteractive apt-get update
-            DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
-          
-            FILE_SHA="$(
-              curl --silent \
-                --fail-with-body \
-                --output=- \
-                https://codeberg.org/PurpleBooth/fast-conventional/archive/v2.3.41.tar.gz \
-              | sha256sum --binary \
-              | cut -d' ' -f1
-            )" VERSION="2.3.41" envsubst < homebrew/formula.rb.j2 > fast-conventional.rb
+          DEBIAN_FRONTEND=noninteractive apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
+
+          FILE_SHA="$(
+            curl --silent \
+              --fail-with-body \
+              --output=- \
+              "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$(cog get-version 2>/dev/null).tar.gz" \
+            | sha256sum --binary \
+            | cut -d' ' -f1
+          )" VERSION="$(cog get-version 2>/dev/null)" envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 )".rb
       - name: Lint formula
         run: |
-            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          
-            test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
-            test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-            echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
-          
-            brew tap-new homebrew-releaser/test --no-git
-            cp -r fast-conventional.rb $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula
-            for file in $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula/*
-            do
-               brew audit --formula "homebrew-releaser/test/$(basename ${file%.rb})"
-            done
-            brew untap homebrew-releaser/test
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+          test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+          test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+
+          brew tap-new homebrew-releaser/test --no-git
+          cp -vr fast-conventional.rb $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula
+          for file in "$(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula/"*
+          do
+             brew audit --formula "homebrew-releaser/test/$(basename ${file%.rb})"
+          done
+          brew untap homebrew-releaser/test
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
+        name: Upload built files
+        with:
+          name: homebrew-formula
+          path: fast-conventional.rb
     runs-on: docker
 
   build:
@@ -72,7 +79,7 @@ jobs:
           [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
       - run: just build
         name: Build supported targets
-      - name: 'Package built assets'
+      - name: "Package built assets"
         run: tar -cvf target.tar target
       - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
         name: Upload built files
@@ -102,7 +109,7 @@ jobs:
         name: Download built assets archive
         with:
           name: target
-      - name: 'Unpack built assets'
+      - name: "Unpack built assets"
         run: tar -xvf target.tar && rm target.tar
       - name: Update version to next
         shell: bash
@@ -140,7 +147,7 @@ jobs:
         name: Download built assets archive
         with:
           name: target
-      - name: 'Unpack built assets'
+      - name: "Unpack built assets"
         run: tar -xvf target.tar && rm target.tar
       - run: just fmt
         name: Format
@@ -180,7 +187,7 @@ jobs:
         name: Download built assets archive
         with:
           name: target
-      - name: 'Unpack built assets'
+      - name: "Unpack built assets"
         run: tar -xvf target.tar && rm target.tar
       - name: Update version to next
         shell: bash
@@ -218,7 +225,7 @@ jobs:
         name: Download built assets archive
         with:
           name: target
-      - name: 'Unpack built assets'
+      - name: "Unpack built assets"
         run: tar -xvf target.tar && rm target.tar
       - name: Update version to next
         shell: bash
@@ -514,3 +521,38 @@ jobs:
           changelog: ${{ needs.release.outputs.changelog }}
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+  generate-formula:
+    name: Generate Homebrew formula
+    if: needs.release.outputs.current_version != needs.release.outputs.previous_version
+    needs:
+      - release
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        name: Checkout
+        with:
+          ref: v${{ needs.release.outputs.current_version }}
+          fetch-depth: 0
+      - name: Generate formula
+        id: generate-formula
+        env:
+          VERSION: ${{ needs.release.outputs.current_version }}
+        run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
+
+          FILE_SHA="$(
+            curl --silent \
+              --fail-with-body \
+              --output=- \
+              "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$VERSION.tar.gz" \
+            | sha256sum --binary \
+            | cut -d' ' -f1
+          )" envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ).rb"
+          echo "path=$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ).rb"
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
+        name: Upload built files
+        with:
+          name: homebrew-formula
+          path: ${{ steps.generate-formula.outputs.test }}
+    runs-on: docker

@@ -26,7 +26,7 @@ jobs:
         name: Install yq
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
-      - run: current_version="$(yq .package.version Cargo.toml)" >> "$GITHUB_OUTPUT"
+      - run: echo current_version="$(yq .package.version Cargo.toml)" >> "$GITHUB_OUTPUT"
         id: current_version
         name: Get current version
       - name: Update version to next
@@ -36,7 +36,7 @@ jobs:
           if ! [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] ; then
             cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
           fi
-      - run: next_version="$(yq .package.version Cargo.toml)" >> "$GITHUB_OUTPUT"
+      - run: echo next_version="$(yq .package.version Cargo.toml)" >> "$GITHUB_OUTPUT"
         id: next_version
         name: Get next version
 
@@ -298,6 +298,7 @@ jobs:
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
       - name: Generate formula
+        id: formula
         env:
           VERSION: ${{ needs.semver.outputs.current_version }}
         run: |
@@ -310,7 +311,8 @@ jobs:
               "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$VERSION.tar.gz" \
             | sha256sum --binary \
             | cut -d' ' -f1
-          )" envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 )".rb
+          )" envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ).rb"
+          echo "path=$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ).rb"
       - name: Lint formula
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -326,11 +328,6 @@ jobs:
              brew audit --formula "homebrew-releaser/test/$(basename "${file%.rb}")"
           done
           brew untap homebrew-releaser/test
-      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
-        name: Upload built files
-        with:
-          name: homebrew-formula
-          path: fast-conventional.rb
     runs-on: docker
 
   release:

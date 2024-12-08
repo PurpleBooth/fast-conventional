@@ -1,7 +1,0 @@
-{
-  name: "fast-conventional",
-  image: "ghcr.io/catthehacker/ubuntu:act-latest",
-  workspaceFolder: "/workspace",
-  "capAdd": ["SYS_PTRACE"],
-  "postCreateCommand": "bash /workspace/.devcontainer/setup.sh"
-}

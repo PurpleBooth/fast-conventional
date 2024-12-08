@@ -7,49 +7,6 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  lint-homebrew-formula:
-    name: Lint Homebrew formula
-    steps:
-      - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        name: Checkout
-        with:
-          fetch-depth: 0
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
-        name: Install cocogitto
-      - name: Generate formula
-        run: |
-          DEBIAN_FRONTEND=noninteractive apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
-
-          FILE_SHA="$(
-            curl --silent \
-              --fail-with-body \
-              "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$(cog get-version 2>/dev/null).tar.gz" \
-            | sha256sum --binary \
-            | cut -d' ' -f1
-          )" VERSION="$(cog get-version 2>/dev/null)" envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 )".rb
-      - name: Lint formula
-        run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-          test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
-          test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
-
-          brew tap-new homebrew-releaser/test --no-git
-          cp -vr fast-conventional.rb $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula
-          for file in "$(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula/"*
-          do
-             brew audit --formula "homebrew-releaser/test/$(basename ${file%.rb})"
-          done
-          brew untap homebrew-releaser/test
-      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
-        name: Upload built files
-        with:
-          name: homebrew-formula
-          path: fast-conventional.rb
-    runs-on: docker
-
   build:
     name: "Build binaries"
     runs-on: docker
@@ -315,6 +272,49 @@ jobs:
         with:
           name: docker-bake-cache
           path: target/docker-bake-edge-test
+
+  lint-homebrew-formula:
+    name: Lint Homebrew formula
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        name: Checkout
+        with:
+          fetch-depth: 0
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
+        name: Install cocogitto
+      - name: Generate formula
+        run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
+
+          FILE_SHA="$(
+            curl --silent \
+              --fail-with-body \
+              "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$(cog get-version 2>/dev/null).tar.gz" \
+            | sha256sum --binary \
+            | cut -d' ' -f1
+          )" VERSION="$(cog get-version 2>/dev/null)" envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 )".rb
+      - name: Lint formula
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+          test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+          test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+
+          brew tap-new homebrew-releaser/test --no-git
+          cp -vr fast-conventional.rb $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula
+          for file in "$(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula/"*
+          do
+             brew audit --formula "homebrew-releaser/test/$(basename ${file%.rb})"
+          done
+          brew untap homebrew-releaser/test
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
+        name: Upload built files
+        with:
+          name: homebrew-formula
+          path: fast-conventional.rb
+    runs-on: docker
 
   release:
     if: github.ref == 'refs/heads/main'

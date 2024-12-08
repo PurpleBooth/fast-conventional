@@ -24,7 +24,6 @@ jobs:
           FILE_SHA="$(
             curl --silent \
               --fail-with-body \
-              --output=- \
               "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$(cog get-version 2>/dev/null).tar.gz" \
             | sha256sum --binary \
             | cut -d' ' -f1

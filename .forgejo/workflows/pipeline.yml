@@ -566,5 +566,5 @@ jobs:
         name: Upload built files
         with:
           name: homebrew-formula
-          path: ${{ steps.generate-formula.outputs.test }}
+          path: ${{ steps.generate-formula.outputs.path }}
     runs-on: docker

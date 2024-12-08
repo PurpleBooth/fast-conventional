@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.49](https://codeberg.org/PurpleBooth/git-mit/compare/60d1b21368e31b5108b272eb43fb6ce7c2f3ed9f..v2.3.49) - 2024-12-08
+#### Bug Fixes
+- create a pr for the homebrew repo - ([60d1b21](https://codeberg.org/PurpleBooth/git-mit/commit/60d1b21368e31b5108b272eb43fb6ce7c2f3ed9f)) - Billie Thompson
+
+- - -
+
 ## [v2.3.48](https://codeberg.org/PurpleBooth/git-mit/compare/4e9ec9930d5270cfaf44d83bfcf76a361c0d0f05..v2.3.48) - 2024-12-08
 #### Bug Fixes
 - correct path for release - ([4e9ec99](https://codeberg.org/PurpleBooth/git-mit/commit/4e9ec9930d5270cfaf44d83bfcf76a361c0d0f05)) - Billie Thompson

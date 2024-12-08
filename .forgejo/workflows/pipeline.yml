@@ -7,8 +7,11 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  build:
-    name: "Build binaries"
+  semver:
+    name: "Work out next version number"
+    outputs:
+      current_version: ${{ steps.current_version.outputs.current_version }}
+      next_version: ${{ steps.next_version.outputs.next_version }}
     runs-on: docker
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -19,8 +22,36 @@ jobs:
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-yq@main
+        name: Install yq
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
+      - run: current_version="$(yq .package.version Cargo.toml)" >> "$GITHUB_OUTPUT"
+        id: current_version
+        name: Get current version
+      - name: Update version to next
+        shell: bash
+        if: github.event_name != 'schedule' && github.ref == 'refs/heads/main'
+        run: |
+          if ! [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] ; then
+            cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
+          fi
+      - run: next_version="$(yq .package.version Cargo.toml)" >> "$GITHUB_OUTPUT"
+        id: next_version
+        name: Get next version
+
+  build:
+    name: "Build binaries"
+    runs-on: docker
+    needs:
+      - semver
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        name: Checkout
+      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
+        name: Install rust
+        with:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
@@ -30,9 +61,9 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - name: Update version to next
         shell: bash
-        if: github.event_name != 'schedule' && github.ref == 'refs/heads/main'
-        run: |
-          [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
+        env:
+          VERSION: ${{ needs.semver.outputs.next_version }}
+        run: cargo set-version "$VERSION"
       - run: just build
         name: Build supported targets
       - name: "Package built assets"
@@ -48,17 +79,14 @@ jobs:
     runs-on: docker
     needs:
       - build
+      - semver
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         name: Checkout
-        with:
-          fetch-depth: 0
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
-        name: Install cocogitto
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
@@ -69,9 +97,9 @@ jobs:
         run: tar -xvf target.tar && rm target.tar
       - name: Update version to next
         shell: bash
-        if: github.event_name != 'schedule' && github.ref == 'refs/heads/main'
-        run: |
-          [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
+        env:
+          VERSION: ${{ needs.semver.outputs.next_version }}
+        run: cargo set-version "$VERSION"
       - run: just lint
 
   fix:
@@ -97,8 +125,6 @@ jobs:
         name: Install specdown
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
-        name: Install cocogitto
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         name: Download built assets archive
         with:
@@ -118,25 +144,22 @@ jobs:
       - name: Commit formatting
         run: |
           git add .
-          cog commit chore "fix formatting"
+          git commit -m "chore: fix formatting"
           git push origin main
 
   unit-test:
     name: "Unit test"
     needs:
       - build
+      - semver
     runs-on: docker
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         name: Checkout
-        with:
-          fetch-depth: 0
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
-        name: Install cocogitto
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install just
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
@@ -147,9 +170,9 @@ jobs:
         run: tar -xvf target.tar && rm target.tar
       - name: Update version to next
         shell: bash
-        if: github.event_name != 'schedule' && github.ref == 'refs/heads/main'
-        run: |
-          [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
+        env:
+          VERSION: ${{ needs.semver.outputs.next_version }}
+        run: cargo set-version "$VERSION"
       - run: just test
         name: Test
 
@@ -157,18 +180,15 @@ jobs:
     name: "Integration test"
     needs:
       - build
+      - semver
     runs-on: docker
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         name: Checkout
-        with:
-          fetch-depth: 0
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
-        name: Install cocogitto
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-specdown@main
         name: Install specdown
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
@@ -185,30 +205,26 @@ jobs:
         run: tar -xvf target.tar && rm target.tar
       - name: Update version to next
         shell: bash
-        if: github.event_name != 'schedule' && github.ref == 'refs/heads/main'
-        run: |
-          [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
+        env:
+          VERSION: ${{ needs.semver.outputs.next_version }}
+        run: cargo set-version "$VERSION"
       - run: just specdown
         name: Integration test
 
   bake-edge-test:
     runs-on: docker
+    needs:
+      - semver
     name: "Test release build"
     steps:
       - name: Checkout
         uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        with:
-          fetch-depth: 0
       - name: Set up Docker Buildx
         uses: https://code.forgejo.org/docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         name: Install rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
-        name: Install cocogitto
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-yq@main
-        name: Install yq
       - uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
         name: Restore from cache
         with:
@@ -216,12 +232,11 @@ jobs:
           key: ${{ runner.os }}-bake-edge-test
       - name: Update version to next
         shell: bash
-        if: github.event_name != 'schedule' && github.ref == 'refs/heads/main'
-        run: |
-          [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] || cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
+        env:
+          VERSION: ${{ needs.semver.outputs.next_verssion }}
+        run: cargo set-version "$VERSION"
       - run: |
           echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
-          echo "target_version=$( yq .package.version Cargo.toml )" >> $GITHUB_OUTPUT
         id: docker
         name: Turn repository name into docker registry name
         env:
@@ -249,9 +264,9 @@ jobs:
         with:
           set: |
             *.attest=type=provenance,mode=max
-            *.args.VER=${{ steps.docker.outputs.target_version }}
+            *.args.VER=${{ needs.semver.outputs.next_version }}
             *.cache-from=type=local,src=target/docker-bake-edge-test
-            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
+            *.cache-from=type=registry,ref=${{ needs.semver.outputs.current_version }}:edge
             *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max
           push: false
           files: |
@@ -275,14 +290,16 @@ jobs:
 
   lint-homebrew-formula:
     name: Lint Homebrew formula
+    needs:
+      - semver
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         name: Checkout
-        with:
-          fetch-depth: 0
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
         name: Install cocogitto
       - name: Generate formula
+        env:
+          VERSION: ${{ needs.semver.outputs.current_version }}
         run: |
           DEBIAN_FRONTEND=noninteractive apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
@@ -290,10 +307,10 @@ jobs:
           FILE_SHA="$(
             curl --silent \
               --fail-with-body \
-              "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$(cog get-version 2>/dev/null).tar.gz" \
+              "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$VERSION.tar.gz" \
             | sha256sum --binary \
             | cut -d' ' -f1
-          )" VERSION="$(cog get-version 2>/dev/null)" envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 )".rb
+          )" envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 )".rb
       - name: Lint formula
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -306,7 +323,7 @@ jobs:
           cp -vr fast-conventional.rb $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula
           for file in "$(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula/"*
           do
-             brew audit --formula "homebrew-releaser/test/$(basename ${file%.rb})"
+             brew audit --formula "homebrew-releaser/test/$(basename "${file%.rb}")"
           done
           brew untap homebrew-releaser/test
       - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4

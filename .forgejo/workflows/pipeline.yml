@@ -579,7 +579,6 @@ jobs:
         name: Install gh
       - run: |
           TEMP_DIR="$(mktemp -d)"
-          echo "$GH_TOKEN" | gh auth login --with-token
           gh repo clone PurpleBooth/homebrew-repo "$TEMP_DIR"
           cp -v "$FORMULA_PATH" "$TEMP_DIR/Formula/"
           cd "$TEMP_DIR"

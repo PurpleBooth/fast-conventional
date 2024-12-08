@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.50](https://codeberg.org/PurpleBooth/git-mit/compare/014e7ed66704a8e4ee51dadcbfd03ec9472b77d0..v2.3.50) - 2024-12-08
+#### Bug Fixes
+- **(deps)** update rust crate thiserror to v2.0.6 - ([7127318](https://codeberg.org/PurpleBooth/git-mit/commit/7127318179cea0e8b65403ab425c817e34aac9db)) - Solace System Renovate Fox
+#### Continuous Integration
+- remove auth step - ([014e7ed](https://codeberg.org/PurpleBooth/git-mit/commit/014e7ed66704a8e4ee51dadcbfd03ec9472b77d0)) - Billie Thompson
+
+- - -
+
 ## [v2.3.49](https://codeberg.org/PurpleBooth/git-mit/compare/60d1b21368e31b5108b272eb43fb6ce7c2f3ed9f..v2.3.49) - 2024-12-08
 #### Bug Fixes
 - create a pr for the homebrew repo - ([60d1b21](https://codeberg.org/PurpleBooth/git-mit/commit/60d1b21368e31b5108b272eb43fb6ce7c2f3ed9f)) - Billie Thompson

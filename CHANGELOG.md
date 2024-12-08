@@ -2,6 +2,25 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.47](https://codeberg.org/PurpleBooth/git-mit/compare/8bde7c71c0079991f03998a4550584ca8deaedc7..v2.3.47) - 2024-12-08
+#### Bug Fixes
+- test release - ([b03214e](https://codeberg.org/PurpleBooth/git-mit/commit/b03214ee78e4b506fca60ebfa3e2ae6ef96daaca)) - Billie Thompson
+#### Continuous Integration
+- correct cache from for bake - ([f34c0de](https://codeberg.org/PurpleBooth/git-mit/commit/f34c0decab45f560fb6521be1205df69fdaa932f)) - Billie Thompson
+- add homebrew formula - ([3b476ef](https://codeberg.org/PurpleBooth/git-mit/commit/3b476ef8698196f4486b97ee3ed49e9e8272141a)) - Billie Thompson
+- correct output - ([6f0e20c](https://codeberg.org/PurpleBooth/git-mit/commit/6f0e20c8c43706052cccbae541428f2f0bbeea1a)) - Billie Thompson
+- correct version typo - ([e1800c8](https://codeberg.org/PurpleBooth/git-mit/commit/e1800c89e3a7f3081f6c04a057230eb1261ac701)) - Billie Thompson
+- reduce pulls with depth 0 - ([46bc05f](https://codeberg.org/PurpleBooth/git-mit/commit/46bc05f53603171abe641f91cfee463c89231a5a)) - Billie Thompson
+- do linting later for homebrew formula - ([835b4e4](https://codeberg.org/PurpleBooth/git-mit/commit/835b4e43cba759ae935c7eb7aa388124915f9b67)) - Billie Thompson
+- remove output from second curl command - ([d1b0a8a](https://codeberg.org/PurpleBooth/git-mit/commit/d1b0a8acbee9bec90da9f3b50d641573b4d2bc48)) - Billie Thompson
+- remove output, stdout is the default for curl - ([e17e126](https://codeberg.org/PurpleBooth/git-mit/commit/e17e1268191285154a0742ed36e5b524f73dc332)) - Billie Thompson
+- build homebrew formula in release step - ([a5d959a](https://codeberg.org/PurpleBooth/git-mit/commit/a5d959aed3e4b0afd1cb94b82480fbeecc07dd1d)) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** update rust:alpine docker digest to 9ab8f4e - ([8bde7c7](https://codeberg.org/PurpleBooth/git-mit/commit/8bde7c71c0079991f03998a4550584ca8deaedc7)) - Solace System Renovate Fox
+- delete unused files - ([ce00d22](https://codeberg.org/PurpleBooth/git-mit/commit/ce00d22910b2178dca890559e29bc0cf57fb5e79)) - Billie Thompson
+
+- - -
+
 ## [v2.3.46](https://codeberg.org/PurpleBooth/git-mit/compare/9a1c5408af61e5f574d3cc25f57ddefd229d8fb2..v2.3.46) - 2024-12-08
 #### Bug Fixes
 - **(deps)** update rust crate clap to v4.5.23 - ([d568800](https://codeberg.org/PurpleBooth/git-mit/commit/d56880033a203c6529f1c1026badd633689e7576)) - Solace System Renovate Fox

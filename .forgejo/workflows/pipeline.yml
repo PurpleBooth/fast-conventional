@@ -567,4 +567,28 @@ jobs:
         with:
           name: homebrew-formula
           path: ${{ steps.generate-formula.outputs.path }}
+      - run: |
+          (type -p wget >/dev/null || ( apt update &&  apt-get install wget -y)) \
+           	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
+           	&& wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg |  tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+           	&& chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+           	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+           	&& sudo apt update \
+           	&& sudo apt install gh -y
+        shell: bash
+        name: Install gh
+      - run: |
+          TEMP_DIR="$(mktemp -d)"
+          echo "$GH_TOKEN" | gh auth login --with-token
+          gh repo clone PurpleBooth/homebrew-repo "$TEMP_DIR"
+          cp -v "$FORMULA_PATH" "$TEMP_DIR/Formula/"
+          cd "$TEMP_DIR"
+          git switch --create "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 )-$VERSION"
+          git commt --all --message="fix: upgrade $(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ) to $VERSION"
+          gh pr create --title "fix: upgrade $(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ) to $VERSION" --body "$CHANGELOG"
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          FORMULA_PATH: ${{ steps.generate-formula.outputs.path }}
+          VERSION: ${{ needs.release.outputs.current_version }}
+          CHANGELOG: ${{ needs.release.outputs.changelog }}
     runs-on: docker

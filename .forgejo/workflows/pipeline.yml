@@ -233,7 +233,7 @@ jobs:
       - name: Update version to next
         shell: bash
         env:
-          VERSION: ${{ needs.semver.outputs.next_verssion }}
+          VERSION: ${{ needs.semver.outputs.next_version }}
         run: cargo set-version "$VERSION"
       - run: |
           echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"

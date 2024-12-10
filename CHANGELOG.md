@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.51](https://codeberg.org/PurpleBooth/git-mit/compare/a21b35c781f243f535a5f0b7aee870d166c6f01a..v2.3.51) - 2024-12-10
+#### Bug Fixes
+- bump versions - ([1254268](https://codeberg.org/PurpleBooth/git-mit/commit/125426809cd06c93beaf01aff9c98cfa8088d00b)) - Billie Thompson
+- correct spelling - ([a21b35c](https://codeberg.org/PurpleBooth/git-mit/commit/a21b35c781f243f535a5f0b7aee870d166c6f01a)) - PurpleBooth
+#### Continuous Integration
+- add all tests passed step - ([d947d59](https://codeberg.org/PurpleBooth/git-mit/commit/d947d59c26ad8fe65f7b95144459978e59b6630d)) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** update tonistiigi/xx docker digest to 923441d - ([050cd42](https://codeberg.org/PurpleBooth/git-mit/commit/050cd4260d02fb4815ba74f74bee3e82571505c7)) - Solace System Renovate Fox
+- **(deps)** update tonistiigi/xx docker digest to 9b35d72 - ([6c5319d](https://codeberg.org/PurpleBooth/git-mit/commit/6c5319dfe1dc78f243f998f733bae5f57f856d69)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.50](https://codeberg.org/PurpleBooth/git-mit/compare/014e7ed66704a8e4ee51dadcbfd03ec9472b77d0..v2.3.50) - 2024-12-08
 #### Bug Fixes
 - **(deps)** update rust crate thiserror to v2.0.6 - ([7127318](https://codeberg.org/PurpleBooth/git-mit/commit/7127318179cea0e8b65403ab425c817e34aac9db)) - Solace System Renovate Fox

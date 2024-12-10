@@ -330,15 +330,24 @@ jobs:
           brew untap homebrew-releaser/test
     runs-on: docker
 
-  release:
-    if: github.ref == 'refs/heads/main'
-    name: Release
+  all-tests-passed:
+    name: All tests passed
     needs:
       - unit-test
       - integration-test
       - lint
       - bake-edge-test
       - lint-homebrew-formula
+    runs-on: docker
+    steps:
+      - run: echo "Looks good"
+        shell: bash
+
+  release:
+    if: github.ref == 'refs/heads/main'
+    name: Release
+    needs:
+      - all-tests-passed
     outputs:
       current_version: ${{ steps.release.outputs.current_version }}
       previous_version: ${{ steps.release.outputs.previous_version }}

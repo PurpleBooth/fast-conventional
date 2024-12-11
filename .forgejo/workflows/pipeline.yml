@@ -556,7 +556,7 @@ jobs:
           ref: v${{ needs.release.outputs.current_version }}
           fetch-depth: 0
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/configure-git-user@main
-              name: Configure git user
+        name: Configure git user
       - name: Generate formula
         id: generate-formula
         env:

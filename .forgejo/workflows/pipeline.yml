@@ -595,7 +595,7 @@ jobs:
           cd "$TEMP_DIR"
           git switch --create "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 )-$VERSION"
           git commit --all --message="fix: upgrade $(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ) to $VERSION"
-          gh pr create --title "fix: upgrade $(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ) to $VERSION" --body "$CHANGELOG"
+          gh pr create --title "fix: upgrade $(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ) to $VERSION" --notes "$CHANGELOG"
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}

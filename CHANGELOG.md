@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.56](https://codeberg.org/PurpleBooth/git-mit/compare/f54fa22b046825b1531f7a4eafb7405b6ce0f545..v2.3.56) - 2024-12-15
+#### Bug Fixes
+- push named branch rather than relying on autosetup - ([2cf02e4](https://codeberg.org/PurpleBooth/git-mit/commit/2cf02e467bf47f110a89786ad93645b3894ef326)) - Billie Thompson
+#### Continuous Integration
+- label prs with correct label - ([1b9cfa2](https://codeberg.org/PurpleBooth/git-mit/commit/1b9cfa243ec1041d7dce70fc6a31a5c8801bde91)) - Billie Thompson
+- things advised by shellcheck - ([f0ea61f](https://codeberg.org/PurpleBooth/git-mit/commit/f0ea61f2dbd61ac56ebe34273d520f84561db277)) - Billie Thompson
+- auto setup remote - ([f54fa22](https://codeberg.org/PurpleBooth/git-mit/commit/f54fa22b046825b1531f7a4eafb7405b6ce0f545)) - PurpleBooth
+
+- - -
+
 ## [v2.3.55](https://codeberg.org/PurpleBooth/git-mit/compare/f0ddb4d7d021cf9ed10e792f6d8ebe67b8532b56..v2.3.55) - 2024-12-14
 #### Bug Fixes
 - add body rather than notes - ([5234c56](https://codeberg.org/PurpleBooth/git-mit/commit/5234c56e5b470c2ee1aef344a1cd9c639e6aa6a6)) - PurpleBooth

@@ -430,7 +430,6 @@ jobs:
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-          #            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -519,7 +518,6 @@ jobs:
             *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=local,src=target/docker-bake-edge-release
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-          #            *.cache-to=type=local,dest=target/docker-bake-edge-release,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -589,10 +587,12 @@ jobs:
         shell: bash
         name: Install gh
       - run: |
+          #!/usr/bin/env bash
+
           TEMP_DIR="$(mktemp -d)"
           gh repo clone PurpleBooth/homebrew-repo "$TEMP_DIR"
           cp -v "$FORMULA_PATH" "$TEMP_DIR/Formula/"
-          cd "$TEMP_DIR"
+          cd "$TEMP_DIR" || exit 1
           git switch --create "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 )-$VERSION"
           git commit --all --message="fix: upgrade $(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ) to $VERSION"
           git config --global --add --bool push.autoSetupRemote true

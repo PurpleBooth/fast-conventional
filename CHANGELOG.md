@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.64](https://codeberg.org/PurpleBooth/git-mit/compare/cdb9cb3e101717bdfd3c75e80b329b7162e17d2d..v2.3.64) - 2024-12-22
+#### Bug Fixes
+- add fill - ([cdb9cb3](https://codeberg.org/PurpleBooth/git-mit/commit/cdb9cb3e101717bdfd3c75e80b329b7162e17d2d)) - PurpleBooth
+
+- - -
+
 ## [v2.3.63](https://codeberg.org/PurpleBooth/git-mit/compare/96f80556a5793569c011b8cd5e48ca8c20b78f10..v2.3.63) - 2024-12-22
 #### Bug Fixes
 - debug homebrew step - ([96f8055](https://codeberg.org/PurpleBooth/git-mit/commit/96f80556a5793569c011b8cd5e48ca8c20b78f10)) - PurpleBooth

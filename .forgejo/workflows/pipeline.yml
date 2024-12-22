@@ -592,7 +592,9 @@ jobs:
           #!/usr/bin/env bash
 
           TEMP_DIR="$(mktemp -d)"
+          gh auth setup-git        
           gh repo clone PurpleBooth/homebrew-repo "$TEMP_DIR"
+          
           cp -v "$FORMULA_PATH" "$TEMP_DIR/Formula/"
           cd "$TEMP_DIR" || exit 1
           git switch --create "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 )-$VERSION"

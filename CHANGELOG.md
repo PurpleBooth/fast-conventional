@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.61](https://codeberg.org/PurpleBooth/git-mit/compare/3d9ea489ba7557a874cee8240ebe3e7bdfdcc38d..v2.3.61) - 2024-12-22
+#### Bug Fixes
+- try and handle the no bump case - ([3d9ea48](https://codeberg.org/PurpleBooth/git-mit/commit/3d9ea489ba7557a874cee8240ebe3e7bdfdcc38d)) - PurpleBooth
+
+- - -
+
 ## [v2.3.60](https://codeberg.org/PurpleBooth/git-mit/compare/0b922484b94d6275ff5e42d92b68ae7b60ceb238..v2.3.60) - 2024-12-21
 #### Bug Fixes
 - **(deps)** update rust crate thiserror to v2.0.9 - ([0b92248](https://codeberg.org/PurpleBooth/git-mit/commit/0b922484b94d6275ff5e42d92b68ae7b60ceb238)) - Solace System Renovate Fox

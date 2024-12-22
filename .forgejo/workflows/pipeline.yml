@@ -590,6 +590,8 @@ jobs:
         name: Install gh
       - run: |
           #!/usr/bin/env bash
+          
+          set -x
 
           TEMP_DIR="$(mktemp -d)"
           gh auth setup-git        

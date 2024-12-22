@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.63](https://codeberg.org/PurpleBooth/git-mit/compare/96f80556a5793569c011b8cd5e48ca8c20b78f10..v2.3.63) - 2024-12-22
+#### Bug Fixes
+- debug homebrew step - ([96f8055](https://codeberg.org/PurpleBooth/git-mit/commit/96f80556a5793569c011b8cd5e48ca8c20b78f10)) - PurpleBooth
+
+- - -
+
 ## [v2.3.62](https://codeberg.org/PurpleBooth/git-mit/compare/023f754d577e61d1085919f26f6e826088489c57..v2.3.62) - 2024-12-22
 #### Bug Fixes
 - set Auth for homebrew pr creation - ([023f754](https://codeberg.org/PurpleBooth/git-mit/commit/023f754d577e61d1085919f26f6e826088489c57)) - PurpleBooth

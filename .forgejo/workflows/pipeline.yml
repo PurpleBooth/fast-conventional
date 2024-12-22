@@ -33,7 +33,9 @@ jobs:
         shell: bash
         if: github.event_name != 'schedule' && github.ref == 'refs/heads/main'
         run: |
-          if ! [[ "$(cog bump --auto --skip-ci --dry-run)" == *"No conventional commits"* ]] ; then
+          cog_bump="$(cog bump --auto --skip-ci --dry-run || true)"
+          
+          if ( ! [[ "$cog_bump" == *"No conventional commits"* ]] ) && [[ "$cog_bump" != "" ]] ; then
             cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
           fi
       - run: echo next_version="$(yq .package.version Cargo.toml)" >> "$GITHUB_OUTPUT"
@@ -100,7 +102,7 @@ jobs:
         env:
           VERSION: ${{ needs.semver.outputs.next_version }}
         run: cargo set-version "$VERSION"
-      - run: just lint
+      - run: just lint 
 
   fix:
     name: "Fix formatting"

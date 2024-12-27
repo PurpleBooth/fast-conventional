@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.65](https://codeberg.org/PurpleBooth/git-mit/compare/ec504f3b7c5425001d9276217618a9e65a158998..v2.3.65) - 2024-12-27
+#### Bug Fixes
+- **(deps)** update rust crate serde to v1.0.217 - ([ec504f3](https://codeberg.org/PurpleBooth/git-mit/commit/ec504f3b7c5425001d9276217618a9e65a158998)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.64](https://codeberg.org/PurpleBooth/git-mit/compare/cdb9cb3e101717bdfd3c75e80b329b7162e17d2d..v2.3.64) - 2024-12-22
 #### Bug Fixes
 - add fill - ([cdb9cb3](https://codeberg.org/PurpleBooth/git-mit/commit/cdb9cb3e101717bdfd3c75e80b329b7162e17d2d)) - PurpleBooth

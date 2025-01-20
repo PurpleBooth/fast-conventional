@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.73](https://codeberg.org/PurpleBooth/git-mit/compare/eaa9870370b35600809585a0e9ea6879f39bf336..v2.3.73) - 2025-01-20
+#### Bug Fixes
+- **(deps)** update rust crate clap to v4.5.27 - ([7ace1b6](https://codeberg.org/PurpleBooth/git-mit/commit/7ace1b607476d3800e99553ade658c8b9f0886d8)) - Solace System Renovate Fox
+#### Miscellaneous Chores
+- **(deps)** update goreleaser/nfpm docker digest to b842811 - ([eaa9870](https://codeberg.org/PurpleBooth/git-mit/commit/eaa9870370b35600809585a0e9ea6879f39bf336)) - Solace System Renovate Fox
+- add ssl dep - ([b290716](https://codeberg.org/PurpleBooth/git-mit/commit/b290716ffe971b95217bcf84b36bfd8086a44d62)) - PurpleBooth
+
+- - -
+
 ## [v2.3.72](https://codeberg.org/PurpleBooth/git-mit/compare/52d68fe00e5e6ca1b59ab533707a7c761a632b6b..v2.3.72) - 2025-01-10
 #### Bug Fixes
 - **(deps)** update rust crate thiserror to v2.0.11 - ([02041ad](https://codeberg.org/PurpleBooth/git-mit/commit/02041ad4cde248750765272a44694c41be6d30f1)) - Solace System Renovate Fox

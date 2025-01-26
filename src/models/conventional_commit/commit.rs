@@ -7,7 +7,8 @@ use nom::bytes::complete::take_till1;
 use nom::bytes::complete::{tag, take_until1};
 
 use nom::combinator::opt;
-use nom::sequence::{delimited, pair, terminated, tuple};
+use nom::sequence::{delimited, pair, terminated};
+use nom::Parser;
 
 use super::body::Body;
 use super::change::Change;
@@ -45,13 +46,14 @@ impl Commit {
 
     fn parse(text: &'_ str) -> Result<ParserOutput<'_>> {
         terminated(
-            tuple((
+            (
                 take_till1(|x| "(!:".contains(x)),
                 opt(delimited(tag("("), take_until1(")"), tag(")"))),
                 opt(tag("!")),
-            )),
+            ),
             pair(tag(":"), opt(tag(" "))),
-        )(text)
+        )
+        .parse(text)
         .map_err(nom::Err::<nom::error::Error<&str>>::to_owned)
         .into_diagnostic()
     }

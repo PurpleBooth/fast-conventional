@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.74](https://codeberg.org/PurpleBooth/git-mit/compare/55495e1fe4bbb1e3f5b6918c37a876a882032eb8..v2.3.74) - 2025-01-28
+#### Bug Fixes
+- **(deps)** update rust crate clap_complete to v4.5.43 - ([da87f88](https://codeberg.org/PurpleBooth/git-mit/commit/da87f88b6ae3e351a27b315dee782c0f83d82038)) - Solace System Renovate Fox
+- **(deps)** update rust crate nom to v8 - ([945f966](https://codeberg.org/PurpleBooth/git-mit/commit/945f966e65cef0a432998dd2f4aae6f2ca21fb92)) - Solace System Renovate Fox
+#### Miscellaneous Chores
+- **(deps)** update https://code.forgejo.org/docker/bake-action action to v6 - ([1e79df5](https://codeberg.org/PurpleBooth/git-mit/commit/1e79df5e3cd1fe83872f47e76e25696001a39e9c)) - Solace System Renovate Fox
+- **(deps)** update https://code.forgejo.org/docker/bake-action digest to aefd381 - ([55495e1](https://codeberg.org/PurpleBooth/git-mit/commit/55495e1fe4bbb1e3f5b6918c37a876a882032eb8)) - Solace System Renovate Fox
+- revert "chore(deps): update https://code.forgejo.org/docker/bake-action digest to aefd381" - ([d2f2655](https://codeberg.org/PurpleBooth/git-mit/commit/d2f26550b9a5b83b58c8a6b65ad0007258c282be)) - Billie Thompson
+#### Refactoring
+- make work with new tuple type - ([c1224c4](https://codeberg.org/PurpleBooth/git-mit/commit/c1224c41eda58f016d1ad22b748b99c8104d69f6)) - Billie Thompson
+
+- - -
+
 ## [v2.3.73](https://codeberg.org/PurpleBooth/git-mit/compare/eaa9870370b35600809585a0e9ea6879f39bf336..v2.3.73) - 2025-01-20
 #### Bug Fixes
 - **(deps)** update rust crate clap to v4.5.27 - ([7ace1b6](https://codeberg.org/PurpleBooth/git-mit/commit/7ace1b607476d3800e99553ade658c8b9f0886d8)) - Solace System Renovate Fox

@@ -522,108 +522,108 @@ jobs:
           name: built-binaries
           path: target/bins/
 
-bake-release-build:
-  name: Create Release Assets
-  if: needs.release.outputs.current_version != needs.release.outputs.previous_version
-  needs:
-    - release
-  runs-on: docker
-  steps:
-    - name: Checkout Code
-      uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      with:
-        token: ${{ secrets.FJ_TOKEN }}
-        ref: v${{ needs.release.outputs.current_version }}
-        fetch-depth: 0
+  bake-release-build:
+    name: Create Release Assets
+    if: needs.release.outputs.current_version != needs.release.outputs.previous_version
+    needs:
+      - release
+    runs-on: docker
+    steps:
+      - name: Checkout Code
+        uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          token: ${{ secrets.FJ_TOKEN }}
+          ref: v${{ needs.release.outputs.current_version }}
+          fetch-depth: 0
 
-    - name: Download Docker Cache
-      uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-      with:
-        name: docker-bake-cache
-        path: target/docker-bake-edge-test
+      - name: Download Docker Cache
+        uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
+        with:
+          name: docker-bake-cache
+          path: target/docker-bake-edge-test
 
-    - name: Install Cocogitto
-      uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
+      - name: Install Cocogitto
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
 
-    - name: Set Up Docker Buildx
-      uses: https://code.forgejo.org/docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5 # v3
+      - name: Set Up Docker Buildx
+        uses: https://code.forgejo.org/docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5 # v3
 
-    - name: Login to Container Registry
-      uses: https://code.forgejo.org/docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
-      with:
-        registry: codeberg.org
-        username: ${{ github.actor }}
-        password: ${{ secrets.FJ_TOKEN }}
+      - name: Login to Container Registry
+        uses: https://code.forgejo.org/docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
+        with:
+          registry: codeberg.org
+          username: ${{ github.actor }}
+          password: ${{ secrets.FJ_TOKEN }}
 
-    - name: Restore Build Cache
-      uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
-      with:
-        path: target/bake-edge-release
-        key: ${{ runner.os }}-bake-edge-release
+      - name: Restore Build Cache
+        uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
+        with:
+          path: target/bake-edge-release
+          key: ${{ runner.os }}-bake-edge-release
 
-    - name: Create Docker Cache Directory
-      run: mkdir -p target/docker-bake-edge-release
+      - name: Create Docker Cache Directory
+        run: mkdir -p target/docker-bake-edge-release
 
-    - name: Normalize Repository Name for Docker
-      id: docker
-      run: echo "repository=$(echo 'codeberg.org/$REPOSITORY' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
-      env:
-        REPOSITORY: ${{ github.repository }}
+      - name: Normalize Repository Name for Docker
+        id: docker
+        run: echo "repository=$(echo 'codeberg.org/$REPOSITORY' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+        env:
+          REPOSITORY: ${{ github.repository }}
 
-    - name: Extract Docker Metadata
-      id: meta-with-version
-      uses: https://code.forgejo.org/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
-      with:
-        bake-target: docker
-        images: ${{ steps.docker.outputs.repository }}
-        tags: |
-          type=edge,branch=main
-          type=schedule
-          type=ref,event=branch
-          type=ref,event=tag
-          type=ref,event=pr
-          type=raw,value=latest
-          type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }},prefix=v
-          type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }}
-          type=sha
+      - name: Extract Docker Metadata
+        id: meta-with-version
+        uses: https://code.forgejo.org/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
+        with:
+          bake-target: docker
+          images: ${{ steps.docker.outputs.repository }}
+          tags: |
+            type=edge,branch=main
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
+            type=raw,value=latest
+            type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }},prefix=v
+            type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }}
+            type=sha
 
-    - name: Docker Bake
-      uses: https://code.forgejo.org/docker/bake-action@7bff531c65a5cda33e52e43950a795b91d450f63 # v6
-      env:
-        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-        GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-      with:
-        set: |
-          *.attest=type=provenance,mode=max
-          *.args.VER=${{ needs.release.outputs.current_version }}
-          *.cache-from=type=local,src=target/docker-bake-edge-test
-          *.cache-from=type=local,src=target/docker-bake-edge-release
-          *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-        push: true
-        files: |
-          ./docker-bake.hcl
-          ${{ steps.meta-with-version.outputs.bake-file-tags }}
-          ${{ steps.meta-with-version.outputs.bake-file-annotations }}
-          ${{ steps.meta-with-version.outputs.bake-file-labels }}
-        targets: docker,bins
+      - name: Docker Bake
+        uses: https://code.forgejo.org/docker/bake-action@7bff531c65a5cda33e52e43950a795b91d450f63 # v6
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        with:
+          set: |
+            *.attest=type=provenance,mode=max
+            *.args.VER=${{ needs.release.outputs.current_version }}
+            *.cache-from=type=local,src=target/docker-bake-edge-test
+            *.cache-from=type=local,src=target/docker-bake-edge-release
+            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
+          push: true
+          files: |
+            ./docker-bake.hcl
+            ${{ steps.meta-with-version.outputs.bake-file-tags }}
+            ${{ steps.meta-with-version.outputs.bake-file-annotations }}
+            ${{ steps.meta-with-version.outputs.bake-file-labels }}
+          targets: docker,bins
 
-    - name: Move Binaries to Release Directory
-      shell: bash
-      run: |
-        for I in target/bins/*/*/* ; do
-          mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr '/' '-')"
-        done
-        find target/bins/ -type d -empty -delete
+      - name: Move Binaries to Release Directory
+        shell: bash
+        run: |
+          for I in target/bins/*/*/* ; do
+            mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr '/' '-')"
+          done
+          find target/bins/ -type d -empty -delete
 
-    - name: Upload Release Artifacts
-      uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/forgejo-release@main
-      with:
-        fj_token: ${{ secrets.FJ_TOKEN }}
-        target: target/bins
-        tag: v${{ needs.release.outputs.current_version }}
-        changelog: ${{ needs.release.outputs.changelog }}
-        gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-        gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      - name: Upload Release Artifacts
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/forgejo-release@main
+        with:
+          fj_token: ${{ secrets.FJ_TOKEN }}
+          target: target/bins
+          tag: v${{ needs.release.outputs.current_version }}
+          changelog: ${{ needs.release.outputs.changelog }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
   generate-formula:
     name: Generate Homebrew formula

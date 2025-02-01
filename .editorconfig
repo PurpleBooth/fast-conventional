@@ -13,8 +13,24 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 
 # Matches the exact files either package.json or .travis.yml
-[*.{yml,yaml}]
+[*.{yml,yaml,toml,toml.dist}]
 indent_size = 2
 
 [*.md]
 trim_trailing_whitespace = false
+
+# Matches Jinja2 template files
+[*.{jinja,j2}]
+indent_size = 4
+
+# Matches git SVGs
+[*.svg]
+indent_size = 4
+
+# Matches Dockerfiles with or without suffixes
+[Dockerfile*]
+indent_size = 4
+
+# Matches Rust files
+[*.rs]
+indent_size = 4

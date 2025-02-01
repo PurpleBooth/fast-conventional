@@ -8,329 +8,411 @@ on:
 
 jobs:
   semver:
-    name: "Work out next version number"
+    name: "Calculate the Next Version Number"
     outputs:
       current_version: ${{ steps.current_version.outputs.current_version }}
       next_version: ${{ steps.next_version.outputs.next_version }}
     runs-on: docker
     steps:
+      # Step 1: Checkout the repository to access the codebase
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         name: Checkout
         with:
           fetch-depth: 0
+
+      # Step 2: Install Rust
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
-        name: Install rust
+        name: Install Rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      # Step 3: Install yq (a lightweight tool for YAML processing)
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-yq@main
         name: Install yq
+
+      # Step 4: Install Cocogitto (tool for managing conventional commits and versioning)
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
-        name: Install cocogitto
+        name: Install Cocogitto
+
+      # Step 5: Retrieve the current version from Cargo.toml
       - run: echo current_version="$(yq .package.version Cargo.toml)" >> "$GITHUB_OUTPUT"
         id: current_version
-        name: Get current version
-      - name: Update version to next
+        name: Get Current Version
+
+      # Step 6: Update the version if there are new conventional commits
+      - name: Update Version to Next
         shell: bash
         if: github.event_name != 'schedule' && github.ref == 'refs/heads/main'
         run: |
           cog_bump="$(cog bump --auto --skip-ci --dry-run || true)"
-          
+  
+          # Check if there are relevant commits to bump the version
           if ( ! [[ "$cog_bump" == *"No conventional commits"* ]] ) && [[ "$cog_bump" != "" ]] ; then
+            # Update the version based on the output of 'cog bump'
             cargo set-version "$(cog bump --auto --skip-ci --dry-run | cut -c2- )"
           fi
+
+      # Step 7: Retrieve the updated/next version from Cargo.toml
       - run: echo next_version="$(yq .package.version Cargo.toml)" >> "$GITHUB_OUTPUT"
         id: next_version
-        name: Get next version
+        name: Get Next Version
 
   build:
-    name: "Build binaries"
+    name: "Build Binaries" # Capitalized properly for consistency
     runs-on: docker
     needs:
       - semver
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        name: Checkout
+        name: Checkout Repository # Improved clarity
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
-        name: Install rust
+        name: Install Rust Toolchain # Clarified step context
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
-        name: Install just
+        name: Install Just Task Runner # Clarified purpose
       - uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
-        name: Restore from cache
+        name: Restore Cargo Cache # More specific description
         with:
           path: target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - name: Update version to next
+      - name: Update Version to Next Semantic Version # Clarified step purpose
         shell: bash
         env:
           VERSION: ${{ needs.semver.outputs.next_version }}
         run: cargo set-version "$VERSION"
-      - run: just build
-        name: Build supported targets
-      - name: "Package built assets"
-        run: tar -cvf target.tar target
+      - name: Build Supported Targets
+        run: just build
+      - name: Package Built Assets
+        run: tar -cvf build-artifacts.tar target
       - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
-        name: Upload built files
+        name: Upload Build Artifacts # Clarified outcome
         with:
-          name: target
-          path: target.tar
+          name: build-artifacts
+          path: build-artifacts.tar
 
   lint:
-    name: "Lint"
-    continue-on-error: true # Let the pipeline continue even if the lint job fails
+    name: "Lint"  # Run linting checks
+    continue-on-error: true  # Allow the pipeline to continue even if linting fails
     runs-on: docker
     needs:
       - build
       - semver
     steps:
-      - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        name: Checkout
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
-        name: Install rust
+      - name: Checkout code  # Checkout repository
+        uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Install Rust  # Install Rust toolchain
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
-        name: Install just
-      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built assets archive
+
+      - name: Install Just task runner  # Install Just
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
+
+      - name: Download built assets archive  # Download build artifacts
+        uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         with:
-          name: target
-      - name: "Unpack built assets"
-        run: tar -xvf target.tar && rm target.tar
-      - name: Update version to next
+          name: build-artifacts
+
+      - name: "Unpack built assets"  # Extract the archive
+        run: tar -xvf build-artifacts.tar && rm build-artifacts.tar
+
+      - name: Update Cargo package version  # Set version in Cargo.toml
         shell: bash
         env:
-          VERSION: ${{ needs.semver.outputs.next_version }}
-        run: cargo set-version "$VERSION"
-      - run: just lint 
+          NEXT_VERSION: ${{ needs.semver.outputs.next_version }}
+        run: cargo set-version "$NEXT_VERSION"
+
+      - name: Run lint checks  # Execute linting commands
+        run: just lint
 
   fix:
-    name: "Fix formatting"
+    name: "Fix Formatting"
     needs:
       - lint
     runs-on: docker
     if: always() && contains(needs.lint.result, 'failure') && github.ref == 'refs/heads/main'
     steps:
-      - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        name: Checkout
+      - name: Checkout Repository
+        uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           token: ${{ secrets.FJ_TOKEN }}
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
-        name: Install rust
+      - name: Install Rust Toolchain
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - run: |
+      - name: Install Socat
+        run: |
           apt-get update
           apt-get install -y socat
-        name: Install socat
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-specdown@main
-        name: Install specdown
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
-        name: Install just
-      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built assets archive
+      - name: Install Specdown
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-specdown@main
+      - name: Install Just
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
+      - name: Download Built Assets
+        uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         with:
-          name: target
-      - name: "Unpack built assets"
-        run: tar -xvf target.tar && rm target.tar
-      - run: just fmt
-        name: Format
-      - run: just lint
-        name: Lint
-      - run: just test
-        name: Unit test
-      - run: just specdown
-        name: Integration test
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/configure-git-user@main
-        name: Configure git user
-      - name: Commit formatting
+          name: build-artifacts
+      - name: Unpack Built Assets
+        run: |
+          tar -xvf build-artifacts.tar
+          rm build-artifacts.tar
+      - name: Format Code
+        run: just fmt
+      - name: Lint Code
+        run: just lint
+      - name: Run Unit Tests
+        run: just test
+      - name: Run Integration Tests
+        run: just specdown
+      - name: Configure Git User
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/configure-git-user@main
+      - name: Commit Formatting Changes
         run: |
           git add .
           git commit -m "chore: fix formatting"
           git push origin main
 
   unit-test:
-    name: "Unit test"
+    name: "Unit Test"
     needs:
       - build
       - semver
     runs-on: docker
     steps:
-      - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        name: Checkout
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
-        name: Install rust
+      - name: Checkout Repository
+        uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Install Rust
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
-        name: Install just
-      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built assets archive
+
+      - name: Install Just
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
+
+      - name: Download Built Artifacts Archive
+        uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         with:
-          name: target
-      - name: "Unpack built assets"
-        run: tar -xvf target.tar && rm target.tar
-      - name: Update version to next
+          name: build-artifacts
+
+      - name: Extract Built Artifacts
+        run: tar -xvf build-artifacts.tar && rm build-artifacts.tar
+
+      - name: Set Cargo Version to Next Semver
         shell: bash
         env:
           VERSION: ${{ needs.semver.outputs.next_version }}
         run: cargo set-version "$VERSION"
-      - run: just test
-        name: Test
+
+      - name: Run Tests
+        run: just test
 
   integration-test:
-    name: "Integration test"
+    name: "Integration Test"
     needs:
       - build
       - semver
     runs-on: docker
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        name: Checkout
+        name: Checkout Code
+
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
-        name: Install rust
+        name: Install Rust
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-specdown@main
-        name: Install specdown
+        name: Install Specdown
+
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
-        name: Install just
+        name: Install Just
+
       - run: |
           apt-get update
           apt-get install -y socat
-        name: Install socat
-      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download built assets archive
-        with:
-          name: target
-      - name: "Unpack built assets"
-        run: tar -xvf target.tar && rm target.tar
-      - name: Update version to next
-        shell: bash
-        env:
-          VERSION: ${{ needs.semver.outputs.next_version }}
-        run: cargo set-version "$VERSION"
-      - run: just specdown
-        name: Integration test
+        name: Install Socat
 
-  bake-edge-test:
-    runs-on: docker
-    needs:
-      - semver
-    name: "Test release build"
-    steps:
-      - name: Checkout
-        uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - name: Set up Docker Buildx
-        uses: https://code.forgejo.org/docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5 # v3
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
-        name: Install rust
+      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
+        name: Download Built Artifacts
         with:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
-        name: Restore from cache
-        with:
-          path: target/bake-edge-test
-          key: ${{ runner.os }}-bake-edge-test
-      - name: Update version to next
+          name: build-artifacts
+
+      - name: "Unpack Built Artifacts"
+        run: tar -xvf build-artifacts.tar && rm build-artifacts.tar
+
+      - name: Update Version to Next Release
         shell: bash
         env:
           VERSION: ${{ needs.semver.outputs.next_version }}
         run: cargo set-version "$VERSION"
-      - run: |
-          echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
-        id: docker
-        name: Turn repository name into docker registry name
-        env:
-          REPOSITORY: ${{ github.repository }}
-      - run: mkdir -p target/docker-bake-edge-test
-        name: Create docker cache directory
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta-without-version
-        uses: https://code.forgejo.org/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
-        with:
-          bake-target: docker
-          images: ${{ steps.docker.outputs.repository }}
-          tags: |
-            type=edge,branch=main
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=tag
-            type=ref,event=pr
-            type=sha
-      - name: Bake
-        uses: https://code.forgejo.org/docker/bake-action@aefd381cbaa93c62a1e8b02194ae420cc36269d2 # v4
-        env:
-          GPG_PRIVATE_KEY: ""
-          GPG_PASSPHRASE: ""
-        with:
-          set: |
-            *.attest=type=provenance,mode=max
-            *.args.VER=${{ needs.semver.outputs.next_version }}
-            *.cache-from=type=local,src=target/docker-bake-edge-test
-            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:${{ needs.semver.outputs.current_version }}
-            *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max
-          push: false
-          files: |
-            ./docker-bake.hcl
-            ${{ steps.meta-without-version.outputs.bake-file-tags }}
-            ${{ steps.meta-without-version.outputs.bake-file-annotations }}
-            ${{ steps.meta-without-version.outputs.bake-file-labels }}
-          targets: docker,bins
-      - shell: bash
-        name: "Move binaries to release path"
-        run: |
-          for I in target/bins/*/*/* ; do
-            mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
-          done
-          find target/bins/ -type d -empty -delete
-      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
-        name: Upload docker cache
-        with:
-          name: docker-bake-cache
-          path: target/docker-bake-edge-test
+
+      - run: just specdown
+        name: Run Integration Tests
+
+bake-edge-test:
+  runs-on: docker
+  needs:
+    - semver # This depends on the "semver" workflow/task/step
+  name: "Test Release Build" # Clarified and capitalized for consistency
+  steps:
+    - name: Checkout Repository
+      uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      # Downloads the current repository
+
+    - name: Set Up Docker Buildx
+      uses: https://code.forgejo.org/docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5 # v3
+      # Configures Docker Buildx (used for building images)
+
+    - name: Install Rust
+      uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
+      with:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      # Installs Rust for building the project
+
+    - name: Restore Cache
+      uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
+      with:
+        path: target/bake-edge-test # Specify target path
+        key: ${{ runner.os }}-bake-edge-test # Define cache key
+      # Restores any cached build dependencies or assets
+
+    - name: Update Version to Next
+      shell: bash
+      env:
+        VERSION: ${{ needs.semver.outputs.next_version }}
+      run: cargo set-version "$VERSION"
+      # Updates the project version using the next semantic version
+
+    - name: Normalize Repository Name for Docker Registry
+      id: docker
+      shell: bash
+      env:
+        REPOSITORY: ${{ github.repository }}
+      run: |
+        echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+      # Turns the repository name into a Docker registry-compatible format
+
+    - name: Create Docker Cache Directory
+      run: mkdir -p target/docker-bake-edge-test
+      # Prepares a directory to store the Docker cache
+
+    - name: Extract Docker Metadata
+      id: extract-docker-metadata
+      uses: https://code.forgejo.org/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
+      with:
+        bake-target: docker
+        images: ${{ steps.docker.outputs.repository }}
+        tags: |
+          type=edge,branch=main
+          type=schedule
+          type=ref,event=branch
+          type=ref,event=tag
+          type=ref,event=pr
+          type=sha
+        # Extracts metadata (tags, labels) for use in building Docker images
+
+    - name: Build (Bake)
+      uses: https://code.forgejo.org/docker/bake-action@aefd381cbaa93c62a1e8b02194ae420cc36269d2 # v4
+      env:
+        GPG_PRIVATE_KEY: "" # Placeholder for GPG key if needed
+        GPG_PASSPHRASE: ""  # Placeholder for GPG passphrase
+      with:
+        set: |
+          *.attest=type=provenance,mode=max
+          *.args.VER=${{ needs.semver.outputs.next_version }}
+          *.cache-from=type=local,src=target/docker-bake-edge-test
+          *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
+          *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:${{ needs.semver.outputs.current_version }}
+          *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max
+        push: false # Do not push images to a registry
+        files: |
+          ./docker-bake.hcl
+          ${{ steps.extract-docker-metadata.outputs.bake-file-tags }}
+          ${{ steps.extract-docker-metadata.outputs.bake-file-annotations }}
+          ${{ steps.extract-docker-metadata.outputs.bake-file-labels }}
+        targets: docker,bins
+      # Runs the Docker build using bake and metadata inputs, caching optimized
+
+    - name: Relocate Binaries to Release Path
+      shell: bash
+      run: |
+        for binary in target/bins/*/*/* ; do
+          mv -v "$binary" "target/bins/$(echo "$binary" | cut -d '/' -f 3- | tr "/" "-")"
+        done
+        find target/bins/ -type d -empty -delete
+      # Moves compiled binaries into a flat release directory structure
+
+    - name: Upload Docker Cache
+      uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
+      with:
+        name: docker-bake-cache # Cache name
+        path: target/docker-bake-edge-test # Location of cache
+      # Uploads the Docker cache for reuse in future builds
 
   lint-homebrew-formula:
-    name: Lint Homebrew formula
+    name: Lint Homebrew Formula
     needs:
       - semver
     steps:
+      # Step: Checkout the repository
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        name: Checkout
+        name: Checkout Repository
+
+      # Step: Install Cocogitto tool
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
-        name: Install cocogitto
-      - name: Generate formula
-        id: formula
+        name: Install Cocogitto
+
+      # Step: Generate the Homebrew formula
+      - name: Generate Homebrew Formula
+        id: generate_formula
         env:
           VERSION: ${{ needs.semver.outputs.current_version }}
         run: |
+          # Update package lists and install gettext
           DEBIAN_FRONTEND=noninteractive apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
-
+  
+          # Calculate the SHA256 checksum of the release archive
           FILE_SHA="$(
             curl --silent \
               --fail-with-body \
               "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$VERSION.tar.gz" \
             | sha256sum --binary \
             | cut -d' ' -f1
-          )" envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ).rb"
-      - name: Lint formula
-        run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          )"
+  
+          # Generate the Homebrew formula using envsubst
+          envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2).rb"
 
+      # Step: Lint the Homebrew formula
+      - name: Lint Homebrew Formula
+        run: |
+          # Install Homebrew on Linux
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  
+          # Set up Homebrew environment
           test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
           test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
-
+  
+          # Create a new Homebrew tap for testing
           brew tap-new homebrew-releaser/test --no-git
-          cp -vr fast-conventional.rb $(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula
-          for file in "$(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula/"*
-          do
-             brew audit --formula "homebrew-releaser/test/$(basename "${file%.rb}")"
+  
+          # Copy the formula file into the test tap's Formula directory
+          cp -vr *.rb "$(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula/"
+  
+          # Lint each formula file in the test tap
+          for file in "$(brew --repository)/Library/Taps/homebrew-releaser/homebrew-test/Formula/"*; do
+            brew audit --formula "homebrew-releaser/test/$(basename "${file%.rb}")"
           done
+  
+          # Remove the test tap after completion
           brew untap homebrew-releaser/test
+
+    # Specify the runner environment
     runs-on: docker
 
   all-tests-passed:
@@ -347,69 +429,76 @@ jobs:
         shell: bash
 
   release:
-    if: github.ref == 'refs/heads/main'
-    name: Release
+    if: github.ref == 'refs/heads/main' # Trigger release pipeline only for the 'main' branch
+    name: Release Workflow
     needs:
-      - all-tests-passed
+      - all-tests-passed # Ensure all tests have passed before proceeding
     outputs:
-      current_version: ${{ steps.release.outputs.current_version }}
-      previous_version: ${{ steps.release.outputs.previous_version }}
-      changelog: ${{ steps.release.outputs.changelog }}
+      current_version: ${{ steps.release.outputs.current_version }} # The current version after the release
+      previous_version: ${{ steps.release.outputs.previous_version }} # The previous version before the release
+      changelog: ${{ steps.release.outputs.changelog }} # Changelog for the release
     runs-on: docker
     steps:
-      - uses: https://code.forgejo.org/actions/checkout@main
+      - name: Checkout Repository
+        uses: https://code.forgejo.org/actions/checkout@main
         with:
-          token: ${{ secrets.FJ_TOKEN }}
-          fetch-depth: 0
-        name: Checkout
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
-        name: Install rust
+          token: ${{ secrets.FJ_TOKEN }} # Token for accessing the repository
+          fetch-depth: 0 # Ensure full history is fetched for branch operations
+      - name: Install Rust Toolchain
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
         with:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
-        name: Install cocogitto
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/configure-git-user@main
-        name: Configure git user
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/release-with-cog@main
-        name: Release using Cog
-        id: release
+          GH_TOKEN: ${{ secrets.GH_TOKEN }} # Token for accessing GitHub dependencies
+      - name: Install Cocogitto
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
+      - name: Configure Git User
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/configure-git-user@main
+      - name: Release with Cocogitto
+        id: release # Step ID for capturing output variables
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/release-with-cog@main
 
   bake-edge-build:
-    name: Create pre-release assets
+    name: Create Pre-release Assets
     if: needs.release.outputs.current_version == needs.release.outputs.previous_version
     runs-on: docker
     needs:
       - release
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download docker cache
+
+      - name: Download Docker Cache
+        uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
         with:
           name: docker-bake-cache
-          path: target/docker-bake-edge-test
-      - name: Set up Docker Buildx
+          path: target/docker-bake-edge-cache
+
+      - name: Set Up Docker Buildx
         uses: https://code.forgejo.org/docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5 # v3
-      - name: Login to GitHub Container Registry
+
+      - name: Log in to GitHub Container Registry
         uses: https://code.forgejo.org/docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
         with:
           registry: codeberg.org
           username: ${{ github.actor }}
           password: ${{ secrets.FJ_TOKEN }}
-      - uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
-        name: Restore from cache
+
+      - name: Restore Cache
+        uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
         with:
-          path: target/bake-edge-release
+          path: target/docker-bake-edge-release
           key: ${{ runner.os }}-bake-edge-release
-      - run: mkdir -p target/docker-bake-edge-release
-        name: Create docker cache directory
-      - run: echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
+      - name: Create Docker Cache Directory
+        run: mkdir -p target/docker-bake-edge-release
+
+      - name: Format Repository Name for Docker Registry
         id: docker
-        name: Turn repository name into docker registry name
+        run: echo "repository=$(echo 'codeberg.org/$REPOSITORY' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
         env:
           REPOSITORY: ${{ github.repository }}
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta-without-version
+
+      - name: Extract Metadata for Docker (Tags, Labels)
+        id: docker-metadata
         uses: https://code.forgejo.org/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
         with:
           bake-target: docker
@@ -421,7 +510,8 @@ jobs:
             type=ref,event=tag
             type=ref,event=pr
             type=sha
-      - name: Bake
+
+      - name: Bake Docker Images
         uses: https://code.forgejo.org/docker/bake-action@aefd381cbaa93c62a1e8b02194ae420cc36269d2 # v4
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -430,120 +520,133 @@ jobs:
           set: |
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,src=target/docker-bake-edge-test
+            *.cache-from=type=local,src=target/docker-bake-edge-cache
             *.cache-from=type=local,src=target/docker-bake-edge-release
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
           push: true
           files: |
             ./docker-bake.hcl
-            ${{ steps.meta-without-version.outputs.bake-file-tags }}
-            ${{ steps.meta-without-version.outputs.bake-file-annotations }}
-            ${{ steps.meta-without-version.outputs.bake-file-labels }}
+            ${{ steps.docker-metadata.outputs.bake-file-tags }}
+            ${{ steps.docker-metadata.outputs.bake-file-annotations }}
+            ${{ steps.docker-metadata.outputs.bake-file-labels }}
           targets: docker,bins
-      - shell: bash
-        name: "Move binaries to release path"
+
+      - name: Move Binaries to Release Path
+        shell: bash
         run: |
           for I in target/bins/*/*/* ; do
-            mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
+            mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr '/' '-')"
           done
           find target/bins/ -type d -empty -delete
-      - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
-        name: Upload binaries
+
+      - name: Upload Binaries
+        uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
         with:
-          name: built-bins
+          name: built-binaries
           path: target/bins/
 
-  bake-release-build:
-    name: Create release assets
-    if: needs.release.outputs.current_version != needs.release.outputs.previous_version
-    needs:
-      - release
-    runs-on: docker
-    steps:
-      - name: Checkout
-        uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        with:
-          token: ${{ secrets.FJ_TOKEN }}
-          ref: v${{ needs.release.outputs.current_version }}
-          fetch-depth: 0
-      - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        name: Download docker cache
-        with:
-          name: docker-bake-cache
-          path: target/docker-bake-edge-test
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
-        name: Install cocogitto
-      - name: Set up Docker Buildx
-        uses: https://code.forgejo.org/docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5 # v3
-      - name: Login to GitHub Container Registry
-        uses: https://code.forgejo.org/docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
-        with:
-          registry: codeberg.org
-          username: ${{ github.actor }}
-          password: ${{ secrets.FJ_TOKEN }}
-      - uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
-        name: Restore from cache
-        with:
-          path: target/bake-edge-release
-          key: ${{ runner.os }}-bake-edge-release
-      - run: mkdir -p target/docker-bake-edge-release
-        name: Create docker cache directory
-      - run: echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
-        id: docker
-        name: Turn repository name into docker registry name
-        env:
-          REPOSITORY: ${{ github.repository }}
-      - name: Extract versioned metadata (tags, labels) for Docker
-        id: meta-with-version
-        uses: https://code.forgejo.org/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
-        with:
-          bake-target: docker
-          images: ${{ steps.docker.outputs.repository }}
-          tags: |
-            type=edge,branch=main
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=tag
-            type=ref,event=pr
-            type=raw,value=latest
-            type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }},prefix=v
-            type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }}
-            type=sha
-      - name: Bake
-        uses: https://code.forgejo.org/docker/bake-action@aefd381cbaa93c62a1e8b02194ae420cc36269d2 # v4
-        env:
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        with:
-          set: |
-            *.attest=type=provenance,mode=max
-            *.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,src=target/docker-bake-edge-test
-            *.cache-from=type=local,src=target/docker-bake-edge-release
-            *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
-          push: true
-          files: |
-            ./docker-bake.hcl
-            ${{ steps.meta-with-version.outputs.bake-file-tags }}
-            ${{ steps.meta-with-version.outputs.bake-file-annotations }}
-            ${{ steps.meta-with-version.outputs.bake-file-labels }}
-          targets: docker,bins
-      - shell: bash
-        name: "Move binaries to release path"
-        run: |
-          for I in target/bins/*/*/* ; do
-            mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr "/" "-")"
-          done
-          find target/bins/ -type d -empty -delete
-      - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/forgejo-release@main
-        name: Upload release
-        with:
-          fj_token: ${{ secrets.FJ_TOKEN }}
-          target: target/bins
-          tag: v${{ needs.release.outputs.current_version }}
-          changelog: ${{ needs.release.outputs.changelog }}
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
+bake-release-build:
+  name: Create Release Assets
+  if: needs.release.outputs.current_version != needs.release.outputs.previous_version
+  needs:
+    - release
+  runs-on: docker
+  steps:
+    - name: Checkout Code
+      uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        token: ${{ secrets.FJ_TOKEN }}
+        ref: v${{ needs.release.outputs.current_version }}
+        fetch-depth: 0
+
+    - name: Download Docker Cache
+      uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
+      with:
+        name: docker-bake-cache
+        path: target/docker-bake-edge-test
+
+    - name: Install Cocogitto
+      uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
+
+    - name: Set Up Docker Buildx
+      uses: https://code.forgejo.org/docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5 # v3
+
+    - name: Login to Container Registry
+      uses: https://code.forgejo.org/docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
+      with:
+        registry: codeberg.org
+        username: ${{ github.actor }}
+        password: ${{ secrets.FJ_TOKEN }}
+
+    - name: Restore Build Cache
+      uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
+      with:
+        path: target/bake-edge-release
+        key: ${{ runner.os }}-bake-edge-release
+
+    - name: Create Docker Cache Directory
+      run: mkdir -p target/docker-bake-edge-release
+
+    - name: Normalize Repository Name for Docker
+      id: docker
+      run: echo "repository=$(echo 'codeberg.org/$REPOSITORY' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+      env:
+        REPOSITORY: ${{ github.repository }}
+
+    - name: Extract Docker Metadata
+      id: meta-with-version
+      uses: https://code.forgejo.org/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
+      with:
+        bake-target: docker
+        images: ${{ steps.docker.outputs.repository }}
+        tags: |
+          type=edge,branch=main
+          type=schedule
+          type=ref,event=branch
+          type=ref,event=tag
+          type=ref,event=pr
+          type=raw,value=latest
+          type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }},prefix=v
+          type=semver,pattern={{version}},value=v${{ needs.release.outputs.current_version }}
+          type=sha
+
+    - name: Docker Bake
+      uses: https://code.forgejo.org/docker/bake-action@aefd381cbaa93c62a1e8b02194ae420cc36269d2 # v4
+      env:
+        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      with:
+        set: |
+          *.attest=type=provenance,mode=max
+          *.args.VER=${{ needs.release.outputs.current_version }}
+          *.cache-from=type=local,src=target/docker-bake-edge-test
+          *.cache-from=type=local,src=target/docker-bake-edge-release
+          *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
+        push: true
+        files: |
+          ./docker-bake.hcl
+          ${{ steps.meta-with-version.outputs.bake-file-tags }}
+          ${{ steps.meta-with-version.outputs.bake-file-annotations }}
+          ${{ steps.meta-with-version.outputs.bake-file-labels }}
+        targets: docker,bins
+
+    - name: Move Binaries to Release Directory
+      shell: bash
+      run: |
+        for I in target/bins/*/*/* ; do
+          mv -v "$I" "target/bins/$(echo "$I" | cut -d '/' -f 3- | tr '/' '-')"
+        done
+        find target/bins/ -type d -empty -delete
+
+    - name: Upload Release Artifacts
+      uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/forgejo-release@main
+      with:
+        fj_token: ${{ secrets.FJ_TOKEN }}
+        target: target/bins
+        tag: v${{ needs.release.outputs.current_version }}
+        changelog: ${{ needs.release.outputs.changelog }}
+        gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+        gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
   generate-formula:
     name: Generate Homebrew formula
@@ -565,7 +668,6 @@ jobs:
         run: |
           DEBIAN_FRONTEND=noninteractive apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
-
           FILE_SHA="$(
             curl --silent \
               --fail-with-body \
@@ -581,19 +683,18 @@ jobs:
           path: ${{ steps.generate-formula.outputs.path }}
       - run: |
           (type -p wget >/dev/null || ( apt update &&  apt-get install wget -y)) \
-           	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
-           	&& wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg |  tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-           	&& chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-           	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-           	&& sudo apt update \
-           	&& sudo apt install gh -y
+              && sudo mkdir -p -m 755 /etc/apt/keyrings \
+              && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg |  tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+              && chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+              && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+              && sudo apt update \
+              && sudo apt install gh -y
         shell: bash
         name: Install gh
       - run: |
           #!/usr/bin/env bash
           
           set -x
-
           TEMP_DIR="$(mktemp -d)"
           gh auth setup-git        
           gh repo clone PurpleBooth/homebrew-repo "$TEMP_DIR"

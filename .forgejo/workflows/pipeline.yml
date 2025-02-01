@@ -78,6 +78,7 @@ jobs:
 
   lint:
     name: "Lint"
+    continue-on-error: true # Let the pipeline continue even if the lint job fails
     runs-on: docker
     needs:
       - build

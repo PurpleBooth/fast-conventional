@@ -80,9 +80,9 @@ impl Repository {
                         git2_revwalk.hide(from)?;
                     }
                     _ => unimplemented!(),
-                };
+                }
             }
-        };
+        }
         git2_revwalk.set_sorting(Git2Sort::TOPOLOGICAL | Git2Sort::REVERSE | Git2Sort::TIME)?;
 
         Ok(git2_revwalk)

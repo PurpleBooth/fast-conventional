@@ -49,7 +49,7 @@ impl FastConventionalConfig {
                 .union(&user_types)
                 .map(ToString::to_string)
                 .collect::<_>();
-        };
+        }
 
         user_types
     }

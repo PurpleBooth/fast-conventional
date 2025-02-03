@@ -350,21 +350,18 @@ jobs:
         env:
           VERSION: ${{ needs.semver.outputs.current_version }}
         run: |
-          # Update package lists and install gettext
           DEBIAN_FRONTEND=noninteractive apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
-
-          # Calculate the SHA256 checksum of the release archive
+          TEMP_DIR="$(mktemp -d)"
+          export TEMP_DIR
+          curl --silent \
+          --fail \
+          --output "$TEMP_DIR/v$VERSION.tar.gz"
+          "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$VERSION.tar.gz"
           FILE_SHA="$(
-            curl --silent \
-              --fail-with-body \
-              "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$VERSION.tar.gz" \
-            | sha256sum --binary \
-            | cut -d' ' -f1
-          )"
-
-          # Generate the Homebrew formula using envsubst
-          envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2).rb"
+          sha256sum --binary "$TEMP_DIR/v$VERSION.tar.gz" | cut -d' ' -f1
+          )" envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ).rb"
+          echo "path=$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ).rb" >> "$GITHUB_OUTPUT"
 
       - name: Lint Homebrew Formula
         run: |
@@ -645,12 +642,14 @@ jobs:
         run: |
           DEBIAN_FRONTEND=noninteractive apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y gettext
+          TEMP_DIR="$(mktemp -d)"
+          export TEMP_DIR
+          curl --silent \
+          --fail \
+          --output "$TEMP_DIR/v$VERSION.tar.gz"
+          "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$VERSION.tar.gz"
           FILE_SHA="$(
-            curl --silent \
-              --fail-with-body \
-              "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$VERSION.tar.gz" \
-            | sha256sum --binary \
-            | cut -d' ' -f1
+          sha256sum --binary "$TEMP_DIR/v$VERSION.tar.gz" | cut -d' ' -f1
           )" envsubst < homebrew/formula.rb.j2 > "$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ).rb"
           echo "path=$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f2 ).rb" >> "$GITHUB_OUTPUT"
       - uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4

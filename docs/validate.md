@@ -72,7 +72,8 @@ fast-conventional validate -r validate
 
 ```text,verify(script_name="validate-non-conventional-commit", stream=stderr)
 [✘] Non-coventional commit
-Error:   × Some commits failed validation
+Error: 
+  × Some commits failed validation
 
 ```
 
@@ -110,7 +111,8 @@ fast-conventional validate -r validate HEAD^..HEAD
 
 ```text,verify(script_name="validate-missing-unknown-type", stream=stderr)
 [✘] missing: Add a pipeline
-Error:   × Some commits failed validation
+Error: 
+  × Some commits failed validation
 
 ```
 
@@ -127,7 +129,8 @@ fast-conventional validate -r validate HEAD^..HEAD
 
 ```text,verify(script_name="validate-missing-unknown-type", stream=stderr)
 [✘] fix(invalid): Correct the automerge settings
-Error:   × Some commits failed validation
+Error: 
+  × Some commits failed validation
 
 ```
 
@@ -152,6 +155,7 @@ fast-conventional validate -r validate HEAD^..HEAD
 
 ```text,verify(script_name="validate-missing-unknown-type", stream=stderr)
 [✘] fix: Correct the automerge settings
-Error:   × Some commits failed validation
+Error: 
+  × Some commits failed validation
 
 ```

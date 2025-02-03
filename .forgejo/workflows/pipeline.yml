@@ -356,7 +356,7 @@ jobs:
           export TEMP_DIR
           curl --silent \
           --fail \
-          --output "$TEMP_DIR/v$VERSION.tar.gz"
+          --output "$TEMP_DIR/v$VERSION.tar.gz" \
           "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$VERSION.tar.gz"
           FILE_SHA="$(
           sha256sum --binary "$TEMP_DIR/v$VERSION.tar.gz" | cut -d' ' -f1
@@ -646,7 +646,7 @@ jobs:
           export TEMP_DIR
           curl --silent \
           --fail \
-          --output "$TEMP_DIR/v$VERSION.tar.gz"
+          --output "$TEMP_DIR/v$VERSION.tar.gz" \
           "https://codeberg.org/$GITHUB_REPOSITORY/archive/v$VERSION.tar.gz"
           FILE_SHA="$(
           sha256sum --binary "$TEMP_DIR/v$VERSION.tar.gz" | cut -d' ' -f1

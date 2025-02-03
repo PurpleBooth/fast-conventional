@@ -315,9 +315,9 @@ jobs:
           push: false
           files: |
             ./docker-bake.hcl
-            ${{ steps.extract-docker-metadata.outputs.bake-file-tags }}
-            ${{ steps.extract-docker-metadata.outputs.bake-file-annotations }}
-            ${{ steps.extract-docker-metadata.outputs.bake-file-labels }}
+            cwd://${{ steps.extract-docker-metadata.outputs.bake-file-tags }}
+            cwd://${{ steps.extract-docker-metadata.outputs.bake-file-annotations }}
+            cwd://${{ steps.extract-docker-metadata.outputs.bake-file-labels }}
           targets: docker,bins
 
       - name: Relocate Binaries to Release Path
@@ -472,7 +472,7 @@ jobs:
           REPOSITORY: ${{ github.repository }}
 
       - name: Extract Metadata for Docker (Tags, Labels)
-        id: docker-metadata
+        id: extract-docker-metadata
         uses: https://code.forgejo.org/docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
         with:
           bake-target: docker
@@ -500,9 +500,9 @@ jobs:
           push: true
           files: |
             ./docker-bake.hcl
-            ${{ steps.docker-metadata.outputs.bake-file-tags }}
-            ${{ steps.docker-metadata.outputs.bake-file-annotations }}
-            ${{ steps.docker-metadata.outputs.bake-file-labels }}
+            ${{ steps.extract-docker-metadata.outputs.bake-file-tags }}
+            ${{ steps.extract-docker-metadata.outputs.bake-file-annotations }}
+            ${{ steps.extract-docker-metadata.outputs.bake-file-labels }}
           targets: docker,bins
 
       - name: Move Binaries to Release Path

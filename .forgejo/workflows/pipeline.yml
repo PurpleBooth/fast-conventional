@@ -500,9 +500,9 @@ jobs:
           push: true
           files: |
             ./docker-bake.hcl
-            ${{ steps.extract-docker-metadata.outputs.bake-file-tags }}
-            ${{ steps.extract-docker-metadata.outputs.bake-file-annotations }}
-            ${{ steps.extract-docker-metadata.outputs.bake-file-labels }}
+            cwd://${{ steps.extract-docker-metadata.outputs.bake-file-tags }}
+            cwd://${{ steps.extract-docker-metadata.outputs.bake-file-annotations }}
+            cwd://${{ steps.extract-docker-metadata.outputs.bake-file-labels }}
           targets: docker,bins
 
       - name: Move Binaries to Release Path

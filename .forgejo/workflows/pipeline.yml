@@ -563,7 +563,7 @@ jobs:
 
       - name: Normalize Repository Name for Docker
         id: docker
-        run: echo "repository=$(echo 'codeberg.org/$REPOSITORY' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+        run: echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
         env:
           REPOSITORY: ${{ github.repository }}
 

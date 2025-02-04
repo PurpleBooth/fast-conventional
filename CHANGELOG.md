@@ -2,6 +2,31 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.76](https://codeberg.org/PurpleBooth/git-mit/compare/a82b76cd51bac9f05f2d0c6a112e9968677d0f6b..v2.3.76) - 2025-02-04
+#### Bug Fixes
+- **(deps)** update rust crate clap to v4.5.28 - ([652fdba](https://codeberg.org/PurpleBooth/git-mit/commit/652fdba7094a52609d4edc9da7f41bc2334f106c)) - Solace System Renovate Fox
+#### Continuous Integration
+- **(pipeline)** adjust paths for docker metadata outputs - ([cf1db1d](https://codeberg.org/PurpleBooth/git-mit/commit/cf1db1df25a429b235ff52080ce974ddf4e4162c)) - Billie Thompson
+- **(workflows)** correct metadata extraction references - ([4185ca6](https://codeberg.org/PurpleBooth/git-mit/commit/4185ca681ce9cd8a75333f0f16057d8693334e5e)) - Billie Thompson
+- correct curl command by restoring missing URL argument - ([7de7b8e](https://codeberg.org/PurpleBooth/git-mit/commit/7de7b8ebafa364883f8b2cacc5d45f0dba952851)) - Billie Thompson
+- Refactor Homebrew formula generation in pipeline - ([24d9949](https://codeberg.org/PurpleBooth/git-mit/commit/24d99495d1191e1eefc1b228798939b3739fcb6e)) - Billie Thompson
+- correct indentation - ([0af1f79](https://codeberg.org/PurpleBooth/git-mit/commit/0af1f797a075b5d7492e1d272143dc7dee46a369)) - Billie Thompson
+- correct indentation - ([969c2c7](https://codeberg.org/PurpleBooth/git-mit/commit/969c2c70d1312557007dc202c81599f33c7b87f1)) - Billie Thompson
+- improve workflow naming and descriptions - ([f05a92f](https://codeberg.org/PurpleBooth/git-mit/commit/f05a92fbd38722656e7c9d1dccf1d7372e06fb73)) - Billie Thompson
+- try adding this line to fix fix not being triggered - ([89781c8](https://codeberg.org/PurpleBooth/git-mit/commit/89781c8f055f07d529bba3b59e2134771c15ec38)) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** update rust:alpine docker digest to 18be086 - ([158606d](https://codeberg.org/PurpleBooth/git-mit/commit/158606d90c5099913bca23e03a87db44ee8c6d1e)) - Solace System Renovate Fox
+- **(deps)** update https://code.forgejo.org/docker/bake-action action to v6 - ([99e202e](https://codeberg.org/PurpleBooth/git-mit/commit/99e202e477137395b60d2dba75a0349352d71de6)) - Solace System Renovate Fox
+- **(editorconfig)** add rules for more file types - ([d0af8d9](https://codeberg.org/PurpleBooth/git-mit/commit/d0af8d93acef1e4efe3033b7eb0be4278a0d993f)) - Billie Thompson
+- reevert "test(docs): clean up redundant error message formatting" - ([4a7493a](https://codeberg.org/PurpleBooth/git-mit/commit/4a7493aa7d7659bf299d402a2c1a830a770025a5)) - Billie Thompson
+#### Refactoring
+- remove some comments - ([5aa0593](https://codeberg.org/PurpleBooth/git-mit/commit/5aa0593d05cbdd1721c0d2b5b4f6e59a62d0c167)) - Billie Thompson
+- clippy - ([a82b76c](https://codeberg.org/PurpleBooth/git-mit/commit/a82b76cd51bac9f05f2d0c6a112e9968677d0f6b)) - Billie Thompson
+#### Tests
+- **(docs)** clean up redundant error message formatting - ([8b23944](https://codeberg.org/PurpleBooth/git-mit/commit/8b23944a2a91900c3ef47130748b8f5b6f8ed829)) - Billie Thompson
+
+- - -
+
 ## [v2.3.75](https://codeberg.org/PurpleBooth/git-mit/compare/3aa1da07fa08692c609c57a9ce6fa3481524b8ae..v2.3.75) - 2025-01-29
 #### Bug Fixes
 - **(deps)** update rust crate clap_complete to v4.5.44 - ([7886dab](https://codeberg.org/PurpleBooth/git-mit/commit/7886dab1ac5fbb32812570d445dd505f0a848836)) - Solace System Renovate Fox

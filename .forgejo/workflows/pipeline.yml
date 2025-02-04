@@ -277,10 +277,8 @@ jobs:
       - name: Normalize Repository Name for Docker Registry
         id: docker
         shell: bash
-        env:
-          REPOSITORY: ${{ github.repository }}
         run: |
-          echo "repository=$( echo "codeberg.org/$REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+          echo "repository=$( echo "codeberg.org/$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
 
       - name: Create Docker Cache Directory
         run: mkdir -p target/docker-bake-edge-test
@@ -467,9 +465,7 @@ jobs:
 
       - name: Format Repository Name for Docker Registry
         id: docker
-        run: echo "repository=$(echo 'codeberg.org/$REPOSITORY' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
-        env:
-          REPOSITORY: ${{ github.repository }}
+        run: echo "repository=$(echo "codeberg.org/$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
 
       - name: Extract Metadata for Docker (Tags, Labels)
         id: extract-docker-metadata

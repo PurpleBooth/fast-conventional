@@ -595,9 +595,9 @@ jobs:
           push: true
           files: |
             ./docker-bake.hcl
-            ${{ steps.meta-with-version.outputs.bake-file-tags }}
-            ${{ steps.meta-with-version.outputs.bake-file-annotations }}
-            ${{ steps.meta-with-version.outputs.bake-file-labels }}
+            cwd://${{ steps.meta-with-version.outputs.bake-file-tags }}
+            cwd://${{ steps.meta-with-version.outputs.bake-file-annotations }}
+            cwd://${{ steps.meta-with-version.outputs.bake-file-labels }}
           targets: docker,bins
 
       - name: Move Binaries to Release Directory

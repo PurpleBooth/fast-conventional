@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.77](https://codeberg.org/PurpleBooth/git-mit/compare/cc5c70e0cebd57b64aa30431d9891844705ad425..v2.3.77) - 2025-02-05
+#### Bug Fixes
+- **(deps)** update rust crate miette to v7.5.0 - ([19f0872](https://codeberg.org/PurpleBooth/git-mit/commit/19f08729a660fa897fecc9cc97addbc28343cdde)) - Solace System Renovate Fox
+#### Continuous Integration
+- correct quotes - ([16b8ba7](https://codeberg.org/PurpleBooth/git-mit/commit/16b8ba73133f62288c309d0c28c30e37df21fb85)) - Billie Thompson
+- correct repository normalisation - ([cc5c70e](https://codeberg.org/PurpleBooth/git-mit/commit/cc5c70e0cebd57b64aa30431d9891844705ad425)) - Billie Thompson
+#### Tests
+- new miette formatting - ([f889226](https://codeberg.org/PurpleBooth/git-mit/commit/f889226a1f45e85cf110273371569639bdd8a176)) - Billie Thompson
+
+- - -
+
 ## [v2.3.76](https://codeberg.org/PurpleBooth/git-mit/compare/a82b76cd51bac9f05f2d0c6a112e9968677d0f6b..v2.3.76) - 2025-02-04
 #### Bug Fixes
 - **(deps)** update rust crate clap to v4.5.28 - ([652fdba](https://codeberg.org/PurpleBooth/git-mit/commit/652fdba7094a52609d4edc9da7f41bc2334f106c)) - Solace System Renovate Fox

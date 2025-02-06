@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.78](https://codeberg.org/PurpleBooth/git-mit/compare/4f789bd63d6ff0190dfad12e27fe0faea991ea25..v2.3.78) - 2025-02-06
+#### Bug Fixes
+- unpin versions - ([c7c2fe2](https://codeberg.org/PurpleBooth/git-mit/commit/c7c2fe2a7b2c08f31f1d25f7862c30a0e6dbf1c7)) - Billie Thompson
+#### Build system
+- **(Dockerfile)** specify Cargo.toml and Cargo.lock during copy - ([4a4f0a2](https://codeberg.org/PurpleBooth/git-mit/commit/4a4f0a29ced597610dae6ac64316a923075a7433)) - Billie Thompson
+#### Continuous Integration
+- use an inline cache - ([d6aecf0](https://codeberg.org/PurpleBooth/git-mit/commit/d6aecf0aa2eab6fe510abdc21d4395a8acf1bd8a)) - Billie Thompson
+- correct file paths in pipeline workflow - ([4f789bd](https://codeberg.org/PurpleBooth/git-mit/commit/4f789bd63d6ff0190dfad12e27fe0faea991ea25)) - Billie Thompson
+
+- - -
+
 ## [v2.3.77](https://codeberg.org/PurpleBooth/git-mit/compare/cc5c70e0cebd57b64aa30431d9891844705ad425..v2.3.77) - 2025-02-05
 #### Bug Fixes
 - **(deps)** update rust crate miette to v7.5.0 - ([19f0872](https://codeberg.org/PurpleBooth/git-mit/commit/19f08729a660fa897fecc9cc97addbc28343cdde)) - Solace System Renovate Fox

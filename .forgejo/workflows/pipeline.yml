@@ -262,12 +262,6 @@ jobs:
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      - name: Restore Cache
-        uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
-        with:
-          path: target/bake-edge-test
-          key: ${{ runner.os }}-bake-edge-test
-
       - name: Update Version to Next
         shell: bash
         env:
@@ -279,9 +273,6 @@ jobs:
         shell: bash
         run: |
           echo "repository=$( echo "codeberg.org/$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
-
-      - name: Create Docker Cache Directory
-        run: mkdir -p target/docker-bake-edge-test
 
       - name: Extract Docker Metadata
         id: extract-docker-metadata
@@ -306,10 +297,9 @@ jobs:
           set: |
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.semver.outputs.next_version }}
-            *.cache-from=type=local,src=target/docker-bake-edge-test
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:${{ needs.semver.outputs.current_version }}
-            *.cache-to=type=local,dest=target/docker-bake-edge-test,mode=max
+            *.cache-to=type=inline,mode=max
           push: false
           files: |
             ./docker-bake.hcl
@@ -325,12 +315,6 @@ jobs:
             mv -v "$binary" "target/bins/$(echo "$binary" | cut -d '/' -f 3- | tr "/" "-")"
           done
           find target/bins/ -type d -empty -delete
-
-      - name: Upload Docker Cache
-        uses: https://code.forgejo.org/forgejo/upload-artifact@16871d9e8cfcf27ff31822cac382bbb5450f1e1e # v4
-        with:
-          name: docker-bake-cache
-          path: target/docker-bake-edge-test
 
   lint-homebrew-formula:
     name: Lint Homebrew Formula
@@ -438,12 +422,6 @@ jobs:
       - name: Checkout Repository
         uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
-      - name: Download Docker Cache
-        uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        with:
-          name: docker-bake-cache
-          path: target/docker-bake-edge-cache
-
       - name: Set Up Docker Buildx
         uses: https://code.forgejo.org/docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5 # v3
 
@@ -453,15 +431,6 @@ jobs:
           registry: codeberg.org
           username: ${{ github.actor }}
           password: ${{ secrets.FJ_TOKEN }}
-
-      - name: Restore Cache
-        uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
-        with:
-          path: target/docker-bake-edge-release
-          key: ${{ runner.os }}-bake-edge-release
-
-      - name: Create Docker Cache Directory
-        run: mkdir -p target/docker-bake-edge-release
 
       - name: Format Repository Name for Docker Registry
         id: docker
@@ -490,9 +459,8 @@ jobs:
           set: |
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,src=target/docker-bake-edge-cache
-            *.cache-from=type=local,src=target/docker-bake-edge-release
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
+            *.cache-to=type=inline,mode=max
           push: true
           files: |
             ./docker-bake.hcl
@@ -529,12 +497,6 @@ jobs:
           ref: v${{ needs.release.outputs.current_version }}
           fetch-depth: 0
 
-      - name: Download Docker Cache
-        uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e # v4
-        with:
-          name: docker-bake-cache
-          path: target/docker-bake-edge-test
-
       - name: Install Cocogitto
         uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-cocogitto@main
 
@@ -547,15 +509,6 @@ jobs:
           registry: codeberg.org
           username: ${{ github.actor }}
           password: ${{ secrets.FJ_TOKEN }}
-
-      - name: Restore Build Cache
-        uses: https://code.forgejo.org/actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
-        with:
-          path: target/bake-edge-release
-          key: ${{ runner.os }}-bake-edge-release
-
-      - name: Create Docker Cache Directory
-        run: mkdir -p target/docker-bake-edge-release
 
       - name: Normalize Repository Name for Docker
         id: docker
@@ -589,9 +542,8 @@ jobs:
           set: |
             *.attest=type=provenance,mode=max
             *.args.VER=${{ needs.release.outputs.current_version }}
-            *.cache-from=type=local,src=target/docker-bake-edge-test
-            *.cache-from=type=local,src=target/docker-bake-edge-release
             *.cache-from=type=registry,ref=${{ steps.docker.outputs.repository }}:edge
+            *.cache-to=type=inline,mode=max
           push: true
           files: |
             ./docker-bake.hcl

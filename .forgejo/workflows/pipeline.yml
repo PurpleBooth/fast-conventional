@@ -223,6 +223,11 @@ jobs:
       - uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
         name: Install Just
 
+      - run: |
+          apt-get update
+          apt-get install -y socat
+        name: Install Socat
+
       - uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e       # v4
         name: Download Built Artifacts
         with:

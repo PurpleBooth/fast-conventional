@@ -139,6 +139,10 @@ jobs:
         uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-specdown@main
       - name: Install Just
         uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-just@main
+      - run: |
+          apt-get update
+          apt-get install -y socat
+        name: Install Socat
       - name: Download Built Assets
         uses: https://code.forgejo.org/forgejo/download-artifact@d8d0a99033603453ad2255e58720b460a0555e1e       # v4
         with:

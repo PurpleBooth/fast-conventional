@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.79](https://codeberg.org/PurpleBooth/git-mit/compare/e40dd3b6851b113a335c8e9726de77148c2f9901..v2.3.79) - 2025-02-14
+#### Bug Fixes
+- **(deps)** update rust crate clap to v4.5.29 - ([6228884](https://codeberg.org/PurpleBooth/git-mit/commit/62288844eb6204400d14dad5f7c0367e93246562)) - Solace System Renovate Fox
+#### Build system
+- add zlib dependency for Linux builds - ([69e5115](https://codeberg.org/PurpleBooth/git-mit/commit/69e5115b3e0906e26146c72f34bc8f9472c10093)) - Billie Thompson
+#### Continuous Integration
+- Add Socat installation to pipeline - ([8503284](https://codeberg.org/PurpleBooth/git-mit/commit/8503284663774d26a3ad27376a4117e6219f2f15)) - Billie Thompson
+- Add Socat installation step to pipeline - ([80b95a5](https://codeberg.org/PurpleBooth/git-mit/commit/80b95a5e7c2ddc37e449f0db586293c35edd6a14)) - Billie Thompson
+- clean up workflow formatting and add cargo publish - ([36453db](https://codeberg.org/PurpleBooth/git-mit/commit/36453dbc0298b02bb4253926b75b7973085a0e5c)) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** update rust crate tempfile to v3.16.0 - ([97a9ae5](https://codeberg.org/PurpleBooth/git-mit/commit/97a9ae5f586c643734539b1f968d396dc587dfe1)) - Solace System Renovate Fox
+- **(deps)** pin dependencies - ([3b19eaa](https://codeberg.org/PurpleBooth/git-mit/commit/3b19eaaaae37f96eeeac73cbf12259a8d3e3c547)) - Solace System Renovate Fox
+- **(deps)** update https://code.forgejo.org/docker/setup-buildx-action digest to f7ce87c - ([972622a](https://codeberg.org/PurpleBooth/git-mit/commit/972622a2ca49d7564e65e2130fe076fcfc7c27f1)) - Solace System Renovate Fox
+- **(deps)** pin dependencies - ([e40dd3b](https://codeberg.org/PurpleBooth/git-mit/commit/e40dd3b6851b113a335c8e9726de77148c2f9901)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.78](https://codeberg.org/PurpleBooth/git-mit/compare/4f789bd63d6ff0190dfad12e27fe0faea991ea25..v2.3.78) - 2025-02-06
 #### Bug Fixes
 - unpin versions - ([c7c2fe2](https://codeberg.org/PurpleBooth/git-mit/commit/c7c2fe2a7b2c08f31f1d25f7862c30a0e6dbf1c7)) - Billie Thompson

@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.80](https://codeberg.org/PurpleBooth/git-mit/compare/01cb962935498b139bc49050248c40e3fe147faa..v2.3.80) - 2025-02-14
+#### Bug Fixes
+- **(deps)** update rust:alpine docker digest to 12360d0 - ([01cb962](https://codeberg.org/PurpleBooth/git-mit/commit/01cb962935498b139bc49050248c40e3fe147faa)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.79](https://codeberg.org/PurpleBooth/git-mit/compare/e40dd3b6851b113a335c8e9726de77148c2f9901..v2.3.79) - 2025-02-14
 #### Bug Fixes
 - **(deps)** update rust crate clap to v4.5.29 - ([6228884](https://codeberg.org/PurpleBooth/git-mit/commit/62288844eb6204400d14dad5f7c0367e93246562)) - Solace System Renovate Fox

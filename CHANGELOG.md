@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.89](https://codeberg.org/PurpleBooth/git-mit/compare/9efe56c16a4636bbccb0eef3aab30f32764fbca9..v2.3.89) - 2025-02-28
+#### Bug Fixes
+- **(deps)** update goreleaser/nfpm docker digest to 5612c15 - ([03659bf](https://codeberg.org/PurpleBooth/git-mit/commit/03659bf2ee85bf32b0ac4f8d5d1b73453d8a2c6c)) - Solace System Renovate Fox
+#### Miscellaneous Chores
+- **(deps)** update https://code.forgejo.org/docker/setup-buildx-action digest to b5ca514 - ([74f9881](https://codeberg.org/PurpleBooth/git-mit/commit/74f988134ef6e59badae0378a4b69a37421d5dad)) - Solace System Renovate Fox
+- **(deps)** update https://code.forgejo.org/actions/cache digest to d4323d4 - ([8abd664](https://codeberg.org/PurpleBooth/git-mit/commit/8abd66420fd3e8285b6478b8281786491242878b)) - Solace System Renovate Fox
+- **(deps)** update https://code.forgejo.org/docker/metadata-action digest to 902fa8e - ([c39d882](https://codeberg.org/PurpleBooth/git-mit/commit/c39d8821cf7b8486d9a633eed90d1bc50cf07607)) - Solace System Renovate Fox
+- **(deps)** update https://code.forgejo.org/docker/bake-action digest to 4ba453f - ([9efe56c](https://codeberg.org/PurpleBooth/git-mit/commit/9efe56c16a4636bbccb0eef3aab30f32764fbca9)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.88](https://codeberg.org/PurpleBooth/git-mit/compare/c0d451f3c64d6b2351d42b285d1cadd4e493e2a0..v2.3.88) - 2025-02-25
 #### Bug Fixes
 - **(deps)** update rust crate clap_complete to v4.5.46 - ([c0d451f](https://codeberg.org/PurpleBooth/git-mit/commit/c0d451f3c64d6b2351d42b285d1cadd4e493e2a0)) - Solace System Renovate Fox

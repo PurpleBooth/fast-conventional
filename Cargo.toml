@@ -1,6 +1,6 @@
 [package]
 name = "fast-conventional"
-version = "2.3.93"
+version = "2.3.94"
 edition = "2021"
 categories = ["development-tools","command-line-utilities"]
 keywords = ["git", "commit_message"]

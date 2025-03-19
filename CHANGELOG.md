@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.95](https://codeberg.org/PurpleBooth/git-mit/compare/70258578dae45f07f118919a25b59494d4b81349..v2.3.95) - 2025-03-19
+#### Bug Fixes
+- **(deps)** update rust:alpine docker digest to 9b8f32b - ([69b3092](https://codeberg.org/PurpleBooth/git-mit/commit/69b3092c6ac323ce177cc73db726019e14b83c0c)) - Solace System Renovate Fox
+#### Miscellaneous Chores
+- **(deps)** update https://code.forgejo.org/docker/login-action digest to 74a5d14 - ([7025857](https://codeberg.org/PurpleBooth/git-mit/commit/70258578dae45f07f118919a25b59494d4b81349)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.94](https://codeberg.org/PurpleBooth/git-mit/compare/48963bcb15eccfb5c68de101a399fa4a2552372b..v2.3.94) - 2025-03-14
 #### Bug Fixes
 - **(deps)** update rust crate serde to v1.0.219 - ([a16c8fa](https://codeberg.org/PurpleBooth/git-mit/commit/a16c8fad3817e2d59a479118c0e2ffb40f26b0ac)) - Solace System Renovate Fox

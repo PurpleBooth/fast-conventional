@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.100](https://codeberg.org/PurpleBooth/git-mit/compare/3359f41aa284f0304261074c7984719c90f79dd4..v2.3.100) - 2025-03-27
+#### Bug Fixes
+- **(deps)** update rust crate clap to v4.5.34 - ([83c93b5](https://codeberg.org/PurpleBooth/git-mit/commit/83c93b55984b1ee92f473e502ab1aa16fcae4d78)) - Solace System Renovate Fox
+#### Miscellaneous Chores
+- **(deps)** update https://code.forgejo.org/actions/cache digest to 5a3ec84 - ([3359f41](https://codeberg.org/PurpleBooth/git-mit/commit/3359f41aa284f0304261074c7984719c90f79dd4)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.99](https://codeberg.org/PurpleBooth/git-mit/compare/16ce7493cf35aeff6096a200a108d9a3b6d4278f..v2.3.99) - 2025-03-27
 #### Bug Fixes
 - **(deps)** update rust crate clap_complete to v4.5.47 - ([16ce749](https://codeberg.org/PurpleBooth/git-mit/commit/16ce7493cf35aeff6096a200a108d9a3b6d4278f)) - Solace System Renovate Fox

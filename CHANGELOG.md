@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.115](https://codeberg.org/PurpleBooth/git-mit/compare/3a86701b277fab2ec73afcb21fd989cb4a4b068b..v2.3.115) - 2025-05-27
+#### Bug Fixes
+- **(deps)** update rust crate mit-commit to v3.3.0 - ([3a86701](https://codeberg.org/PurpleBooth/git-mit/commit/3a86701b277fab2ec73afcb21fd989cb4a4b068b)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.114](https://codeberg.org/PurpleBooth/git-mit/compare/ad559b981cd340c19c1d55cc76e51b19fae1fcb6..v2.3.114) - 2025-05-26
 #### Bug Fixes
 - **(deps)** update rust crate mit-commit to v3.2.3 - ([ad559b9](https://codeberg.org/PurpleBooth/git-mit/commit/ad559b981cd340c19c1d55cc76e51b19fae1fcb6)) - Solace System Renovate Fox

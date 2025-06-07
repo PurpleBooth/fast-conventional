@@ -2,7 +2,7 @@
 pub struct Subject(pub(crate) String);
 
 impl Subject {
-    pub(crate) fn is_empty(&self) -> bool {
+    pub(crate) const fn is_empty(&self) -> bool {
         self.0.is_empty()
     }
 }

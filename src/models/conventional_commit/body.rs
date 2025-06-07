@@ -4,7 +4,7 @@ use mit_commit::Bodies;
 pub struct Body(pub(crate) String);
 
 impl Body {
-    pub(crate) fn is_empty(&self) -> bool {
+    pub(crate) const fn is_empty(&self) -> bool {
         self.0.is_empty()
     }
 }
@@ -47,7 +47,6 @@ impl From<Body> for String {
 
 #[cfg(test)]
 mod tests {
-
     use super::*;
 
     #[test]

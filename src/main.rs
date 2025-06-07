@@ -1,15 +1,23 @@
 //! Quickly put together a conventional commit
-#![warn(
-    rust_2018_idioms,
+#![warn(clippy::nursery)]
+#![deny(
     unused,
-    rust_2021_compatibility,
     nonstandard_style,
     future_incompatible,
     missing_copy_implementations,
     missing_debug_implementations,
-    missing_docs
+    missing_docs,
+    clippy::pedantic,
+    clippy::cargo,
+    clippy::complexity,
+    clippy::correctness,
+    clippy::pedantic,
+    clippy::perf,
+    clippy::style,
+    clippy::suspicious,
+    non_fmt_panics
 )]
-
+#![allow(clippy::multiple_crate_versions)]
 mod cli;
 mod commands;
 mod models;

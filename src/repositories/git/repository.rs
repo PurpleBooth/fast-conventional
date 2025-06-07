@@ -176,19 +176,19 @@ mod tests {
     #[test]
     fn can_be_created_from_a_git_repository() {
         let dir = repo_init();
-        assert!(Repository::try_from(dir.into_path()).is_ok());
+        assert!(Repository::try_from(dir.keep()).is_ok());
     }
 
     #[test]
     fn errors_on_not_a_git_repository() {
         let dir = tempdir().unwrap();
-        assert!(Repository::try_from(dir.into_path()).is_err());
+        assert!(Repository::try_from(dir.keep()).is_err());
     }
 
     #[test]
     fn it_can_give_me_a_list_of_commit_messages() {
         let dir = repo_init();
-        let repo = Repository::try_from(dir.into_path()).unwrap();
+        let repo = Repository::try_from(dir.keep()).unwrap();
         let commits = repo
             .list_commits(None)
             .unwrap()
@@ -209,7 +209,7 @@ mod tests {
     #[test]
     fn it_can_give_me_a_list_of_commits_like_git_log() {
         let dir = repo_init();
-        let repo = Repository::try_from(dir.into_path()).unwrap();
+        let repo = Repository::try_from(dir.keep()).unwrap();
         let commits = repo
             .list_commits(Some(GitRevisionSelection::from_str("HEAD^").unwrap()))
             .unwrap()
@@ -229,7 +229,7 @@ mod tests {
     #[test]
     fn it_can_give_me_a_commit_from_a_range() {
         let dir = repo_init();
-        let repo = Repository::try_from(dir.into_path()).unwrap();
+        let repo = Repository::try_from(dir.keep()).unwrap();
         let commits = repo
             .list_commits(Some(GitRevisionSelection::from_str("HEAD^..HEAD").unwrap()))
             .unwrap()
@@ -244,7 +244,7 @@ mod tests {
     fn it_can_give_me_a_commit_from_a_range_with_the_finishing_id_missing() {
         let dir = repo_init();
 
-        let repo = Repository::try_from(dir.into_path()).unwrap();
+        let repo = Repository::try_from(dir.keep()).unwrap();
         let commits = repo
             .list_commits(Some(GitRevisionSelection::from_str("HEAD^^..").unwrap()))
             .unwrap()

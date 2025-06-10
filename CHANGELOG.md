@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.118](https://codeberg.org/PurpleBooth/git-mit/compare/d9cd5b919906c9699fd68175ccd79f5937a94a8a..v2.3.118) - 2025-06-10
+#### Bug Fixes
+- **(deps)** update rust crate clap_complete to v4.5.54 - ([8a85efa](https://codeberg.org/PurpleBooth/git-mit/commit/8a85efae7b5ee9fc6ea8070294748f909f2f387a)) - Solace System Renovate Fox
+- **(deps)** update rust crate clap_complete to v4.5.53 - ([9bcda46](https://codeberg.org/PurpleBooth/git-mit/commit/9bcda468f36872710edf013e7e3e71f070587340)) - Solace System Renovate Fox
+- **(deps)** update rust crate clap to v4.5.40 - ([1c4e651](https://codeberg.org/PurpleBooth/git-mit/commit/1c4e6515775148c9c456d7d7b275de740659ef7d)) - Solace System Renovate Fox
+- **(deps)** update goreleaser/nfpm docker digest to 929e105 - ([6f0956e](https://codeberg.org/PurpleBooth/git-mit/commit/6f0956e1a312ff32643383584a63b84b4c8ff703)) - Solace System Renovate Fox
+- **(deps)** update rust:alpine docker digest to 126df0f - ([d9cd5b9](https://codeberg.org/PurpleBooth/git-mit/commit/d9cd5b919906c9699fd68175ccd79f5937a94a8a)) - Solace System Renovate Fox
+#### Refactoring
+- enhance linting and code clarity - ([c78f42d](https://codeberg.org/PurpleBooth/git-mit/commit/c78f42d9f190d5c24fa09ad35f82f4787b182fe9)) - Billie Thompson
+
+- - -
+
 ## [v2.3.117](https://codeberg.org/PurpleBooth/git-mit/compare/80e3619839d07b7b609ad1e8061fc7f2558562bd..v2.3.117) - 2025-05-30
 #### Bug Fixes
 - **(deps)** update rust crate clap_complete to v4.5.52 - ([ae548bd](https://codeberg.org/PurpleBooth/git-mit/commit/ae548bd5e74c77451ae0797975a9d349cab46dc4)) - Solace System Renovate Fox

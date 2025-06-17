@@ -691,9 +691,9 @@ dependencies = [
 
 [[package]]
 name = "mit-commit"
-version = "3.3.0"
+version = "3.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4d26fc7da838c9c061f628ff00e04c6eb2eb80b7e59f30a67943493a85044a6e"
+checksum = "ce07b4a0380781054fc37906656c0a46b6bded7e579a4a1a9efc8812c15fe948"
 dependencies = [
  "indoc",
  "miette",

@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v2.3.119](https://codeberg.org/PurpleBooth/git-mit/compare/3aa782e18df4e6d10df815ae8bca66032809b3ec..v2.3.119) - 2025-06-17
+#### Bug Fixes
+- **(deps)** update rust crate mit-commit to v3.3.1 - ([5dabead](https://codeberg.org/PurpleBooth/git-mit/commit/5dabead0972ed54307fa56b71c26137204dd2bba)) - Solace System Renovate Fox
+#### Miscellaneous Chores
+- **(deps)** update https://code.forgejo.org/docker/setup-buildx-action digest to 18ce135 - ([3aa782e](https://codeberg.org/PurpleBooth/git-mit/commit/3aa782e18df4e6d10df815ae8bca66032809b3ec)) - Solace System Renovate Fox
+
+- - -
+
 ## [v2.3.118](https://codeberg.org/PurpleBooth/git-mit/compare/d9cd5b919906c9699fd68175ccd79f5937a94a8a..v2.3.118) - 2025-06-10
 #### Bug Fixes
 - **(deps)** update rust crate clap_complete to v4.5.54 - ([8a85efa](https://codeberg.org/PurpleBooth/git-mit/commit/8a85efae7b5ee9fc6ea8070294748f909f2f387a)) - Solace System Renovate Fox

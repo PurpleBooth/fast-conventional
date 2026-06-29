@@ -19,7 +19,7 @@ class FastConventional < Formula
     system "cargo", "install", "--locked", "--root", prefix, "--path", "."
 
     # Install completion
-    generate_completions_from_executable(bin/"fast-conventional", "completion", shells: [:bash, :zsh, :fish])
+    generate_completions_from_executable(bin/"fast-conventional", "completion")
 
     # Man pages
     output = Utils.safe_popen_read("help2man", "#{bin}/fast-conventional")

@@ -11,22 +11,33 @@ use mit_commit::CommitMessage;
 use super::models::fast_conventional_config::FastConventionalConfig;
 use super::models::{ConventionalBody, ConventionalSubject};
 
-pub fn prompt_body(previous_body: &ConventionalBody) -> Result<Option<String>> {
-    let mut body_ui = Editor::new("description")
-        .with_file_extension("COMMIT_EDITMSG")
-        .with_predefined_text(&previous_body.0)
-        .with_help_message("A body (if any)");
-
-    body_ui = if previous_body.is_empty() {
-        body_ui
+pub fn prompt_body(
+    previous_body: &ConventionalBody,
+    subject_so_far: &str,
+) -> Result<Option<String>> {
+    let predefined_text = if previous_body.is_empty() {
+        format!("# {subject_so_far}\n\n")
     } else {
-        body_ui.with_predefined_text(&previous_body.0)
+        format!("# {subject_so_far}\n\n{}", previous_body.0)
     };
+
+    let body_ui = Editor::new("description")
+        .with_file_extension("COMMIT_EDITMSG")
+        .with_predefined_text(&predefined_text)
+        .with_help_message("A body (if any)");
 
     Ok(body_ui
         .prompt_skippable()
         .into_diagnostic()?
-        .filter(|breaking_message| !breaking_message.is_empty()))
+        .map(|text| {
+            text.lines()
+                .filter(|line| !line.starts_with('#'))
+                .collect::<Vec<&str>>()
+                .join("\n")
+                .trim()
+                .to_string()
+        })
+        .filter(|body| !body.is_empty()))
 }
 
 pub fn prompt_subject(previous_subject: &ConventionalSubject) -> Result<String> {
@@ -111,7 +122,20 @@ pub fn ask_user(
     let scope: Option<String> = prompt_commit_scope(config, scope_index)?;
     let breaking = prompt_breaking(&previous_breaking)?;
     let subject = prompt_subject(&previous_subject)?;
-    let body = prompt_body(&previous_body)?;
+
+    let mut subject_so_far = commit_type.clone();
+    if let Some(ref scope_str) = scope {
+        subject_so_far.push('(');
+        subject_so_far.push_str(scope_str);
+        subject_so_far.push(')');
+    }
+    if breaking.is_some() {
+        subject_so_far.push('!');
+    }
+    subject_so_far.push_str(": ");
+    subject_so_far.push_str(&subject);
+
+    let body = prompt_body(&previous_body, &subject_so_far)?;
 
     Ok(ConventionalCommit {
         type_slug: commit_type.into(),
